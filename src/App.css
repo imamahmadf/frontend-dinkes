@@ -1,0 +1,43 @@
+.custom-tab[aria-selected="true"] {
+  background: #14a75b !important;
+  color: white !important;
+  border-color: #14a75b !important;
+  box-shadow: 0 2px 8px rgba(20, 167, 91, 0.15);
+}
+
+/* Tambahkan di App.css atau file CSS global */
+.swiper-button-next,
+.swiper-button-prev {
+  background: #14a75b;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px;
+  font-weight: bold;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: #0e7c41;
+  opacity: 1;
+}
+
+/* Custom Swiper Pagination Hijau */
+.custom-swiper-pagination .swiper-pagination-bullet {
+  background: #16a34a !important; /* hijau */
+  opacity: 1;
+}
+.custom-swiper-pagination .swiper-pagination-bullet-active {
+  background: #22c55e !important; /* hijau lebih terang */
+}
