@@ -32,7 +32,7 @@ import iconBidang5 from "../assets/iconbidang5.png";
 
 import PenaLogo from "../assets/penaLogo.png";
 import AptekaLogo from "../assets/logoApteka.png";
-import PangkatLogo from "../assets/PangkatLogo.png";
+import PangkatLogo from "../assets/pangkatLogo.png";
 import AsetLogo from "../assets/asetLogo.png";
 
 const MotionBox = chakra(motion.div);
