@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import {
   Box,
   Flex,
@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { chakra } from "@chakra-ui/react";
 import Logo from "../assets/logo.png";
 import { Link as RouterLink } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 import icon1 from "../assets/dinkesicon1.png";
 import icon2 from "../assets/dinkesicon2.png";
@@ -38,6 +39,7 @@ import AsetLogo from "../assets/asetLogo.png";
 const MotionBox = chakra(motion.div);
 
 function Navbar() {
+  const { isAuthenticated, logout } = useContext(AuthContext);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedMenu, setSelectedMenu] = useState("dinkes"); // State untuk menu yang dipilih
   const [selectedPPIDMenu, setSelectedPPIDMenu] = useState("profile"); // State untuk submenu PPID yang dipilih
@@ -606,7 +608,7 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1200px"
+            width="1400px"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -774,7 +776,7 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1200px"
+            width="1400px"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -985,7 +987,7 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1200px"
+            width="1400px"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1190,7 +1192,7 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1200px"
+            width="1400px"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1408,7 +1410,7 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1200px"
+            width="1400px"
             gap={{ base: 6, md: 24 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1446,7 +1448,7 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1200px"
+            width="1400px"
             gap={{ base: 6, md: 24 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1483,7 +1485,7 @@ function Navbar() {
       }}
     >
       <Flex
-        maxW="1200px"
+        maxW="1400px"
         mx="auto"
         align="center"
         justify="space-between"
@@ -1582,6 +1584,23 @@ function Navbar() {
               )}
             </Box>
           ))}
+
+          {/* Tombol Logout */}
+          {isAuthenticated && (
+            <Box as="li" ml="auto">
+              <Button
+                variant="outline"
+                color="white"
+                borderColor="white"
+                _hover={{ bg: "whiteAlpha.200" }}
+                onClick={logout}
+                size="sm"
+                fontSize="sm"
+              >
+                Logout
+              </Button>
+            </Box>
+          )}
         </Flex>
       </Flex>
       {/* Render dropdown di luar Flex agar full-width, dengan transisi Fade+Slide */}
