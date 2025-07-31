@@ -164,7 +164,7 @@ function Peta() {
   }
 
   return (
-    <Box width="100vw" height="50vh" position="relative">
+    <Box width="100%" height="50vh" position="relative">
       <MapContainer
         center={[-1.5, 116.5]}
         zoom={10}

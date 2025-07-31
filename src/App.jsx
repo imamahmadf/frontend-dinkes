@@ -28,6 +28,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
 import UserRoute from "./components/UserRoute";
 import SuperAdminRoute from "./components/SuperAdminRoute";
+import TambahBerita from "./pages/Admin/Berita/TambahBerita";
 
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
@@ -115,12 +116,10 @@ function App() {
         {/* Public Routes - Tidak memerlukan login */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-
         {/* Dinas Kesehatan - Public */}
         <Route path="/dinkes/visi-misi" element={<VisiMisi />} />
         <Route path="/dinkes/tugas-fungsi" element={<TugasDanFungsi />} />
         <Route path="/dinkes/struktur" element={<Struktur />} />
-
         {/* PPID - Public */}
         <Route path="/informasi/berkala" element={<Berkala />} />
         <Route path="/informasi/publik" element={<Publik />} />
@@ -128,7 +127,6 @@ function App() {
         <Route path="/informasi/setiap-saat" element={<SetiapSaat />} />
         <Route path="/ppid/profile" element={<ProfilePPID />} />
         <Route path="/ppid/tugas-dan-fungsi" element={<TugasDanFungsiPPID />} />
-
         {/* Protected Routes - Memerlukan login */}
         <Route
           path="/pelayanan/permohonan"
@@ -146,7 +144,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         {/* Admin Routes - Hanya untuk Admin Dinas Kesehatan dan Super Admin */}
         <Route
           path="/bidang/p2p"
@@ -188,7 +185,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         {/* User Routes - Untuk user biasa */}
         <Route
           path="/sop/pengajuan-informasi"
@@ -198,14 +194,22 @@ function App() {
             </UserRoute>
           }
         />
-
         {/* Super Admin Routes - Hanya untuk Super Admin */}
         <Route
-          path="/admin/super"
+          path="/admin/superx"
           element={
             <SuperAdminRoute>
-              <div>Super Admin Dashboard</div>
+              <div>Super Adminxxx Dashboard</div>
             </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/tambah-berita"
+          element={
+            <adminRoute>
+              <TambahBerita />
+            </adminRoute>
           }
         />
       </Routes>

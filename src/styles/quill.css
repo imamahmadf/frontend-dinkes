@@ -1,0 +1,64 @@
+/* Custom styling untuk ReactQuill */
+.ql-container {
+  font-family: inherit;
+  font-size: 16px;
+  border: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.ql-toolbar {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px 8px 0 0;
+  background-color: #f7fafc;
+}
+
+.ql-editor {
+  min-height: 200px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.ql-editor:focus {
+  border-color: #14a75b;
+  box-shadow: 0 0 0 1px #14a75b;
+}
+
+.ql-toolbar button:hover,
+.ql-toolbar .ql-picker-label:hover {
+  color: #14a75b;
+}
+
+.ql-toolbar button:hover .ql-stroke,
+.ql-toolbar .ql-picker-label:hover .ql-stroke {
+  stroke: #14a75b;
+}
+
+.ql-toolbar button:hover .ql-fill {
+  fill: #14a75b;
+}
+
+.ql-toolbar .ql-active {
+  color: #14a75b;
+}
+
+.ql-toolbar .ql-active .ql-stroke {
+  stroke: #14a75b;
+}
+
+.ql-toolbar .ql-active .ql-fill {
+  fill: #14a75b;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .ql-toolbar {
+    padding: 8px;
+  }
+
+  .ql-editor {
+    padding: 12px;
+    min-height: 150px;
+  }
+}
