@@ -449,7 +449,7 @@ function Home() {
                 transition={{ delay: index * 0.2 }}
                 viewport={{ once: true }}
               >
-                <Flex gap={5} align="center">
+                <Flex gap={5}>
                   <Image src={leader.img} width={"180px"} h={"220px"} />
                   <Box>
                     <Text fontSize="20px" fontWeight={400}>
@@ -463,7 +463,9 @@ function Home() {
               </MotionBox>
             ))}
           </SimpleGrid>
-          <Box>
+        </Container>
+        <Container>
+          <Flex>
             {loading && (
               <Text textAlign="center" color="gray.500" fontSize="lg" py={8}>
                 Memuat data berita...
@@ -485,7 +487,7 @@ function Home() {
                 >
                   BERITA TERKINI
                 </Text>
-                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
                   {databerita.map((berita, index) => (
                     <BeritaCard key={berita.id} berita={berita} index={index} />
                   ))}
@@ -497,25 +499,23 @@ function Home() {
                 Tidak ada berita tersedia saat ini
               </Text>
             )}
-          </Box>
+          </Flex>
         </Container>
         <Container>
+          {" "}
           <Box>
-            <LaporPelayanan />
+            <iframe
+              width="100%"
+              height="800"
+              src="https://www.youtube-nocookie.com/embed/mUtaYgkgUhs?si=SFK4MmVGtSMUk_Ux"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </Box>
         </Container>
-        <Box>
-          <iframe
-            width="100%"
-            height="800"
-            src="https://www.youtube-nocookie.com/embed/mUtaYgkgUhs?si=SFK4MmVGtSMUk_Ux"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
-        </Box>
         <Box p={"30px"}>
           <Peta />
         </Box>

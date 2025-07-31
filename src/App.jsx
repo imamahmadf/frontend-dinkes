@@ -29,7 +29,11 @@ import AdminRoute from "./components/AdminRoute";
 import UserRoute from "./components/UserRoute";
 import SuperAdminRoute from "./components/SuperAdminRoute";
 import TambahBerita from "./pages/Admin/Berita/TambahBerita";
-
+import TambahDokumen from "./pages/Admin/Informasi/TambahDokumen";
+import HomeAdmin from "./pages/Admin/HomeAdmin";
+import DaftarInformasi from "./pages/Admin/Informasi/DaftarInformasi";
+import DaftarBerita from "./pages/Admin/Berita/Daftarberita";
+import DaftarPermohonan from "./pages/Admin/Permohonan/DaftarPermohonan";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -207,9 +211,54 @@ function App() {
         <Route
           path="/admin/tambah-berita"
           element={
-            <adminRoute>
+            <AdminRoute>
               <TambahBerita />
-            </adminRoute>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/tambah-dokumen"
+          element={
+            <AdminRoute>
+              <TambahDokumen />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <HomeAdmin />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/daftar-informasi"
+          element={
+            <AdminRoute>
+              <DaftarInformasi />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/daftar-berita"
+          element={
+            <AdminRoute>
+              <DaftarBerita />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/daftar-permohonan"
+          element={
+            <AdminRoute>
+              <DaftarPermohonan />
+            </AdminRoute>
           }
         />
       </Routes>

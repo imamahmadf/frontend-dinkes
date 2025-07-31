@@ -30,7 +30,9 @@ function Publik() {
   const [dataPublik, setDataPublik] = useState(null);
   async function fetchDataPublik() {
     await axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/publik/get`)
+      .get(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/informasi/get/publik`
+      )
       .then((res) => {
         setDataPublik(res.data.result);
         console.log(res.data.result);

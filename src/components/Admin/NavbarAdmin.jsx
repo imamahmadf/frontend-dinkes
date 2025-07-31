@@ -20,9 +20,14 @@ const NavbarAdmin = () => {
   };
 
   const navItems = [
-    { name: "Dashboard", path: "/admin/dashboard", icon: RiHomeLine },
-    { name: "Kelola User", path: "/admin/users", icon: RiUserLine },
-    { name: "Pengaturan", path: "/admin/settings", icon: RiSettingsLine },
+    { name: "Dashboard", path: "/admin", icon: RiHomeLine },
+    { name: "Informasi", path: "/admin/daftar-informasi", icon: RiUserLine },
+    { name: "Berita", path: "/admin/daftar-berita", icon: RiSettingsLine },
+    {
+      name: "Permohonan",
+      path: "/admin/daftar-permohonan",
+      icon: RiSettingsLine,
+    },
   ];
 
   return (

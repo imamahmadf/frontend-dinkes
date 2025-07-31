@@ -2,11 +2,14 @@ import React from "react";
 import { Box, Container } from "@chakra-ui/react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import MobileNavbar from "./MobileNavbar";
 function Layout({ children }) {
   return (
     <Box>
       <Navbar />
-      <Box minH={"75vh"}>{children}</Box>
+      <Box p={0} minH={"75vh"}>
+        {children}
+      </Box>
       <Footer />
     </Box>
   );
