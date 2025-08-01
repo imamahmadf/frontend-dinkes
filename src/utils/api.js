@@ -1,8 +1,25 @@
 import axios from "axios";
 
+// Fungsi untuk mendapatkan base URL berdasarkan environment
+const getBaseURL = () => {
+  // Jika ada environment variable, gunakan itu
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+
+  // Jika di production, gunakan domain yang sesuai
+  if (import.meta.env.PROD) {
+    // Ganti dengan domain production Anda
+    return "https://your-production-domain.com/api";
+  }
+
+  // Default untuk development
+  return "http://localhost:7000/api";
+};
+
 // Membuat instance axios dengan konfigurasi default
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:7000/api", // Ganti dengan URL API Anda
+  baseURL: getBaseURL(),
   timeout: 30000, // 30 detik timeout
   headers: {
     "Content-Type": "application/json",
