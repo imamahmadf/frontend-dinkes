@@ -10,7 +10,7 @@ const getBaseURL = () => {
   // Jika di production, gunakan domain yang sesuai
   if (import.meta.env.PROD) {
     // Ganti dengan domain production Anda
-    return "https://your-production-domain.com/api";
+    return "https://api-dinkes.paserkab.go.id/api";
   }
 
   // Default untuk development
