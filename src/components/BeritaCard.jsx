@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Image, Text, Button, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
 
 const BeritaCard = ({ berita, index }) => {
+  const [isVisible, setIsVisible] = useState(false);
   const handleImageError = (e) => {
     e.target.src = "https://via.placeholder.com/400x200?text=Berita";
   };
@@ -28,20 +29,52 @@ const BeritaCard = ({ berita, index }) => {
       ? cleanText.substring(0, maxLength) + "..."
       : cleanText;
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      // Trigger animasi ketika user scroll ke bagian atas (dalam 200px dari atas)
+      if (scrollTop < 200) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
 
+    // Set initial state
+    setIsVisible(true);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <MotionBox
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.3 }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+      transition={{
+        delay: index * 0.2,
+        duration: 0.6,
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+      }}
       bg="white"
-      borderRadius="lg"
+      borderRadius="0px"
       overflow="hidden"
       boxShadow="md"
-      _hover={{
-        boxShadow: "lg",
-        transform: "translateY(-2px)",
+      whileHover={{
+        scale: 1.05,
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        y: -8,
+        transition: {
+          type: "spring",
+          stiffness: 300,
+          damping: 20,
+          duration: 0.3,
+        },
       }}
+      cursor="pointer"
     >
       <Box position="relative">
         <Image

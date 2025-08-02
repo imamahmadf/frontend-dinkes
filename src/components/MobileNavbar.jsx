@@ -19,6 +19,7 @@ import {
   Separator,
   Span,
 } from "@chakra-ui/react";
+import { BsList } from "react-icons/bs";
 import { BiChevronDown, BiMenu, BiX } from "react-icons/bi";
 import { motion, AnimatePresence } from "framer-motion";
 import { chakra } from "@chakra-ui/react";
@@ -539,7 +540,7 @@ function MobileNavbar() {
                 _hover={{ bg: "whiteAlpha.300" }}
                 size="lg"
               /> */}
-              <Button>buka</Button>
+              <BsList />
             </Drawer.Trigger>
             <Portal>
               <Drawer.Backdrop />

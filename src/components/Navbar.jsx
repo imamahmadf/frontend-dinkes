@@ -70,23 +70,26 @@ function Navbar() {
   const puskesmasList = [
     "Tanah Grogot",
     "Senaken",
-    "Padang Pangrapat",
+
     "Lolo",
+    "Padang Pangrapat",
     "Kuaro",
     "Long Ikis",
     "Kayungo",
-    "Krayan",
+    "Muara Komamam",
+
     "Long Kail",
     "Mendik",
-    "Sebakung Taka",
-    "Batu Kajang",
-    "Muara Komamam",
     "Muser",
-    "Pasi Belengkong",
+
+    "Sebakung Taka",
+    "Krayan",
+    "Batu Kajang",
+    "Tanjung Aru",
     "Suliliran Baru",
     "Suatang Baru",
     "Kerang",
-    "Tanjung Aru",
+    "Pasi Belengkong",
   ];
 
   // Tutup dropdown jika klik di luar
@@ -125,25 +128,34 @@ function Navbar() {
       case "dinkes":
         return (
           <Box>
-            <Text
-              fontSize={"14px"}
-              fontWeight={600}
-              mb={2}
-              color="whiteAlpha.900"
-            >
-              Dinas Kesehatan
-            </Text>
             <Flex direction="column" gap={2}>
+              {" "}
               <Button
                 as={RouterLink}
-                to="/dinkes/visi-misi"
-                size="sm"
+                to="/kepala-dinas"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+              >
+                • Kepala Dinas
+              </Button>
+              <Button
+                as={RouterLink}
+                to="/dinkes/visi-misi"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -156,13 +168,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/dinkes/struktur"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -175,13 +186,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/dinkes/tugas-fungsi"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -191,49 +201,24 @@ function Navbar() {
               >
                 • Tugas & Fungsi
               </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                color="whiteAlpha.900"
-                _hover={{ bg: "whiteAlpha.200", color: "white" }}
-                justifyContent="flex-start"
-                textAlign="left"
-                fontSize={"12px"}
-                fontWeight="normal"
-                px={2}
-                py={1}
-                h="auto"
-                minH="32px"
-              >
-                • Tentang Dinas
-              </Button>
             </Flex>
           </Box>
         );
       case "puskesmas":
         return (
           <Box>
-            <Text
-              fontSize={"14px"}
-              fontWeight={600}
-              mb={2}
-              color="whiteAlpha.900"
-            >
-              UPTD Puskesmas
-            </Text>
-            <SimpleGrid columns={[1, null, 3]} gap={1}>
+            <SimpleGrid columns={[1, null, 4]} columnGap={"0px"}>
               {puskesmasList.map((puskesmas, index) => (
                 <Button
                   key={index}
-                  size="sm"
                   variant="ghost"
                   color="whiteAlpha.900"
                   _hover={{ bg: "whiteAlpha.200", color: "white" }}
                   justifyContent="flex-start"
                   textAlign="left"
-                  fontSize={"12px"}
+                  fontSize={"15px"}
                   fontWeight="normal"
-                  px={2}
+                  px={3}
                   py={1}
                   h="auto"
                   minH="32px"
@@ -247,23 +232,14 @@ function Navbar() {
       case "uptd":
         return (
           <Box>
-            <Text
-              fontSize={"14px"}
-              fontWeight={600}
-              mb={2}
-              color="whiteAlpha.900"
-            >
-              UPTD Lainnya
-            </Text>
             <Flex direction="column" gap={1}>
               <Button
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -273,13 +249,12 @@ function Navbar() {
                 • Labkesda
               </Button>
               <Button
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -314,13 +289,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/ppid/profile"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -332,13 +306,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/ppid/tugas-dan-fungsi"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -365,13 +338,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/informasi/berkala"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -384,13 +356,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/informasi/publik"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -403,13 +374,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/informasi/serta-merta"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -422,13 +392,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/informasi/setiap-saat"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -456,13 +425,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/pelayanan/permohonan"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -475,13 +443,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/pelayanan/keberatan"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -493,13 +460,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/pelayanan/cek-permohonan"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -526,13 +492,12 @@ function Navbar() {
               <Button
                 as={RouterLink}
                 to="/sop/pengajuan-informasi"
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -543,13 +508,12 @@ function Navbar() {
                 • SOP Permohonan Informasi
               </Button>
               <Button
-                size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
                 justifyContent="flex-start"
                 textAlign="left"
-                fontSize={"12px"}
+                fontSize={"15px"}
                 fontWeight="normal"
                 px={2}
                 py={1}
@@ -748,7 +712,7 @@ function Navbar() {
               </Flex>
             </SimpleGrid>
             <Separator orientation="vertical" mx={0} />
-            <Box maxWidth={"400px"}>
+            <Box>
               <Text fontSize={"16px"} fontWeight={600} mb={4}>
                 SUB MENU
               </Text>
@@ -1426,7 +1390,72 @@ function Navbar() {
                 GALERI
               </Text>
               <Text>Kumpulan dokumentasi dan foto kegiatan.</Text>
-            </Box>
+            </Box>{" "}
+            <Separator orientation="vertical" mx={0} />{" "}
+            <SimpleGrid columns={[3, null, 3]} gap="20px">
+              <Flex
+                as={RouterLink}
+                to="/galeri/foto"
+                gap={"10px"}
+                borderRadius="md"
+                p={"10px"}
+                alignItems="center"
+                maxWidth={"300px"}
+                cursor="pointer"
+                _hover={{ boxShadow: "md", bg: "whiteAlpha.200" }}
+              >
+                <Box
+                  height={"50px"}
+                  width={"50px"}
+                  borderRadius={"4px"}
+                  bg={"white"}
+                  p={"10px"}
+                >
+                  <Image
+                    height="100%"
+                    width="100%"
+                    objectFit="contain"
+                    src={iconBidang1}
+                    alt="yankes"
+                  />
+                </Box>
+                <Box>
+                  <Text fontSize={"15px"}>Foto</Text>
+                  <Text fontSize={"12px"}>Dokumentasi kegiatan</Text>
+                </Box>
+              </Flex>
+              <Flex
+                as={RouterLink}
+                to="/galeri/info-grafis"
+                gap={"10px"}
+                borderRadius="md"
+                p={"10px"}
+                alignItems="center"
+                maxWidth={"300px"}
+                cursor="pointer"
+                _hover={{ boxShadow: "md", bg: "whiteAlpha.200" }}
+              >
+                <Box
+                  height={"50px"}
+                  width={"50px"}
+                  borderRadius={"4px"}
+                  bg={"white"}
+                  p={"10px"}
+                >
+                  <Image
+                    height="100%"
+                    width="100%"
+                    objectFit="contain"
+                    src={iconBidang2}
+                    alt="sdk"
+                  />
+                </Box>
+                <Box>
+                  <Text fontSize={"15px"}>Infografis</Text>
+                  <Text fontSize={"12px"}>Infografis</Text>
+                </Box>
+              </Flex>
+            </SimpleGrid>
           </Flex>
         </MotionBox>
       );

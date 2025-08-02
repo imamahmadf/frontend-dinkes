@@ -36,6 +36,8 @@ import DaftarBerita from "./pages/Admin/Berita/Daftarberita";
 import DaftarPermohonan from "./pages/Admin/Permohonan/DaftarPermohonan";
 import Keberatan from "./pages/Pelayanan/Keberatan";
 import DaftarBeritaDinkes from "./pages/DaftarberitaDinkes";
+import Detailberita from "./pages/DetailBerita";
+import KepalaDinas from "./pages/DinasKesehatan/KepalaDinas";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -138,14 +140,19 @@ function App() {
         <Route path="/pelayanan/permohonan" element={<Permohonan />} />
         <Route path="/pelayanan/cek-permohonan" element={<CekPermohonan />} />
         {/* Admin Routes - Hanya untuk Admin Dinas Kesehatan dan Super Admin */}
-        <Route path="/bidang/p2p" element={<P2P />} />
+        <Route path="/bidang/p2p" element={<P2P />} />{" "}
+        <Route path="/berita/:slug" element={<Detailberita />} />
         <Route path="/bidang/sekret" element={<Sekret />} />
         <Route path="/bidang/sdk" element={<SDK />} />
         <Route path="/bidang/yankes" element={<Yankes />} />
         <Route path="/bidang/kesmas" element={<Kesmas />} />
         {/* User Routes - Untuk user biasa */}
         <Route path="/sop/pengajuan-informasi" element={<SOPInformasi />} />
-        <Route path="/daftar-berita-dinkes" element={<DaftarBeritaDinkes />} />
+        <Route
+          path="/daftar-berita-dinkes"
+          element={<DaftarBeritaDinkes />}
+        />{" "}
+        <Route path="/kepala-dinas" element={<KepalaDinas />} />
         {/* Super Admin Routes - Hanya untuk Super Admin */}
         <Route
           path="/admin/superx"
@@ -155,7 +162,6 @@ function App() {
             </SuperAdminRoute>
           }
         />
-
         <Route
           path="/admin/tambah-berita"
           element={
@@ -164,7 +170,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/tambah-dokumen"
           element={
@@ -173,7 +178,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin"
           element={
@@ -182,7 +186,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/daftar-informasi"
           element={
@@ -191,7 +194,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/daftar-berita"
           element={
@@ -200,7 +202,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/daftar-permohonan"
           element={

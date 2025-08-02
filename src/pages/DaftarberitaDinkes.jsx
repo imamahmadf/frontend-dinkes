@@ -25,6 +25,7 @@ import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
+import { Link as RouterLink } from "react-router-dom";
 import "../styles/pagination.css";
 
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
@@ -106,7 +107,7 @@ function DaftarBeritaDinkes() {
               color={"#524E4E"}
               px={"80px"}
             >
-              <Heading mb={"30px"} fontSize={"35px"}>
+              <Heading mb={"15px"} fontWeight={800} fontSize={"35px"}>
                 BERITA DAN INFO SEPUTAR DINAS KESEHATAN
               </Heading>
 
@@ -122,6 +123,7 @@ function DaftarBeritaDinkes() {
                         flexDirection="row"
                         overflow="hidden"
                         mb={"30px"}
+                        borderRadius={"0px"}
                       >
                         <Image
                           width="80%"
@@ -145,7 +147,9 @@ function DaftarBeritaDinkes() {
                             </HStack>
                           </Card.Body>
                           <Card.Footer>
-                            <Button>Buy Latte</Button>
+                            <Button as={RouterLink} to={`/berita/${item.slug}`}>
+                              Buy Latte
+                            </Button>
                           </Card.Footer>
                         </Box>
                       </Card.Root>
