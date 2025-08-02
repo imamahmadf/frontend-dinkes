@@ -23,17 +23,34 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 
+import "../../styles/pagination.css";
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
 
 function Berkala() {
   const [dataBerkala, setDataBerkala] = useState(null);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(20);
+  const [pages, setPages] = useState(0);
+  const [rows, setRows] = useState(0);
+
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
   async function fetchDataBerkala() {
     await axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/Berkala/get`)
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_BASE_URL
+        }/informasi/get/2?page=${page}&limit=${limit}`
+      )
       .then((res) => {
         setDataBerkala(res.data.result);
         console.log(res.data.result);
+        setPage(res.data.page);
+        setPages(res.data.totalPage);
+        setRows(res.data.totalRows);
       })
       .catch((err) => {
         console.error(err);
@@ -131,7 +148,7 @@ function Berkala() {
               px={"80px"}
             >
               <Heading mb={"30px"} fontSize={"35px"}>
-                Informasi Berkala
+                Informasi Publik
               </Heading>{" "}
               <Table.Root stickyHeader fontSize={"20px"}>
                 <Table.Header>
@@ -145,7 +162,10 @@ function Berkala() {
                       Ringkasan
                     </Table.ColumnHeader>
                     <Table.ColumnHeader color={"white"} textAlign="end">
-                      unit
+                      bidang
+                    </Table.ColumnHeader>{" "}
+                    <Table.ColumnHeader color={"white"} textAlign="end">
+                      Tahun
                     </Table.ColumnHeader>{" "}
                     <Table.ColumnHeader textAlign="end" color={"white"}>
                       Aksi
@@ -159,7 +179,10 @@ function Berkala() {
                       <Table.Cell>{index + 1}</Table.Cell>
                       <Table.Cell>{item?.judul}</Table.Cell>
                       <Table.Cell>{item?.ringkasan}</Table.Cell>
-                      <Table.Cell textAlign="end">{item?.unit}</Table.Cell>{" "}
+                      <Table.Cell textAlign="end">
+                        {item?.bidang.nama}
+                      </Table.Cell>
+                      <Table.Cell textAlign="end">{item?.tahun}</Table.Cell>
                       <Table.Cell textAlign="end">
                         {" "}
                         <Button onClick={() => handlePreview(item?.dokumen)}>
@@ -169,7 +192,35 @@ function Berkala() {
                     </Table.Row>
                   ))}
                 </Table.Body>
-              </Table.Root>
+              </Table.Root>{" "}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+
+                  boxSizing: "border-box",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <ReactPaginate
+                  previousLabel={"+"}
+                  nextLabel={"-"}
+                  pageCount={pages}
+                  onPageChange={changePage}
+                  activeClassName={"item active "}
+                  breakClassName={"item break-me "}
+                  breakLabel={"..."}
+                  containerClassName={"pagination"}
+                  disabledClassName={"disabled-page"}
+                  marginPagesDisplayed={1}
+                  nextClassName={"item next "}
+                  pageClassName={"item pagination-page "}
+                  pageRangeDisplayed={2}
+                  previousClassName={"item previous"}
+                />
+              </div>
             </Container>
           </Box>
         </Box>

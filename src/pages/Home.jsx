@@ -464,7 +464,7 @@ function Home() {
             ))}
           </SimpleGrid>
         </Container>
-        <Container>
+        <Container my={"60px"}>
           <Flex>
             {loading && (
               <Text textAlign="center" color="gray.500" fontSize="lg" py={8}>
@@ -477,16 +477,13 @@ function Home() {
               </Text>
             )}
             {!loading && !error && databerita && databerita.length > 0 && (
-              <Box>
-                <Text
-                  fontSize="2xl"
-                  fontWeight="bold"
-                  textAlign="center"
-                  mb={6}
-                  color="gray.700"
-                >
-                  BERITA TERKINI
-                </Text>
+              <Box mt={"60px"}>
+                <Box color={"#524E4E"} width="100%" mb={"30px"}>
+                  <Text fontSize="40px" fontWeight={1000} textAlign="center">
+                    BERITA TERKINI
+                  </Text>
+                </Box>
+
                 <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
                   {databerita.map((berita, index) => (
                     <BeritaCard key={berita.id} berita={berita} index={index} />
@@ -500,9 +497,10 @@ function Home() {
               </Text>
             )}
           </Flex>
+
+          <Button w={"100%"}>Semua Berita</Button>
         </Container>
         <Container>
-          {" "}
           <Box>
             <iframe
               width="100%"
@@ -516,7 +514,12 @@ function Home() {
             ></iframe>
           </Box>
         </Container>
-        <Box p={"30px"}>
+        <Box color={"#524E4E"} p={"30px"}>
+          <Box width="100%" mb={"30px"}>
+            <Text fontSize="40px" fontWeight={1000} textAlign="center">
+              PERSEBARAN PUSKESMAS
+            </Text>
+          </Box>
           <Peta />
         </Box>
       </Box>

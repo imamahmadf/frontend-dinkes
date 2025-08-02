@@ -34,6 +34,8 @@ import HomeAdmin from "./pages/Admin/HomeAdmin";
 import DaftarInformasi from "./pages/Admin/Informasi/DaftarInformasi";
 import DaftarBerita from "./pages/Admin/Berita/Daftarberita";
 import DaftarPermohonan from "./pages/Admin/Permohonan/DaftarPermohonan";
+import Keberatan from "./pages/Pelayanan/Keberatan";
+import DaftarBeritaDinkes from "./pages/DaftarberitaDinkes";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -131,73 +133,19 @@ function App() {
         <Route path="/informasi/setiap-saat" element={<SetiapSaat />} />
         <Route path="/ppid/profile" element={<ProfilePPID />} />
         <Route path="/ppid/tugas-dan-fungsi" element={<TugasDanFungsiPPID />} />
+        <Route path="/pelayanan/keberatan" element={<Keberatan />} />
         {/* Protected Routes - Memerlukan login */}
-        <Route
-          path="/pelayanan/permohonan"
-          element={
-            <ProtectedRoute minimumRole="User">
-              <Permohonan />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/pelayanan/cek-permohonan"
-          element={
-            <ProtectedRoute minimumRole="User">
-              <CekPermohonan />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/pelayanan/permohonan" element={<Permohonan />} />
+        <Route path="/pelayanan/cek-permohonan" element={<CekPermohonan />} />
         {/* Admin Routes - Hanya untuk Admin Dinas Kesehatan dan Super Admin */}
-        <Route
-          path="/bidang/p2p"
-          element={
-            <AdminRoute>
-              <P2P />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/bidang/sekret"
-          element={
-            <AdminRoute>
-              <Sekret />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/bidang/sdk"
-          element={
-            <AdminRoute>
-              <SDK />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/bidang/yankes"
-          element={
-            <AdminRoute>
-              <Yankes />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/bidang/kesmas"
-          element={
-            <AdminRoute>
-              <Kesmas />
-            </AdminRoute>
-          }
-        />
+        <Route path="/bidang/p2p" element={<P2P />} />
+        <Route path="/bidang/sekret" element={<Sekret />} />
+        <Route path="/bidang/sdk" element={<SDK />} />
+        <Route path="/bidang/yankes" element={<Yankes />} />
+        <Route path="/bidang/kesmas" element={<Kesmas />} />
         {/* User Routes - Untuk user biasa */}
-        <Route
-          path="/sop/pengajuan-informasi"
-          element={
-            <UserRoute>
-              <SOPInformasi />
-            </UserRoute>
-          }
-        />
+        <Route path="/sop/pengajuan-informasi" element={<SOPInformasi />} />
+        <Route path="/daftar-berita-dinkes" element={<DaftarBeritaDinkes />} />
         {/* Super Admin Routes - Hanya untuk Super Admin */}
         <Route
           path="/admin/superx"

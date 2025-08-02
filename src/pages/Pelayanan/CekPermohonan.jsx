@@ -27,7 +27,7 @@ import axios from "axios";
 function CekPermohonan() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [modalMessage, setModalMessage] = useState(null);
   const [noPermohonan, setNoPermohonan] = useState("");
   const [hasil, setHasil] = useState(null);
   const cekStatus = (val) => {
@@ -45,6 +45,8 @@ function CekPermohonan() {
       })
       .catch((err) => {
         console.error(err);
+        setIsOpen(true);
+        setModalMessage("data tidak ditemukan");
       });
   };
   return (
@@ -152,7 +154,18 @@ function CekPermohonan() {
               </Dialog.Header>
               <Dialog.Body>
                 <Text>{modalMessage}</Text>
-                <Text>{JSON.stringify(hasil)}</Text>
+                {/* <Text>{JSON.stringify(hasil)}</Text> */}
+                {modalMessage ? null : (
+                  <>
+                    {" "}
+                    <Text>Alasan: {hasil?.alasan}</Text>
+                    <Text>nomor: {hasil?.noPermohonan}</Text>
+                    <Text>status: {hasil?.status?.nama}</Text>
+                    <Text>
+                      Alasan Keberatan: {hasil?.keberatans[0]?.alasan}
+                    </Text>
+                  </>
+                )}
               </Dialog.Body>
               <Dialog.Footer>
                 <Button

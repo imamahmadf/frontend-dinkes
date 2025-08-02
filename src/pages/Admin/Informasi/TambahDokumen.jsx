@@ -18,6 +18,7 @@ const TambahDokumen = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [dataJenis, setDataJenis] = useState(null);
+  const [dataBidang, setDataBidang] = useState(null);
   // Schema validasi menggunakan Yup
   const validationSchema = Yup.object({
     judul: Yup.string()
@@ -30,6 +31,7 @@ const TambahDokumen = () => {
       .max(500, "Ringkasan dokumen maksimal 500 karakter"),
 
     jenis: Yup.string().required("Jenis dokumen wajib dipilih"),
+    bidang: Yup.string().required("Bidang wajib dipilih"),
     tahun: Yup.number()
       .required("Tahun wajib diisi")
       .min(2000, "Tahun minimal 2000")
@@ -71,6 +73,7 @@ const TambahDokumen = () => {
     formData.append("tahun", values.tahun);
     formData.append("file", values.file);
     formData.append("jenis", values.jenis);
+    formData.append("bidang", values.bidang);
 
     try {
       const response = await axios.post(
@@ -101,12 +104,15 @@ const TambahDokumen = () => {
     const fetchData = async () => {
       try {
         // setLoading(true);
-        const response = await api.get("/informasi/get/seed"); // Sesuaikan endpoint dengan API Anda
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/informasi/get/seed`
+        ); // Sesuaikan endpoint dengan API Anda
         const data = response.data || response.data;
 
         console.log(response.data, "DATA SEED");
 
         setDataJenis(response.data.result);
+        setDataBidang(response.data.resultBidang);
       } catch (err) {
         console.error("Error fetching data:", err);
 
@@ -224,6 +230,37 @@ const TambahDokumen = () => {
                     {errors.jenis && touched.jenis && (
                       <Text color="red.500" fontSize="sm" mt={1}>
                         {errors.jenis}
+                      </Text>
+                    )}
+                  </Box>
+
+                  <Box>
+                    <Text mb={2} fontWeight="medium">
+                      Bidang *
+                    </Text>
+                    <Field
+                      as="select"
+                      name="bidang"
+                      style={{
+                        width: "100%",
+                        padding: "0.5rem",
+                        border:
+                          errors.bidang && touched.bidang
+                            ? "1px solid red"
+                            : "1px solid #ccc",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      <option value="">Pilih Bidang</option>
+                      {dataBidang?.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.nama}
+                        </option>
+                      ))}
+                    </Field>
+                    {errors.bidang && touched.bidang && (
+                      <Text color="red.500" fontSize="sm" mt={1}>
+                        {errors.bidang}
                       </Text>
                     )}
                   </Box>

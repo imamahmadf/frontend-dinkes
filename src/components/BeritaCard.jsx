@@ -45,14 +45,11 @@ const BeritaCard = ({ berita, index }) => {
     >
       <Box position="relative">
         <Image
-          src={`${import.meta.env.VITE_API_URL || "http://localhost:7000/api"}${
-            berita.foto
-          }`}
+          src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}${berita.foto}`}
           alt={berita.judul}
           width="100%"
           height="200px"
           objectFit="cover"
-          fallbackSrc="https://via.placeholder.com/400x200?text=Berita"
           onError={handleImageError}
         />
         <Box

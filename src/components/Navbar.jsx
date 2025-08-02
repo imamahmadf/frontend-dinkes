@@ -52,13 +52,18 @@ function Navbar() {
 
   // Daftar menu
   const menus = [
-    { key: "home", label: "HOME", dropdown: false },
+    { key: "home", label: "HOME", dropdown: false, url: "/" },
     { key: "profil", label: "PROFIL", dropdown: true },
     { key: "informasi", label: "PPID", dropdown: true },
     { key: "standar", label: "PROGRAM", dropdown: true },
     { key: "galeri", label: "GALERI", dropdown: true },
     { key: "aplikasi", label: "APLIKASI", dropdown: true },
-    { key: "laporan", label: "LAPORAN", dropdown: true },
+    {
+      key: "berita",
+      label: "BERITA",
+      dropdown: false,
+      url: "/daftar-berita-dinkes",
+    },
   ];
 
   // Data Puskesmas
@@ -468,6 +473,8 @@ function Navbar() {
                 • Permohonan
               </Button>
               <Button
+                as={RouterLink}
+                to="/pelayanan/keberatan"
                 size="sm"
                 variant="ghost"
                 color="whiteAlpha.900"
@@ -1554,13 +1561,15 @@ function Navbar() {
                   </Box>
                 </Button>
               ) : (
-                <Link
+                <Button
                   as={RouterLink}
-                  to="/"
+                  to={menu.url}
+                  variant="ghost"
                   fontWeight="medium"
-                  fontSize="md"
+                  fontSize="xl"
                   color="white"
-                  _hover={{ color: "white" }}
+                  bg="transparent"
+                  _hover={{ bg: "whiteAlpha.300", color: "white" }}
                   px={2}
                   position="relative"
                   height="48px"
@@ -1580,7 +1589,7 @@ function Navbar() {
                     height="4px"
                     mt={"2px"}
                   ></Box>
-                </Link>
+                </Button>
               )}
             </Box>
           ))}

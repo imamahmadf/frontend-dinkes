@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Image,
@@ -6,10 +5,12 @@ import {
   Center,
   Container,
   Heading,
-  List,
+  Table,
+  Button,
 } from "@chakra-ui/react";
 import { For, SimpleGrid, Tabs } from "@chakra-ui/react";
 import Layout from "../../components/Layout";
+import React, { useRef, useState, useEffect } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -21,10 +22,50 @@ import Dinkes2 from "../../assets/dinkes2.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
+import axios from "axios";
+import ReactPaginate from "react-paginate";
+
+import "../../styles/pagination.css";
 
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
 
 function SertaMerta() {
+  const [dataSertaMerta, setDataSertaMerta] = useState(null);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(20);
+  const [pages, setPages] = useState(0);
+  const [rows, setRows] = useState(0);
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
+  async function fetchDataSertaMerta() {
+    await axios
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_BASE_URL
+        }/informasi/get/3?page=${page}&limit=${limit}`
+      )
+      .then((res) => {
+        setDataSertaMerta(res.data.result);
+        console.log(res.data.result);
+        setPage(res.data.page);
+        setPages(res.data.totalPage);
+        setRows(res.data.totalRows);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  const handlePreview = (fileName) => {
+    const url = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}${fileName}`;
+    window.open(url, "_blank");
+  };
+
+  useEffect(() => {
+    fetchDataSertaMerta();
+  }, [page]);
+
   return (
     <Layout>
       <motion.div
@@ -84,7 +125,7 @@ function SertaMerta() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  PROFILE DINAS KESEHATAN
+                  INFORMASI DINAS KESEHATAN
                 </Text>
                 <Text
                   fontSize={"30px"}
@@ -92,7 +133,7 @@ function SertaMerta() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  STRUKTUR ORGANISASI
+                  INFORMASI SERTA MERTA
                 </Text>
               </Box>
             </Center>
@@ -107,16 +148,79 @@ function SertaMerta() {
               px={"80px"}
             >
               <Heading mb={"30px"} fontSize={"35px"}>
-                Struktur Organisasi
-              </Heading>
+                Informasi SertaMerta
+              </Heading>{" "}
+              <Table.Root stickyHeader fontSize={"20px"}>
+                <Table.Header>
+                  <Table.Row bgColor={"#14A75B"} py={"50px"}>
+                    {" "}
+                    <Table.ColumnHeader color={"white"}>No.</Table.ColumnHeader>
+                    <Table.ColumnHeader color={"white"}>
+                      Judul Informasi
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader color={"white"}>
+                      Ringkasan
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader color={"white"} textAlign="end">
+                      bidang
+                    </Table.ColumnHeader>{" "}
+                    <Table.ColumnHeader color={"white"} textAlign="end">
+                      Tahun
+                    </Table.ColumnHeader>{" "}
+                    <Table.ColumnHeader textAlign="end" color={"white"}>
+                      Aksi
+                    </Table.ColumnHeader>
+                  </Table.Row>
+                </Table.Header>
 
-              <Box pb={"30px"}>
-                <Text fontSize={"30px"} textAlign={"justify"} mb={"20px"}>
-                  Dalam rangka kelancaran pelaksanaan tugas dan fungsinya, Dinas
-                  Kesehatan telah dilengkapi dengan perangkat organisasi yang
-                  secara struktural dengan susunan organisasi sebagai berikut:
-                </Text>
-              </Box>
+                <Table.Body>
+                  {dataSertaMerta?.map((item, index) => (
+                    <Table.Row key={item.id}>
+                      <Table.Cell>{index + 1}</Table.Cell>
+                      <Table.Cell>{item?.judul}</Table.Cell>
+                      <Table.Cell>{item?.ringkasan}</Table.Cell>
+                      <Table.Cell textAlign="end">
+                        {item?.bidang.nama}
+                      </Table.Cell>
+                      <Table.Cell textAlign="end">{item?.tahun}</Table.Cell>
+                      <Table.Cell textAlign="end">
+                        {" "}
+                        <Button onClick={() => handlePreview(item?.dokumen)}>
+                          Lihat
+                        </Button>{" "}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table.Root>{" "}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+
+                  boxSizing: "border-box",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <ReactPaginate
+                  previousLabel={"+"}
+                  nextLabel={"-"}
+                  pageCount={pages}
+                  onPageChange={changePage}
+                  activeClassName={"item active "}
+                  breakClassName={"item break-me "}
+                  breakLabel={"..."}
+                  containerClassName={"pagination"}
+                  disabledClassName={"disabled-page"}
+                  marginPagesDisplayed={1}
+                  nextClassName={"item next "}
+                  pageClassName={"item pagination-page "}
+                  pageRangeDisplayed={2}
+                  previousClassName={"item previous"}
+                />
+              </div>
             </Container>
           </Box>
         </Box>

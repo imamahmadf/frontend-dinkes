@@ -11,32 +11,45 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import LayoutAdmin from "../../../components/Admin/LayoutAdmin";
 import React, { useRef, useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
+
+import "../../../styles/pagination.css";
 
 import { motion } from "framer-motion";
 import axios from "axios";
 
 function DaftarPermohonan() {
-  const [dataPublik, setDataPublik] = useState(null);
-  async function fetchDataPublik() {
+  const [dataPermohonan, setDataPermohonan] = useState(null);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(50);
+  const [pages, setPages] = useState(0);
+  const [rows, setRows] = useState(0);
+
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
+  async function fetchdataPermohonan() {
     await axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/permohonan/get`)
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_BASE_URL
+        }/permohonan/get?page=${page}&limit=${limit}`
+      )
       .then((res) => {
-        setDataPublik(res.data.result);
+        setDataPermohonan(res.data.result);
         console.log(res.data.result);
+        setPage(res.data.page);
+        setPages(res.data.totalPage);
+        setRows(res.data.totalRows);
       })
       .catch((err) => {
         console.error(err);
       });
   }
 
-  const handlePreview = (fileName) => {
-    const url = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}${fileName}`;
-    window.open(url, "_blank");
-  };
-
   useEffect(() => {
-    fetchDataPublik();
-  }, []);
+    fetchdataPermohonan();
+  }, [page]);
 
   return (
     <LayoutAdmin>
@@ -54,29 +67,30 @@ function DaftarPermohonan() {
               color={"#524E4E"}
               px={"80px"}
             >
-              <Box mb={"30px"}>
-                <Button as={RouterLink} to="/admin/tambah-dokumen">
-                  Tambah Informasi{" "}
-                </Button>
-              </Box>
               <Heading mb={"30px"} fontSize={"35px"}>
-                Informasi Publik
+                Daftar Permohonan
               </Heading>
               <Table.Root stickyHeader fontSize={"20px"}>
                 <Table.Header>
                   <Table.Row bgColor={"#14A75B"} py={"50px"}>
                     <Table.ColumnHeader color={"white"}>No.</Table.ColumnHeader>
                     <Table.ColumnHeader color={"white"}>
-                      Judul Informasi
+                      Nama
                     </Table.ColumnHeader>
                     <Table.ColumnHeader color={"white"}>
-                      Ringkasan
+                      Asal
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader color={"white"}>
+                      NO WA
                     </Table.ColumnHeader>
                     <Table.ColumnHeader color={"white"} textAlign="end">
-                      bidang
+                      Email
                     </Table.ColumnHeader>
                     <Table.ColumnHeader color={"white"} textAlign="end">
-                      Jenis
+                      No. Permohonan
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader color={"white"} textAlign="end">
+                      Status
                     </Table.ColumnHeader>
                     <Table.ColumnHeader textAlign="end" color={"white"}>
                       Aksi
@@ -85,16 +99,18 @@ function DaftarPermohonan() {
                 </Table.Header>
 
                 <Table.Body>
-                  {dataPublik?.map((item, index) => (
+                  {dataPermohonan?.map((item, index) => (
                     <Table.Row key={item.id}>
                       <Table.Cell>{index + 1}</Table.Cell>
-                      <Table.Cell>{item?.judul}</Table.Cell>
-                      <Table.Cell>{item?.ringkasan}</Table.Cell>
+                      <Table.Cell>{item?.nama}</Table.Cell>
+                      <Table.Cell>{item?.asal}</Table.Cell>
+                      <Table.Cell>+62 {item?.nomorWA}</Table.Cell>
+                      <Table.Cell textAlign="end">{item?.email}</Table.Cell>
                       <Table.Cell textAlign="end">
-                        {item?.bidang.nama}
+                        {item?.noPermohonan}
                       </Table.Cell>
                       <Table.Cell textAlign="end">
-                        {item?.jenisInformasi.jenis}
+                        {item?.status.nama}
                       </Table.Cell>
                       <Table.Cell textAlign="end">
                         <Button onClick={() => handlePreview(item?.dokumen)}>
@@ -105,6 +121,34 @@ function DaftarPermohonan() {
                   ))}
                 </Table.Body>
               </Table.Root>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+
+                  boxSizing: "border-box",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <ReactPaginate
+                  previousLabel={"+"}
+                  nextLabel={"-"}
+                  pageCount={pages}
+                  onPageChange={changePage}
+                  activeClassName={"item active "}
+                  breakClassName={"item break-me "}
+                  breakLabel={"..."}
+                  containerClassName={"pagination"}
+                  disabledClassName={"disabled-page"}
+                  marginPagesDisplayed={1}
+                  nextClassName={"item next "}
+                  pageClassName={"item pagination-page "}
+                  pageRangeDisplayed={2}
+                  previousClassName={"item previous"}
+                />
+              </div>
             </Container>
           </Box>
         </Box>

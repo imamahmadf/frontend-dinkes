@@ -14,15 +14,33 @@ import React, { useRef, useState, useEffect } from "react";
 
 import { motion } from "framer-motion";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+
+import "../../../styles/pagination.css";
 
 function DaftarInformasi() {
   const [dataPublik, setDataPublik] = useState(null);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(20);
+  const [pages, setPages] = useState(0);
+  const [rows, setRows] = useState(0);
+  const jenisId = 0;
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
   async function fetchDataPublik() {
     await axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/informasi/get`)
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_BASE_URL
+        }/informasi/get/${jenisId}?page=${page}&limit=${limit}`
+      )
       .then((res) => {
         setDataPublik(res.data.result);
         console.log(res.data.result);
+        setPage(res.data.page);
+        setPages(res.data.totalPage);
+        setRows(res.data.totalRows);
       })
       .catch((err) => {
         console.error(err);
@@ -65,6 +83,7 @@ function DaftarInformasi() {
               <Table.Root stickyHeader fontSize={"20px"}>
                 <Table.Header>
                   <Table.Row bgColor={"#14A75B"} py={"50px"}>
+                    {" "}
                     <Table.ColumnHeader color={"white"}>No.</Table.ColumnHeader>
                     <Table.ColumnHeader color={"white"}>
                       Judul Informasi
@@ -74,10 +93,13 @@ function DaftarInformasi() {
                     </Table.ColumnHeader>
                     <Table.ColumnHeader color={"white"} textAlign="end">
                       bidang
-                    </Table.ColumnHeader>
+                    </Table.ColumnHeader>{" "}
                     <Table.ColumnHeader color={"white"} textAlign="end">
                       Jenis
-                    </Table.ColumnHeader>
+                    </Table.ColumnHeader>{" "}
+                    <Table.ColumnHeader color={"white"} textAlign="end">
+                      Tahun
+                    </Table.ColumnHeader>{" "}
                     <Table.ColumnHeader textAlign="end" color={"white"}>
                       Aksi
                     </Table.ColumnHeader>
@@ -96,15 +118,45 @@ function DaftarInformasi() {
                       <Table.Cell textAlign="end">
                         {item?.jenisInformasi.jenis}
                       </Table.Cell>
+                      <Table.Cell textAlign="end">{item?.tahun}</Table.Cell>
                       <Table.Cell textAlign="end">
+                        {" "}
                         <Button onClick={() => handlePreview(item?.dokumen)}>
                           Lihat
-                        </Button>
+                        </Button>{" "}
                       </Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>
               </Table.Root>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+
+                  boxSizing: "border-box",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <ReactPaginate
+                  previousLabel={"+"}
+                  nextLabel={"-"}
+                  pageCount={pages}
+                  onPageChange={changePage}
+                  activeClassName={"item active "}
+                  breakClassName={"item break-me "}
+                  breakLabel={"..."}
+                  containerClassName={"pagination"}
+                  disabledClassName={"disabled-page"}
+                  marginPagesDisplayed={1}
+                  nextClassName={"item next "}
+                  pageClassName={"item pagination-page "}
+                  pageRangeDisplayed={2}
+                  previousClassName={"item previous"}
+                />
+              </div>
             </Container>
           </Box>
         </Box>
