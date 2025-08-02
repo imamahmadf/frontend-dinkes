@@ -27,6 +27,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import api from "../utils/api";
+import axios from "axios";
 
 // Fix untuk icon marker Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -99,7 +100,9 @@ function Peta() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await api.get("/titik/get"); // Sesuaikan endpoint dengan API Anda
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/titik/get`
+        ); // Sesuaikan endpoint dengan API Anda
         const data = response.data.result || response.data;
 
         // Memastikan data adalah array

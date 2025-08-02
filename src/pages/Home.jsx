@@ -45,6 +45,7 @@ import api from "../utils/api";
 import { BsInstagram } from "react-icons/bs";
 import LaporPelayanan from "../components/LaporPelayanan";
 import { BsFacebook } from "react-icons/bs";
+import axios from "axios";
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
 const MotionButton = motion(Button);
@@ -80,7 +81,9 @@ function Home() {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get("/berita/list");
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/berita/list`
+      );
       console.log(response.data);
       setDataBerita(response.data.result);
     } catch (error) {
