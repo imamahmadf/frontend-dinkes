@@ -97,7 +97,9 @@ const TambahBerita = () => {
     const fetchData = async () => {
       try {
         // setLoading(true);
-        const response = await api.get("/berita/get/seed"); // Sesuaikan endpoint dengan API Anda
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/berita/get/seed`
+        );
         const data = response.data || response.data;
 
         console.log(response.data, "DATA SEED");
