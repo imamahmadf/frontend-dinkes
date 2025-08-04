@@ -27,7 +27,7 @@ import axios from "axios";
 function CekPermohonan() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState(null);
+  const [modalMessage, setModalMessage] = useState("");
   const [noPermohonan, setNoPermohonan] = useState("");
   const [hasil, setHasil] = useState(null);
   const cekStatus = (val) => {
@@ -153,19 +153,22 @@ function CekPermohonan() {
                 <Dialog.Title>Informasi</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>
-                <Text>{modalMessage}</Text>
+                <Text>
+                  {typeof modalMessage === "string" ? modalMessage : ""}
+                </Text>
                 {/* <Text>{JSON.stringify(hasil)}</Text> */}
-                {modalMessage ? null : (
+                {!modalMessage && hasil ? (
                   <>
                     {" "}
-                    <Text>Alasan: {hasil?.alasan}</Text>
-                    <Text>nomor: {hasil?.noPermohonan}</Text>
-                    <Text>status: {hasil?.status?.nama}</Text>
+                    <Text>Alasan: {hasil?.alasan || "Tidak ada"}</Text>
+                    <Text>nomor: {hasil?.noPermohonan || "Tidak ada"}</Text>
+                    <Text>status: {hasil?.status?.nama || "Tidak ada"}</Text>
                     <Text>
-                      Alasan Keberatan: {hasil?.keberatans[0]?.alasan}
+                      Alasan Keberatan:{" "}
+                      {hasil?.keberatans?.[0]?.alasan || "Tidak ada"}
                     </Text>
                   </>
-                )}
+                ) : null}
               </Dialog.Body>
               <Dialog.Footer>
                 <Button

@@ -24,7 +24,6 @@ import axios from "axios";
 // Schema validasi
 const validationSchema = Yup.object({
   noPermohonan: Yup.string().required("Nomor Permohonan wajib diisi"),
-
   alasan: Yup.string()
     .min(10, "Alasan Keberatan minimal 10 karakter")
     .required("Alasan Keberatan wajib diisi"),
@@ -36,6 +35,7 @@ function Keberatan() {
   const [modalMessage, setModalMessage] = useState("");
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    console.log("Form values:", values); // Debug log
     setIsSubmitting(true);
     try {
       const response = await axios.post(
@@ -48,11 +48,18 @@ function Keberatan() {
         }
       );
 
-      setModalMessage(response.data?.result);
+      // Pastikan modalMessage adalah string
+      console.log("Response data:", response.data); // Debug log
+      const resultMessage =
+        typeof response.data?.result === "string"
+          ? response.data?.result
+          : "Keberatan berhasil dikirim";
+      setModalMessage(resultMessage);
       setIsOpen(true);
       console.log(response.data);
       resetForm();
     } catch (error) {
+      console.log("Error:", error); // Debug log
       const msg =
         error.response?.data?.message ||
         "Gagal mengirim permohonan. Silakan coba lagi.";
@@ -61,7 +68,6 @@ function Keberatan() {
     } finally {
       setIsSubmitting(false);
       setSubmitting(false);
-      setIsOpen(true);
     }
   };
 
@@ -130,7 +136,6 @@ function Keberatan() {
               <Formik
                 initialValues={{
                   noPermohonan: "",
-
                   alasan: "",
                 }}
                 validationSchema={validationSchema}
@@ -226,7 +231,9 @@ function Keberatan() {
               </Dialog.Header>
               <Dialog.Body>
                 <Text fontWeight={800} mt={"15px"} fontSize={"25px"}>
-                  {modalMessage}
+                  {typeof modalMessage === "string"
+                    ? modalMessage
+                    : "Keberatan berhasil dikirim"}
                 </Text>
               </Dialog.Body>
               <Dialog.Footer>

@@ -573,16 +573,16 @@ function Home() {
             direction={{ base: "column", lg: "row" }}
             align={{ base: "center", lg: "flex-start" }}
           >
-            <Box w={{ base: "100%", lg: "70%" }}>
+            <Box display={{ base: "none", lg: "flex" }}>
               <iframe
-                width="100%"
-                height={{ base: "250", md: "350", lg: "550" }}
-                src="https://www.youtube-nocookie.com/embed/mUtaYgkgUhs?si=SFK4MmVGtSMUk_Ux"
+                width="900"
+                height="515"
+                src="https://www.youtube.com/embed/mUtaYgkgUhs?si=p98ugz3SSmxl3e4L"
                 title="YouTube video player"
-                frameBorder="0"
+                frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
               ></iframe>
             </Box>
             <Flex

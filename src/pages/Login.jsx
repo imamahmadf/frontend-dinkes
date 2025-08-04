@@ -71,8 +71,8 @@ const Login = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <Center bgColor={"primary"} height={"100vh"}>
-      <Center boxShadow="md" borderRadius={"8px"} p={"100px"}>
+    <Center bgColor={"#14A75B"} height={"100vh"}>
+      <Center bgColor={"white"} boxShadow="md" borderRadius={"8px"} p={"100px"}>
         <form onSubmit={handleSubmit}>
           <VStack spacing={6} w={"600px"}>
             <Text fontSize="2xl" fontWeight="bold" mb={4}>
@@ -105,7 +105,6 @@ const Login = () => {
 
             <Button
               type="submit"
-              variant={"primary"}
               height="60px"
               w={"100%"}
               isLoading={isLoading}

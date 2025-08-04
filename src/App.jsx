@@ -38,6 +38,7 @@ import Keberatan from "./pages/Pelayanan/Keberatan";
 import DaftarBeritaDinkes from "./pages/DaftarberitaDinkes";
 import Detailberita from "./pages/DetailBerita";
 import KepalaDinas from "./pages/DinasKesehatan/KepalaDinas";
+import Kontak from "./pages/Kontak";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -147,7 +148,11 @@ function App() {
         <Route path="/bidang/yankes" element={<Yankes />} />
         <Route path="/bidang/kesmas" element={<Kesmas />} />
         {/* User Routes - Untuk user biasa */}
-        <Route path="/sop/pengajuan-informasi" element={<SOPInformasi />} />
+        <Route
+          path="/sop/pengajuan-informasi"
+          element={<SOPInformasi />}
+        />{" "}
+        <Route path="/kontak" element={<Kontak />} />
         <Route
           path="/daftar-berita-dinkes"
           element={<DaftarBeritaDinkes />}

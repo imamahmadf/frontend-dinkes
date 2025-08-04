@@ -56,13 +56,20 @@ function Navbar() {
     { key: "profil", label: "PROFIL", dropdown: true },
     { key: "informasi", label: "PPID", dropdown: true },
     { key: "standar", label: "PROGRAM", dropdown: true },
-    { key: "galeri", label: "GALERI", dropdown: true },
-    { key: "aplikasi", label: "APLIKASI", dropdown: true },
+
     {
       key: "berita",
       label: "BERITA",
       dropdown: false,
       url: "/daftar-berita-dinkes",
+    },
+    { key: "galeri", label: "GALERI", dropdown: true },
+    { key: "aplikasi", label: "APLIKASI", dropdown: true },
+    {
+      key: "kontak",
+      label: "HUBUNGI KAMI",
+      dropdown: false,
+      url: "/kontak",
     },
   ];
 
@@ -1179,7 +1186,7 @@ function Navbar() {
             </Box>
             <Separator orientation="vertical" mx={0} />
             {/* Kolom tengah: Pilihan aplikasi */}
-            <SimpleGrid columns={[2, null, 2]} gap="20px">
+            <SimpleGrid columns={[2, null, 3]} gap="20px">
               <Flex
                 as="a"
                 href="https://pena.dinkes.paserkab.go.id/login"
