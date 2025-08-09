@@ -10,11 +10,11 @@ const getBaseURL = () => {
   // Jika di production, gunakan domain yang sesuai
   if (import.meta.env.PROD) {
     // Ganti dengan domain production Anda
-    return "http://localhost:7000/api";
+    return "https://api-dinkes.paserkab.go.id/api";
   }
 
   // Default untuk development
-  return "http://localhost:7000/api";
+  return "https://api-dinkes.paserkab.go.id/api";
 };
 
 // Membuat instance axios dengan konfigurasi default

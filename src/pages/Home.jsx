@@ -45,6 +45,7 @@ import api from "../utils/api";
 import { BsInstagram } from "react-icons/bs";
 import LaporPelayanan from "../components/LaporPelayanan";
 import { BsFacebook } from "react-icons/bs";
+import Kadis from "../assets/kadis.jpg";
 import axios from "axios";
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
@@ -593,10 +594,12 @@ function Home() {
             >
               <Avatar.Root
                 borderRadius={0}
+                shape="square"
                 minW={{ base: "250px", md: "300px", lg: "400px" }}
                 h={{ base: "300px", md: "350px", lg: "450px" }}
               >
-                <Avatar.Fallback name="Kepala Dinas" />
+                <Avatar.Fallback name="Kepala Dinas" />{" "}
+                <Avatar.Image src={Kadis} />
               </Avatar.Root>
               <Spacer />
               <Text

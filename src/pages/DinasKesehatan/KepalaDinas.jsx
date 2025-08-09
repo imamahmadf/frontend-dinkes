@@ -25,6 +25,7 @@ import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import KiriGambar from "../../assets/kiri.png";
 import KananGambar from "../../assets/kanan.png";
+import Kadis from "../../assets/kadis.jpg";
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
 
 function KepalaDinas() {
@@ -100,7 +101,7 @@ function KepalaDinas() {
                 >
                   <Box flex="0 0 300px">
                     <Image
-                      src={Dinkes1}
+                      src={Kadis}
                       alt="Kepala Dinas Kesehatan"
                       borderRadius="lg"
                       boxShadow="lg"

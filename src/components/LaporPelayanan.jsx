@@ -18,7 +18,7 @@ import {
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import api from "../utils/api";
-
+import axios from "axios";
 import { motion } from "framer-motion";
 
 // Schema validasi
@@ -79,11 +79,15 @@ function LaporPelayanan() {
       //   formData.append("rincian", values.rincianInformasi);
       formData.append("asal", values.asalInstansi);
 
-      const response = await api.post("/permohonan/post", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/permohonan/post`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       setModalMessage(response.data?.result.noPermohonan);
       setIsOpen(true);
