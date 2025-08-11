@@ -46,7 +46,7 @@ const TambahDokumen = () => {
         "Ukuran file terlalu besar (maksimal 10MB)",
         (value) => {
           if (!value) return true;
-          return value.size <= 10 * 1024 * 1024; // 10MB
+          return value.size <= 70 * 1024 * 1024; // 10MB
         }
       )
       .test("fileType", "Format file harus PDF", (value) => {
