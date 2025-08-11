@@ -43,7 +43,7 @@ function BarangDanJasa() {
       .get(
         `${
           import.meta.env.VITE_REACT_APP_API_BASE_URL
-        }/informasi/get/2?page=${page}&limit=${limit}`
+        }/informasi/get/6?page=${page}&limit=${limit}`
       )
       .then((res) => {
         setDataBerkala(res.data.result);

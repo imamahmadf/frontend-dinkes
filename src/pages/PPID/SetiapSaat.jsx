@@ -133,7 +133,7 @@ function SetiapSaat() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  INFORMASI SERTA MERTA
+                  Informasi Setiap Saat
                 </Text>
               </Box>
             </Center>
@@ -148,7 +148,7 @@ function SetiapSaat() {
               px={"80px"}
             >
               <Heading mb={"30px"} fontSize={"35px"}>
-                Informasi SetiapSaat
+                Informasi Setiap Saat
               </Heading>{" "}
               <Table.Root stickyHeader fontSize={"20px"}>
                 <Table.Header>

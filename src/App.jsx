@@ -138,8 +138,8 @@ function App() {
         <Route path="/informasi/publik" element={<Publik />} />
         <Route path="/informasi/serta-merta" element={<SertaMerta />} />
         <Route path="/informasi/setiap-saat" element={<SetiapSaat />} />
-        <Route path="/informasi/keuangan" element={<SertaMerta />} />
-        <Route path="/informasi/barang-dan-jasa" element={<SetiapSaat />} />
+        <Route path="/informasi/keuangan" element={<Keuangan />} />
+        <Route path="/informasi/barang-dan-jasa" element={<BarangDanJasa />} />
         <Route path="/ppid/profile" element={<ProfilePPID />} />
         <Route path="/ppid/tugas-dan-fungsi" element={<TugasDanFungsiPPID />} />
         <Route path="/pelayanan/keberatan" element={<Keberatan />} />

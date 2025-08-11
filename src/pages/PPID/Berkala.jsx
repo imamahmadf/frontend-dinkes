@@ -125,7 +125,7 @@ function Berkala() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  INFORMASI Berkala
+                  INFORMASI DINAS KESEHATAN
                 </Text>
                 <Text
                   fontSize={"30px"}
@@ -133,7 +133,7 @@ function Berkala() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  INFORMASI Berkala
+                  Informasi Berkala
                 </Text>
               </Box>
             </Center>
@@ -148,7 +148,7 @@ function Berkala() {
               px={"80px"}
             >
               <Heading mb={"30px"} fontSize={"35px"}>
-                Informasi Publik
+                Informasi Berkala
               </Heading>{" "}
               <Table.Root stickyHeader fontSize={"20px"}>
                 <Table.Header>

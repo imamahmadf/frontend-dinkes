@@ -133,7 +133,7 @@ function SertaMerta() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  INFORMASI SERTA MERTA
+                  Informasi Serta Merta
                 </Text>
               </Box>
             </Center>
@@ -148,7 +148,7 @@ function SertaMerta() {
               px={"80px"}
             >
               <Heading mb={"30px"} fontSize={"35px"}>
-                Informasi SertaMerta
+                Informasi Serta Merta
               </Heading>{" "}
               <Table.Root stickyHeader fontSize={"20px"}>
                 <Table.Header>

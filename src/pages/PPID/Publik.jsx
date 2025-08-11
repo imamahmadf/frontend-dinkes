@@ -133,7 +133,7 @@ function Publik() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  INFORMASI PUBLIK
+                  iInformasi Publik
                 </Text>
               </Box>
             </Center>
