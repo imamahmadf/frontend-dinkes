@@ -26,7 +26,10 @@ function Footer() {
         <Stack spacing={2} fontSize="md">
           <Flex align="center" gap={2}>
             <Icon as={BsGeoAltFill} />
-            <Text>Jl. Noto Sunardi No. 1, Tana Paser, Kalimantan Timur</Text>
+            <Text>
+              Komplek Perkantoran Jl. Kusuma Bangsa KM. 05 Gedung A. Lt.2 Kav.
+              1,Tanah Grogot, Paser
+            </Text>
           </Flex>
           <Flex align="center" gap={2}>
             <Icon as={BsEnvelopeAtFill} />

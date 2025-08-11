@@ -43,6 +43,8 @@ import AlasanPenolakan from "./pages/SOP/AlasanPenolakan";
 import Maklumat from "./pages/ProfilPPID/Maklumat";
 import Keuangan from "./pages/InformasiKeuangan/Keuangan";
 import BarangDanJasa from "./pages/InformasiKeuangan/BarangDanJasa";
+import SanggahInformasi from "./pages/SOP/SanggahInformasi";
+import Pengaduan from "./pages/Pengaduan";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -155,6 +157,8 @@ function App() {
         <Route path="/bidang/kesmas" element={<Kesmas />} />
         <Route path="/alasan-penolakan" element={<AlasanPenolakan />} />
         <Route path="/maklumat-pelayanan" element={<Maklumat />} />
+        <Route path="/sengketa-informasi" element={<SanggahInformasi />} />
+        <Route path="/pengaduan" element={<Pengaduan />} />
         {/* User Routes - Untuk user biasa */}
         <Route
           path="/sop/pengajuan-informasi"

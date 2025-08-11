@@ -183,7 +183,7 @@ function Kontak() {
                         >
                           <BsWhatsapp />
                         </Box>
-                        <Text>+62 8 1250-4392-0303</Text>
+                        <Text>0853-8638-4948</Text>
                       </Link>
                     </Flex>
                     {/* Instagram */}

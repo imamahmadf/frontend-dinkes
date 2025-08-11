@@ -31,7 +31,8 @@ import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { BsBuilding, BsTelephone, BsClock } from "react-icons/bs";
 import Home1 from "../assets/home1.jpg";
 import Home2 from "../assets/home2.jpg";
-import Home3 from "../assets/home3.png";
+import Home3 from "../assets/home3.jpg";
+import Home4 from "../assets/home4.jpg";
 import Bupati from "../assets/bupati-kab-paser.jpg";
 import Wabup from "../assets/wakil-bupati-kab-paser.jpg";
 import Sekda from "../assets/sekda-paser-2024.jpg";
@@ -47,11 +48,12 @@ import LaporPelayanan from "../components/LaporPelayanan";
 import { BsFacebook } from "react-icons/bs";
 import Kadis from "../assets/kadis.jpg";
 import axios from "axios";
+
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
 const MotionButton = motion(Button);
 
-const images = [Home1, Home2, Home3];
+const images = [Home1, Home2, Home3, Home4];
 const BannerSwiper = [Banner1, Banner2, Banner3, Banner4, Banner5, Banner6];
 const leaders = [
   {
@@ -339,7 +341,7 @@ function Home() {
                     </Box>
                     <Box>
                       <Text fontWeight="bold">Kontak:</Text>
-                      <Text>WhatsApp: 0812-xxxx-xxxx</Text>
+                      <Text>WhatsApp: 0853-8638-4948</Text>
                       <Text>Email: dinkes@paserkab.go.id</Text>
                     </Box>
                   </Flex>
@@ -349,7 +351,8 @@ function Home() {
                     </Box>
                     <Box>
                       <Text fontWeight="bold">Jam Operasional:</Text>
-                      <Text>Senin - Jumat, 08.00 - 16.00 WITA</Text>
+                      <Text>Senin - Kamis, 08.00 - 16.00 WITA</Text>
+                      <Text>Jumat, 08.00 - 11.30 WITA</Text>
                     </Box>
                   </Flex>
                 </VStack>
@@ -576,9 +579,9 @@ function Home() {
           >
             <Box display={{ base: "none", lg: "flex" }}>
               <iframe
-                width="900"
+                width="960"
                 height="515"
-                src="https://www.youtube.com/embed/mUtaYgkgUhs?si=p98ugz3SSmxl3e4L"
+                src="https://www.youtube.com/embed/abBU-dOeTaQ?si=oYWKVdOEq_13S-_I"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -534,7 +534,7 @@ function Navbar() {
               </Button>
               <Button
                 as={RouterLink}
-                to="/sop/pengajuan-informasi"
+                to="/sengketa-informasi  "
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
@@ -684,9 +684,7 @@ function Navbar() {
               </Text>
               <Text>KABUPATEN PASER</Text>
               <Text mt={"30px"}>
-                Temukan informasi penting tentang pendidikan, kesehatan, dan
-                lainnya, serta dapatkan panduan berguna untuk setiap tahapan
-                kehidupan Anda.
+                Temukan informasi penting tentang Dinas kesehatan
               </Text>
             </Box>{" "}
             <Separator orientation="vertical" mx={0} />
