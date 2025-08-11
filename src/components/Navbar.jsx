@@ -31,7 +31,7 @@ import iconBidang2 from "../assets/iconbidang2.png";
 import iconBidang3 from "../assets/iconbidang3.png";
 import iconBidang4 from "../assets/iconbidang4.png";
 import iconBidang5 from "../assets/iconbidang5.png";
-
+import iconKontak from "../assets/icona6.png";
 import PenaLogo from "../assets/penaLogo.png";
 import AptekaLogo from "../assets/logoApteka.png";
 import PangkatLogo from "../assets/pangkatLogo.png";
@@ -68,9 +68,8 @@ function Navbar() {
     { key: "aplikasi", label: "APLIKASI", dropdown: true },
     {
       key: "kontak",
-      label: "HUBUNGI KAMI",
-      dropdown: false,
-      url: "/kontak",
+      label: "KONTAK",
+      dropdown: true,
     },
   ];
 
@@ -432,6 +431,24 @@ function Navbar() {
               >
                 • Setiap Saat
               </Button>
+              <Button
+                as={RouterLink}
+                to="/informasi/dikecualikan"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+                onClick={() => setOpenDropdown(null)}
+              >
+                • Dikecualikan
+              </Button>
             </SimpleGrid>
           </Box>
         );
@@ -579,6 +596,57 @@ function Navbar() {
               color="whiteAlpha.900"
             >
               Informasi Keuangan
+            </Text>
+            <SimpleGrid columns={[2, null, 1]}>
+              <Button
+                as={RouterLink}
+                to="/informasi/keuangan"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+                onClick={() => setOpenDropdown(null)}
+              >
+                • Keuangan
+              </Button>
+              <Button
+                as={RouterLink}
+                to="/informasi/barang-dan-jasa"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+              >
+                • Pengadaan
+              </Button>
+            </SimpleGrid>
+          </Box>
+        );
+
+      case "kontak":
+        return (
+          <Box>
+            <Text
+              fontSize={"14px"}
+              fontWeight={600}
+              mb={2}
+              color="whiteAlpha.900"
+            >
+              dddd Informasi Keuangan
             </Text>
             <SimpleGrid columns={[2, null, 1]}>
               <Button
@@ -1622,6 +1690,109 @@ function Navbar() {
               </Text>
               <Text>Data dan laporan Dinas Kesehatan.</Text>
             </Box>
+          </Flex>
+        </MotionBox>
+      );
+    } else if (type === "kontak") {
+      return (
+        <MotionBox
+          borderTop="2px solid white"
+          position="fixed"
+          left={0}
+          top={dropdownTop + "px"}
+          width="100vw"
+          minH="180px"
+          boxShadow="lg"
+          bgColor={"#14A75B"}
+          zIndex={99}
+          px={{ base: 6, md: 24 }}
+          py={8}
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="center"
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.28, ease: "easeInOut" }}
+          style={{ position: "fixed" }}
+        >
+          {closeButton}
+          <Flex
+            width="1400px"
+            gap={{ base: 6, md: 24 }}
+            direction={{ base: "column", md: "row" }}
+          >
+            <Box maxWidth={"400px"}>
+              <Text fontSize={"20px"} fontWeight={600}>
+                KONTAK
+              </Text>
+              <Text>Temukan Cara Untuk terhubung Dengan Kami.</Text>
+            </Box>{" "}
+            <Separator orientation="vertical" mx={0} />{" "}
+            <SimpleGrid columns={[3, null, 3]} gap="20px">
+              <Flex
+                as={RouterLink}
+                to="/alur-pelaporan"
+                gap={"10px"}
+                borderRadius="md"
+                p={"10px"}
+                alignItems="center"
+                maxWidth={"300px"}
+                cursor="pointer"
+                _hover={{ boxShadow: "md", bg: "whiteAlpha.200" }}
+              >
+                <Box
+                  height={"50px"}
+                  width={"50px"}
+                  borderRadius={"4px"}
+                  bg={"white"}
+                  p={"10px"}
+                >
+                  <Image
+                    height="100%"
+                    width="100%"
+                    objectFit="contain"
+                    src={iconPPID4}
+                    alt="yankes"
+                  />
+                </Box>
+                <Box>
+                  <Text fontSize={"15px"}>Alur Pelaporan</Text>
+                  <Text fontSize={"12px"}>Dokumentasi kegiatan</Text>
+                </Box>
+              </Flex>
+              <Flex
+                as={RouterLink}
+                to="/kontak"
+                gap={"10px"}
+                borderRadius="md"
+                p={"10px"}
+                alignItems="center"
+                maxWidth={"300px"}
+                cursor="pointer"
+                _hover={{ boxShadow: "md", bg: "whiteAlpha.200" }}
+              >
+                <Box
+                  height={"50px"}
+                  width={"50px"}
+                  borderRadius={"4px"}
+                  bg={"white"}
+                  p={"10px"}
+                >
+                  <Image
+                    height="100%"
+                    width="100%"
+                    objectFit="contain"
+                    src={iconKontak}
+                    alt="sdk"
+                  />
+                </Box>
+                <Box>
+                  <Text fontSize={"15px"}>Hubungi Kami</Text>
+                  <Text fontSize={"12px"}>Hubungi Kami</Text>
+                </Box>
+              </Flex>
+            </SimpleGrid>
           </Flex>
         </MotionBox>
       );

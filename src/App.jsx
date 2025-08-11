@@ -45,6 +45,8 @@ import Keuangan from "./pages/InformasiKeuangan/Keuangan";
 import BarangDanJasa from "./pages/InformasiKeuangan/BarangDanJasa";
 import SanggahInformasi from "./pages/SOP/SanggahInformasi";
 import Pengaduan from "./pages/Pengaduan";
+import Dikecualikan from "./pages/PPID/Dikecualikan";
+import AlurPelaporan from "./pages/AlurPelaporan";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -142,6 +144,7 @@ function App() {
         <Route path="/informasi/setiap-saat" element={<SetiapSaat />} />
         <Route path="/informasi/keuangan" element={<Keuangan />} />
         <Route path="/informasi/barang-dan-jasa" element={<BarangDanJasa />} />
+        <Route path="/informasi/dikecualikan" element={<Dikecualikan />} />
         <Route path="/ppid/profile" element={<ProfilePPID />} />
         <Route path="/ppid/tugas-dan-fungsi" element={<TugasDanFungsiPPID />} />
         <Route path="/pelayanan/keberatan" element={<Keberatan />} />
@@ -159,6 +162,7 @@ function App() {
         <Route path="/maklumat-pelayanan" element={<Maklumat />} />
         <Route path="/sengketa-informasi" element={<SanggahInformasi />} />
         <Route path="/pengaduan" element={<Pengaduan />} />
+        <Route path="/alur-pelaporan" element={<AlurPelaporan />} />
         {/* User Routes - Untuk user biasa */}
         <Route
           path="/sop/pengajuan-informasi"
