@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Image, Text, Center, Container, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Text,
+  Center,
+  Container,
+  Heading,
+  List,
+} from "@chakra-ui/react";
 import { For, SimpleGrid, Tabs } from "@chakra-ui/react";
 import Layout from "../../components/Layout";
 import "swiper/css";
@@ -15,14 +23,12 @@ import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import KiriGambar from "../../assets/kiri.png";
 import KananGambar from "../../assets/kanan.png";
-import SK1 from "../../assets/SKPPID1.jpg";
-import SK2 from "../../assets/SKPPID2.jpg";
-import SK3 from "../../assets/SKPPID3.jpg";
-import SK4 from "../../assets/SKPPID4.jpg";
-import SK5 from "../../assets/SKPPID5.jpg";
+import AlurPermohonan from "../../assets/alurPermohonan.jpg";
+
+import SOP1 from "../../assets/SOP.png";
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
 
-function ProfilePPID() {
+function AlasanPenolakan() {
   return (
     <Layout>
       <motion.div
@@ -90,7 +96,7 @@ function ProfilePPID() {
                       color={"white"}
                       textAlign={"center"}
                     >
-                      PPID
+                      ALUR PELAYANAN
                     </Text>
                     <Box
                       height={"5px"}
@@ -108,7 +114,7 @@ function ProfilePPID() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  Profil, Tugas dan Fungsi PPID
+                  Alasan Penolakan Informasi Publik
                 </Text>
               </Box>
             </Center>
@@ -116,48 +122,84 @@ function ProfilePPID() {
           {/* Box biru, langsung di bawah swiper */}
           <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
             <Container
-              pt={"80px"}
+              py={"80px"}
               bgColor={"white"}
               maxWidth={"1820px"}
               color={"#524E4E"}
             >
-              {" "}
-              <Box px={"130px"}>
-                <Image
-                  src={SK1}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />{" "}
-                <Image
-                  src={SK2}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
-                <Image
-                  src={SK3}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
-                <Image
-                  src={SK4}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
-                <Image
-                  src={SK5}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
+              <Text fontWeight={600} fontSize={"30px"}>
+                PERMOHONAN INFORMASI AKAN DITOLAK JIKA:
+              </Text>{" "}
+              <Box ms={"35px"} mb={"35px"}>
+                <List.Root as="ol" fontSize={"25px"}>
+                  <List.Item>
+                    Pemohon Informasi tidak memberikan data identitas dengan
+                    jelas;
+                  </List.Item>
+                  <List.Item>
+                    Permintaan informasi untuk kepentingan yang tidak jelas;
+                  </List.Item>
+                  <List.Item>
+                    Penolakan atas subtansi, yaitu menolak memberikan informasi
+                    yang dikecualikan oleh UU KIP atau perundang-undangan
+                    lainnya;
+                  </List.Item>{" "}
+                  <List.Item>
+                    Penolakan atas prosedur, yakni menolak memberikan informasi
+                    apabila pemohon informasi tidak mematuhi ketentuan yang
+                    diatur dalam perundang-undangan;
+                  </List.Item>
+                  <List.Item>
+                    Dinas Kesehatan Kabupaten Paser tidak
+                    menguasai/memiliki/menyimpan informasi publik yang
+                    dimohonkan oleh pemohon informasi;
+                  </List.Item>{" "}
+                  <List.Item>
+                    Informasi publik yang diminta belum dikuasai atau
+                    didokumentasikan.
+                  </List.Item>
+                </List.Root>
+              </Box>
+              <Text fontWeight={600} fontSize={"30px"}>
+                PERMOHONAN INFORMASI YANG DITOLAK MENCAKUP TENTANG :
+              </Text>{" "}
+              <Box ms={"35px"}>
+                <List.Root as="ol" fontSize={"25px"}>
+                  <List.Item>Informasi yang dikecualikan;</List.Item>
+                  <List.Item>
+                    Informasi yang apabila dibuka dapat menghambat proses hukum;
+                  </List.Item>
+                  <List.Item>
+                    Informasi yang apabila dibuka dapat mengganggu kepentingan
+                    perlindungan hak atas kekayaan intelektual;
+                  </List.Item>{" "}
+                  <List.Item>
+                    Informasi yang apabila dibuka dapat mengganggu ketahanan
+                    ekonomi nasional;
+                  </List.Item>
+                  <List.Item>
+                    Informasi yang apabila dibuka dapat mengganggu pertahanan
+                    dan keamanan negara;
+                  </List.Item>{" "}
+                  <List.Item>
+                    Informasi yang apabila dibuka dapat mengungkapkan kekayaan
+                    alam Indonesia;
+                  </List.Item>
+                  <List.Item>
+                    Informasi yang apabila dibuka dapat merugikan hubungan Luar
+                    Negeri;
+                  </List.Item>
+                  <List.Item>
+                    Informasi yang apabila dibuka dapat mengungkapkan isi akta
+                    otentik yang bersifat pribadi atau wasiat seseorang;
+                  </List.Item>{" "}
+                  <List.Item>
+                    Informasi yang tidak boleh diungkapkan berdasarkan UU dengan
+                    perincian dan penjelasan sebagaimana dimaksud Pasal 17 dan
+                    18 Undang-Undang No. 14 Tahun 2008 tentang Keterbukaan
+                    Publik
+                  </List.Item>
+                </List.Root>
               </Box>
             </Container>
           </Box>
@@ -167,4 +209,4 @@ function ProfilePPID() {
   );
 }
 
-export default ProfilePPID;
+export default AlasanPenolakan;

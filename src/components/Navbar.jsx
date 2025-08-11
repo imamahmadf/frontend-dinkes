@@ -24,7 +24,8 @@ import icon3 from "../assets/dinkesicon3.png";
 import iconPPID1 from "../assets/icona1.png";
 import iconPPID2 from "../assets/icona2.png";
 import iconPPID3 from "../assets/icona3.png";
-
+import iconPPID4 from "../assets/icona4.png";
+import iconPPID5 from "../assets/icona5.png";
 import iconBidang1 from "../assets/iconbidang1.png";
 import iconBidang2 from "../assets/iconbidang2.png";
 import iconBidang3 from "../assets/iconbidang3.png";
@@ -327,6 +328,23 @@ function Navbar() {
               >
                 • Tugas & Fungsu
               </Button>
+              <Button
+                as={RouterLink}
+                to="/maklumat-pelayanan"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+              >
+                • Maklumat Pelayanan
+              </Button>
             </SimpleGrid>
           </Box>
         );
@@ -484,7 +502,7 @@ function Navbar() {
             </SimpleGrid>
           </Box>
         );
-      case "sop":
+      case "alur":
         return (
           <Box>
             <Text
@@ -493,7 +511,7 @@ function Navbar() {
               mb={2}
               color="whiteAlpha.900"
             >
-              SOP PPID
+              Alur Pelayanan
             </Text>
             <SimpleGrid columns={[2, null, 1]}>
               <Button
@@ -512,9 +530,11 @@ function Navbar() {
                 minH="32px"
                 onClick={() => setOpenDropdown(null)}
               >
-                • SOP Permohonan Informasi
+                • Permohonan Informasi
               </Button>
               <Button
+                as={RouterLink}
+                to="/sop/pengajuan-informasi"
                 variant="ghost"
                 color="whiteAlpha.900"
                 _hover={{ bg: "whiteAlpha.200", color: "white" }}
@@ -527,7 +547,74 @@ function Navbar() {
                 h="auto"
                 minH="32px"
               >
-                • SOP sanggahan Informasi
+                • sanggahan Informasi
+              </Button>
+              <Button
+                as={RouterLink}
+                to="/alasan-penolakan"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+              >
+                • Alasan Penolakan
+              </Button>
+            </SimpleGrid>
+          </Box>
+        );
+      case "keuangan":
+        return (
+          <Box>
+            <Text
+              fontSize={"14px"}
+              fontWeight={600}
+              mb={2}
+              color="whiteAlpha.900"
+            >
+              Informasi Keuangan
+            </Text>
+            <SimpleGrid columns={[2, null, 1]}>
+              <Button
+                as={RouterLink}
+                to="/informasi/keuangan"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+                onClick={() => setOpenDropdown(null)}
+              >
+                • Keuangan
+              </Button>
+              <Button
+                as={RouterLink}
+                to="/informasi/barang-dan-jasa"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+              >
+                • Pengadaan
               </Button>
             </SimpleGrid>
           </Box>
@@ -849,6 +936,44 @@ function Navbar() {
                     Berkala, Publik, Serta Merta, Setiap Saat
                   </Text>
                 </Box>
+              </Flex>{" "}
+              <Flex
+                gap={"10px"}
+                borderRadius="md"
+                p={"10px"}
+                alignItems="center"
+                maxWidth={"300px"}
+                cursor="pointer"
+                onClick={() => setSelectedPPIDMenu("keuangan")}
+                bg={
+                  selectedPPIDMenu === "keuangan"
+                    ? "whiteAlpha.300"
+                    : "transparent"
+                }
+                _hover={{
+                  boxShadow: "md",
+                  bg: "whiteAlpha.200",
+                }}
+              >
+                <Box
+                  height={"50px"}
+                  width={"50px"}
+                  borderRadius={"4px"}
+                  bg={"white"}
+                  p={"10px"}
+                >
+                  <Image
+                    height="100%"
+                    width="100%"
+                    objectFit="contain"
+                    src={iconPPID5}
+                    alt="icon2"
+                  />
+                </Box>
+                <Box>
+                  <Text fontSize={"15px"}>Informasi Keuangan</Text>
+                  <Text fontSize={"12px"}>Keuangan, Barang & Jasa</Text>
+                </Box>
               </Flex>
               <Flex
                 gap={"10px"}
@@ -897,11 +1022,9 @@ function Navbar() {
                 alignItems="center"
                 maxWidth={"300px"}
                 cursor="pointer"
-                onClick={() => setSelectedPPIDMenu("sop")}
+                onClick={() => setSelectedPPIDMenu("alur")}
                 bg={
-                  selectedPPIDMenu === "informasi"
-                    ? "whiteAlpha.300"
-                    : "transparent"
+                  selectedPPIDMenu === "alur" ? "whiteAlpha.300" : "transparent"
                 }
                 _hover={{
                   boxShadow: "md",
@@ -919,13 +1042,13 @@ function Navbar() {
                     height="100%"
                     width="100%"
                     objectFit="contain"
-                    src={iconPPID2}
+                    src={iconPPID4}
                     alt="icon2"
                   />
                 </Box>
                 <Box>
-                  <Text fontSize={"15px"}>SOP PPID</Text>
-                  <Text fontSize={"12px"}>Standar Operasional Prosedur</Text>
+                  <Text fontSize={"15px"}>Alur Pelayanan</Text>
+                  <Text fontSize={"12px"}>Standar Alur Pelayanan</Text>
                 </Box>
               </Flex>
             </SimpleGrid>

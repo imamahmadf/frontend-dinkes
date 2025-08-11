@@ -39,6 +39,10 @@ import DaftarBeritaDinkes from "./pages/DaftarberitaDinkes";
 import Detailberita from "./pages/DetailBerita";
 import KepalaDinas from "./pages/DinasKesehatan/KepalaDinas";
 import Kontak from "./pages/Kontak";
+import AlasanPenolakan from "./pages/SOP/AlasanPenolakan";
+import Maklumat from "./pages/ProfilPPID/Maklumat";
+import Keuangan from "./pages/InformasiKeuangan/Keuangan";
+import BarangDanJasa from "./pages/InformasiKeuangan/BarangDanJasa";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -134,6 +138,8 @@ function App() {
         <Route path="/informasi/publik" element={<Publik />} />
         <Route path="/informasi/serta-merta" element={<SertaMerta />} />
         <Route path="/informasi/setiap-saat" element={<SetiapSaat />} />
+        <Route path="/informasi/keuangan" element={<SertaMerta />} />
+        <Route path="/informasi/barang-dan-jasa" element={<SetiapSaat />} />
         <Route path="/ppid/profile" element={<ProfilePPID />} />
         <Route path="/ppid/tugas-dan-fungsi" element={<TugasDanFungsiPPID />} />
         <Route path="/pelayanan/keberatan" element={<Keberatan />} />
@@ -147,6 +153,8 @@ function App() {
         <Route path="/bidang/sdk" element={<SDK />} />
         <Route path="/bidang/yankes" element={<Yankes />} />
         <Route path="/bidang/kesmas" element={<Kesmas />} />
+        <Route path="/alasan-penolakan" element={<AlasanPenolakan />} />
+        <Route path="/maklumat-pelayanan" element={<Maklumat />} />
         {/* User Routes - Untuk user biasa */}
         <Route
           path="/sop/pengajuan-informasi"

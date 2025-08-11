@@ -21,6 +21,7 @@ import Dinkes2 from "../../assets/dinkes2.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
+import StrukturGambar from "../../assets/strukturDINKES.jpg";
 
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
 
@@ -116,6 +117,15 @@ function Struktur() {
                   Kesehatan telah dilengkapi dengan perangkat organisasi yang
                   secara struktural dengan susunan organisasi sebagai berikut:
                 </Text>
+              </Box>
+              <Box height={"100%"} width={"100%"}>
+                <Image
+                  height={"100%"}
+                  width={"100%"}
+                  objectFit="contain"
+                  src={StrukturGambar}
+                  alt="icon1"
+                />
               </Box>
             </Container>
           </Box>

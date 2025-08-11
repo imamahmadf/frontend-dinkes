@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Image, Text, Center, Container, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Text,
+  Center,
+  Container,
+  Heading,
+  List,
+} from "@chakra-ui/react";
 import { For, SimpleGrid, Tabs } from "@chakra-ui/react";
 import Layout from "../../components/Layout";
 import "swiper/css";
@@ -15,14 +23,9 @@ import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import KiriGambar from "../../assets/kiri.png";
 import KananGambar from "../../assets/kanan.png";
-import SK1 from "../../assets/SKPPID1.jpg";
-import SK2 from "../../assets/SKPPID2.jpg";
-import SK3 from "../../assets/SKPPID3.jpg";
-import SK4 from "../../assets/SKPPID4.jpg";
-import SK5 from "../../assets/SKPPID5.jpg";
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
 
-function ProfilePPID() {
+function Maklumat() {
   return (
     <Layout>
       <motion.div
@@ -90,7 +93,7 @@ function ProfilePPID() {
                       color={"white"}
                       textAlign={"center"}
                     >
-                      PPID
+                      MAKLUMAT PELAYANAN
                     </Text>
                     <Box
                       height={"5px"}
@@ -108,7 +111,7 @@ function ProfilePPID() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  Profil, Tugas dan Fungsi PPID
+                  Maklumat Pelayanan Informasi Publik
                 </Text>
               </Box>
             </Center>
@@ -120,44 +123,51 @@ function ProfilePPID() {
               bgColor={"white"}
               maxWidth={"1820px"}
               color={"#524E4E"}
+              pb={"50px"}
             >
-              {" "}
-              <Box px={"130px"}>
-                <Image
-                  src={SK1}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />{" "}
-                <Image
-                  src={SK2}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
-                <Image
-                  src={SK3}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
-                <Image
-                  src={SK4}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
-                <Image
-                  src={SK5}
-                  w="100%"
-                  h="auto"
-                  objectFit="contain"
-                  alt="SOP Pengajuan Informasi"
-                />
+              <Text fontWeight={600} fontSize={"30px"}>
+                Maklumat Peayanan Informasi Publik
+              </Text>{" "}
+              <Box ms={"35px"} mb={"35px"}>
+                <List.Root as="ol" fontSize={"25px"}>
+                  <List.Item>
+                    Memberikan Pelayanan Informasi yang cepat dan tepat waktu;
+                  </List.Item>
+                  <List.Item>
+                    Memberikan kemudahan dalam mendapatkan informasi publik
+                    bidang komunikasi dan informatika yang diperlukan dengan
+                    murah dan sederhana;
+                  </List.Item>
+                  <List.Item>
+                    Menyediakan dan memberikan informasi publik yang akurat,
+                    benar dan tidak menyesatkan;
+                  </List.Item>{" "}
+                  <List.Item>
+                    Menyediakan daftar informasi publik untuk informasi yang
+                    wajib disediakan dan diumumkan;
+                  </List.Item>
+                  <List.Item>
+                    Menjamin penggunaan seluruh informasi publik dan fasilitas
+                    pelayanan sesuai dengan ketentuan dan tata tertib yang
+                    berlaku;
+                  </List.Item>{" "}
+                  <List.Item>
+                    Menyiapkan ruang dan fasilitas nyaman dan tertata baik;
+                  </List.Item>
+                  <List.Item>
+                    Merespon dengan cepat permintaan informasi dan keberatan
+                    atas informasi publik yang disampaikan baik langsung maupun
+                    media;
+                  </List.Item>
+                  <List.Item>
+                    Menyiapkan petugas informasi yang berdedikasi dan siap
+                    melayani;
+                  </List.Item>
+                  <List.Item>
+                    Melakukan pengawasan internal dan evaluasi kinerja
+                    pelaksana.
+                  </List.Item>
+                </List.Root>
               </Box>
             </Container>
           </Box>
@@ -167,4 +177,4 @@ function ProfilePPID() {
   );
 }
 
-export default ProfilePPID;
+export default Maklumat;

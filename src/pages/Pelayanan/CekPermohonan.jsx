@@ -101,10 +101,11 @@ function CekPermohonan() {
               maxWidth={"1820px"}
               color={"#524E4E"}
               px={"80px"}
+              minH={"50vh"}
             >
-              <Center flexDirection={"column"}>
+              <Center h={"100%"} flexDirection={"column"}>
                 <Heading mb={"30px"} fontSize={"35px"} textAlign="center">
-                  Form Permohonan Informasi
+                  Cek Permohonan Informasi
                 </Heading>
                 <Text
                   fontSize={"18px"}
@@ -112,8 +113,7 @@ function CekPermohonan() {
                   mb={"40px"}
                   color="gray.600"
                 >
-                  Silakan isi form di bawah ini untuk mengajukan permohonan
-                  informasi
+                  Silakan isi Dengan Nomor Permohonan
                 </Text>{" "}
                 <Box w={"80%"}>
                   <InputGroup flex="1" startElement={<BsSearch />}>
@@ -162,10 +162,9 @@ function CekPermohonan() {
                     {" "}
                     <Text>Alasan: {hasil?.alasan || "Tidak ada"}</Text>
                     <Text>nomor: {hasil?.noPermohonan || "Tidak ada"}</Text>
-                    <Text>status: {hasil?.status?.nama || "Tidak ada"}</Text>
+                    <Text>status: {"Sedang Diproses"}</Text>
                     <Text>
-                      Alasan Keberatan:{" "}
-                      {hasil?.keberatans?.[0]?.alasan || "Tidak ada"}
+                      Alasan Keberatan: {hasil?.keberatans?.[0]?.alasan || "-"}
                     </Text>
                   </>
                 ) : null}

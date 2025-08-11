@@ -15,6 +15,7 @@ import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import KiriGambar from "../../assets/kiri.png";
 import KananGambar from "../../assets/kanan.png";
+import AlurPermohonan from "../../assets/alurPermohonan.jpg";
 
 import SOP1 from "../../assets/SOP.png";
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
@@ -87,7 +88,7 @@ function SOPInformasi() {
                       color={"white"}
                       textAlign={"center"}
                     >
-                      STANDAR OPERASIONAL PROSEDUR
+                      ALUR PELAYANAN
                     </Text>
                     <Box
                       height={"5px"}
@@ -105,7 +106,7 @@ function SOPInformasi() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  SOP Pengajuan Informasi
+                  Alur Permohonan Permintaan Informasi
                 </Text>
               </Box>
             </Center>
@@ -113,14 +114,14 @@ function SOPInformasi() {
           {/* Box biru, langsung di bawah swiper */}
           <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
             <Container
-              pt={"80px"}
+              py={"80px"}
               bgColor={"white"}
               maxWidth={"1820px"}
               color={"#524E4E"}
             >
               <Box px={"130px"}>
                 <Image
-                  src={SOP1}
+                  src={AlurPermohonan}
                   w="100%"
                   h="auto"
                   objectFit="contain"
