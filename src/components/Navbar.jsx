@@ -583,6 +583,23 @@ function Navbar() {
               >
                 • Alasan Penolakan
               </Button>
+              <Button
+                as={RouterLink}
+                to="/alur-sengketa"
+                variant="ghost"
+                color="whiteAlpha.900"
+                _hover={{ bg: "whiteAlpha.200", color: "white" }}
+                justifyContent="flex-start"
+                textAlign="left"
+                fontSize={"15px"}
+                fontWeight="normal"
+                px={2}
+                py={1}
+                h="auto"
+                minH="32px"
+              >
+                • Sengketa Informasi
+              </Button>
             </SimpleGrid>
           </Box>
         );

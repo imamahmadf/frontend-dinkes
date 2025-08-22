@@ -54,7 +54,7 @@ function DaftarInformasi() {
 
   useEffect(() => {
     fetchDataPublik();
-  }, []);
+  }, [page]);
 
   return (
     <LayoutAdmin>

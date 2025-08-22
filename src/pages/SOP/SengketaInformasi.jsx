@@ -1,34 +1,26 @@
 import React from "react";
-import {
-  Box,
-  Image,
-  Text,
-  Center,
-  Container,
-  Heading,
-  Button,
-  List,
-} from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Box, Image, Text, Center, Container, Heading } from "@chakra-ui/react";
 import { For, SimpleGrid, Tabs } from "@chakra-ui/react";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade"; // penting!
-import Dinkes3 from "../assets/dinkes3.png";
-import Dinkes4 from "../assets/dinkes4.png";
-import Dinkes1 from "../assets/dinkes1.png";
-import Dinkes2 from "../assets/dinkes2.png";
+import Dinkes3 from "../../assets/dinkes3.png";
+import Dinkes4 from "../../assets/dinkes4.png";
+import Dinkes1 from "../../assets/dinkes1.png";
+import Dinkes2 from "../../assets/dinkes2.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
-import KiriGambar from "../assets/kiri.png";
-import KananGambar from "../assets/kanan.png";
-import GambarPelaporan from "../assets/pelaporanPejabat.jpg";
+import KiriGambar from "../../assets/kiri.png";
+import KananGambar from "../../assets/kanan.png";
+import AlurPermohonan from "../../assets/alurPermohonan.jpg";
+import GambarSengketa from "../../assets/sengketa.jpg";
+import SOP1 from "../../assets/SOP.png";
 const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
 
-function AlurPelaporan() {
+function SengketaInformasi() {
   return (
     <Layout>
       <motion.div
@@ -96,7 +88,7 @@ function AlurPelaporan() {
                       color={"white"}
                       textAlign={"center"}
                     >
-                      ALUR PELAPORAN
+                      ALUR PELAYANAN
                     </Text>
                     <Box
                       height={"5px"}
@@ -114,8 +106,7 @@ function AlurPelaporan() {
                   color={"white"}
                   textAlign={"center"}
                 >
-                  Alur Pelaporan Pelanggaran Pejabat Publik atau Pihak Yang
-                  Mendapatkan Izin atau Perjanjian Kerja
+                  Alur Permohonan Penyelesaian Sengketa Informasi
                 </Text>
               </Box>
             </Center>
@@ -128,21 +119,15 @@ function AlurPelaporan() {
               maxWidth={"1820px"}
               color={"#524E4E"}
             >
-              {" "}
               <Box px={"130px"}>
                 <Image
-                  src={GambarPelaporan}
+                  src={GambarSengketa}
                   w="100%"
                   h="auto"
                   objectFit="contain"
                   alt="SOP Pengajuan Informasi"
                 />
               </Box>
-              <Center>
-                <Button as={RouterLink} to="/kontak" w={"300px"}>
-                  Lapor
-                </Button>
-              </Center>
             </Container>
           </Box>
         </Box>
@@ -151,4 +136,4 @@ function AlurPelaporan() {
   );
 }
 
-export default AlurPelaporan;
+export default SengketaInformasi;

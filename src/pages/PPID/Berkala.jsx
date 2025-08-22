@@ -64,7 +64,7 @@ function Berkala() {
 
   useEffect(() => {
     fetchDataBerkala();
-  }, []);
+  }, [page]);
 
   return (
     <Layout>
