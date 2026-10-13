@@ -99,12 +99,12 @@ function Struktur() {
             </Center>
           </Box>
           {/* Box biru, langsung di bawah swiper */}
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
+          <Box bgColor="var(--surface)" zIndex={1} py={"50px"}>
             <Container
               py={"120px"}
-              bgColor={"white"}
+              bgColor="var(--card)"
               maxWidth={"1820px"}
-              color={"#524E4E"}
+              color="var(--text)"
               px={"80px"}
             >
               <Heading mb={"30px"} fontSize={"35px"}>

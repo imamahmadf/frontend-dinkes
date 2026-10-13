@@ -90,12 +90,12 @@ function P2P() {
             </Center>
           </Box>
           {/* Box biru, langsung di bawah swiper */}
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
+          <Box bgColor="var(--surface)" zIndex={1} py={"50px"}>
             <Container
               pt={"80px"}
-              bgColor={"white"}
+              bgColor="var(--card)"
               maxWidth={"1820px"}
-              color={"#524E4E"}
+              color="var(--text)"
             >
               <Center mb={"30px"}>
                 <Heading fontSize={"35px"}>Misi</Heading>

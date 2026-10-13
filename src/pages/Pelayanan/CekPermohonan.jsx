@@ -1,190 +1,159 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
-  Text,
-  Center,
+  Button,
   Container,
   Heading,
-  Button,
-  VStack,
-  HStack,
-  Flex,
-  Textarea,
-  Dialog,
-  Portal,
-  CloseButton,
-  Group,
+  Input,
+  Text,
 } from "@chakra-ui/react";
-import { Input, InputGroup, Kbd } from "@chakra-ui/react";
-import { BsSearch } from "react-icons/bs";
-import * as Yup from "yup";
-import api from "../../utils/api";
-import Layout from "../../components/Layout";
-import { motion } from "framer-motion";
 import axios from "axios";
-// Schema validasi
+import Layout from "../../components/Layout";
+
+function Baris({ label, children }) {
+  return (
+    <Box>
+      <Text fontSize="13px" fontWeight="700" letterSpacing="0.04em" color="#0E7A45">
+        {label}
+      </Text>
+      <Text mt={1} lineHeight="1.6">{children || "-"}</Text>
+    </Box>
+  );
+}
 
 function CekPermohonan() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [noPermohonan, setNoPermohonan] = useState("");
-  const [hasil, setHasil] = useState(null);
-  const cekStatus = (val) => {
-    console.log(val);
-    axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_BASE_URL
-        }/permohonan/get/status?&noPermohonan=${val}`
-      )
-      .then((res) => {
-        console.log(res.data, "DATASEEED");
-        setHasil(res.data.result);
-        setIsOpen(true);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsOpen(true);
-        setModalMessage("data tidak ditemukan");
-      });
+  const [kata, setKata] = useState("");
+  const [hasil, setHasil] = useState([]);
+  const [pesan, setPesan] = useState("");
+  const [memuat, setMemuat] = useState(false);
+
+  const cekStatus = async (event) => {
+    event.preventDefault();
+    const nilai = kata.trim();
+    if (!nilai) {
+      setHasil([]);
+      setPesan("Masukkan nomor permohonan atau NIK.");
+      return;
+    }
+
+    setMemuat(true);
+    setPesan("");
+    setHasil([]);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/permohonan/get/status`,
+        { params: { kata: nilai } }
+      );
+      setHasil(res.data.result || []);
+    } catch (error) {
+      console.error(error);
+      setPesan(error.response?.data?.message || "Permohonan tidak ditemukan.");
+    } finally {
+      setMemuat(false);
+    }
   };
+
   return (
     <Layout>
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <Box w="100vw" position="relative">
-          <Box bgColor={"#14A75B"} height={"350px"}></Box>
-          <Box
-            position="absolute"
-            left="50%"
-            transform="translateX(-50%)"
-            top="calc(25vh - 30px)"
-            bg="white"
-            color="black"
-            px={8}
-            py={4}
-            zIndex={10}
-            minHeight={"100px"}
-            minWidth={"1500px"}
-            bgColor={"gray"}
-          >
-            <Center height={"100px"}>
-              <Box width={"100%"}>
-                <Text
-                  fontSize={"40px"}
-                  fontWeight={1000}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  PERMOHONAN INFORMASI ONLINE
-                </Text>
-                <Text
-                  fontSize={"30px"}
-                  fontWeight={100}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  CEK STATUS PERMOHONAN
-                </Text>
-              </Box>
-            </Center>
-          </Box>
-
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
-            <Container
-              py={"120px"}
-              bgColor={"white"}
-              maxWidth={"1820px"}
-              color={"#524E4E"}
-              px={"80px"}
-              minH={"50vh"}
-            >
-              <Center h={"100%"} flexDirection={"column"}>
-                <Heading mb={"30px"} fontSize={"35px"} textAlign="center">
-                  Cek Permohonan Informasi
-                </Heading>
-                <Text
-                  fontSize={"18px"}
-                  textAlign={"center"}
-                  mb={"40px"}
-                  color="gray.600"
-                >
-                  Silakan isi Dengan Nomor Permohonan
-                </Text>{" "}
-                <Box w={"80%"}>
-                  <InputGroup flex="1" startElement={<BsSearch />}>
-                    <Input
-                      height={"60px"}
-                      placeholder="Cari Status Permohonan"
-                      value={noPermohonan}
-                      onChange={(e) => setNoPermohonan(e.target.value)}
-                    />
-                  </InputGroup>
-                  <Button
-                    mt={"30px"}
-                    w={"100%"}
-                    onClick={() => {
-                      cekStatus(noPermohonan);
-                    }}
-                  >
-                    Submit
-                  </Button>
-                </Box>
-              </Center>
-            </Container>
-          </Box>
+      <Box bg="var(--page-bg)" minH="70vh" color="var(--text)" overflowX="hidden">
+        <Box bg="#14A75B" color="white" pt={{ base: "88px", md: "104px" }} pb={{ base: 6, md: 8 }}>
+          <Container maxW="860px" px={{ base: 4, md: 6 }}>
+            <Text fontSize="13px" fontWeight="700" letterSpacing="0.08em" textTransform="uppercase" color="whiteAlpha.800">
+              Layanan PPID
+            </Text>
+            <Heading as="h1" mt={2} fontSize={{ base: "28px", md: "36px" }} color="white">
+              Cek Status Permohonan
+            </Heading>
+            <Text mt={3} color="whiteAlpha.900">
+              Masukkan nomor permohonan atau NIK untuk melihat status dan detail permohonan.
+            </Text>
+          </Container>
         </Box>
-      </motion.div>
 
-      {/* ✅ Dialog untuk menampilkan hasil */}
-      <Dialog.Root
-        open={isOpen}
-        onOpenChange={(details) => setIsOpen(details.open)}
-      >
-        <Portal>
-          <Dialog.Backdrop />
-          <Dialog.Positioner>
-            <Dialog.Content>
-              <Dialog.Header>
-                <Dialog.Title>Informasi</Dialog.Title>
-              </Dialog.Header>
-              <Dialog.Body>
-                <Text>
-                  {typeof modalMessage === "string" ? modalMessage : ""}
-                </Text>
-                {/* <Text>{JSON.stringify(hasil)}</Text> */}
-                {!modalMessage && hasil ? (
-                  <>
-                    {" "}
-                    <Text>Alasan: {hasil?.alasan || "Tidak ada"}</Text>
-                    <Text>nomor: {hasil?.noPermohonan || "Tidak ada"}</Text>
-                    <Text>status: {"Sedang Diproses"}</Text>
-                    <Text>
-                      Alasan Keberatan: {hasil?.keberatans?.[0]?.alasan || "-"}
-                    </Text>
-                  </>
-                ) : null}
-              </Dialog.Body>
-              <Dialog.Footer>
-                <Button
-                  colorScheme="green"
-                  mr={3}
-                  onClick={() => setIsOpen(false)}
+        <Container maxW="860px" px={{ base: 4, md: 6 }} py={{ base: 5, md: 8 }}>
+          <Box
+            as="form"
+            onSubmit={cekStatus}
+            bg="var(--card)"
+            borderWidth="1px"
+            borderColor="var(--line)"
+            borderRadius="16px"
+            p={{ base: 4, md: 6 }}
+          >
+            <Heading as="h2" fontSize={{ base: "20px", md: "24px" }} color="var(--heading)">
+              Cek Permohonan Informasi
+            </Heading>
+            <Text mt={2} mb={4} color="var(--muted)">
+              Gunakan nomor permohonan atau NIK yang dipakai saat mengajukan permohonan.
+            </Text>
+            <Input
+              aria-label="Nomor permohonan atau NIK"
+              height="52px"
+              bg="var(--surface)"
+              color="var(--text)"
+              borderColor="var(--line)"
+              placeholder="Nomor permohonan atau NIK"
+              value={kata}
+              onChange={(event) => setKata(event.target.value)}
+            />
+            <Button
+              type="submit"
+              mt={4}
+              w="100%"
+              bg="#14A75B"
+              color="white"
+              _hover={{ bg: "#0E7A45" }}
+              loading={memuat}
+              loadingText="Mencari..."
+            >
+              Cari status
+            </Button>
+            {pesan ? <Text mt={4} color="red.500">{pesan}</Text> : null}
+          </Box>
+
+          {hasil.length > 0 ? (
+            <Box mt={4} display="flex" flexDirection="column" gap={4}>
+              <Text color="var(--muted)">
+                {hasil.length} permohonan ditemukan
+              </Text>
+              {hasil.map((item) => (
+                <Box
+                  key={item.id}
+                  bg="var(--card)"
+                  borderWidth="1px"
+                  borderColor="var(--line)"
+                  borderRadius="16px"
+                  p={{ base: 4, md: 6 }}
+                  display="flex"
+                  flexDirection="column"
+                  gap={4}
                 >
-                  Tutup
-                </Button>
-              </Dialog.Footer>
-              <Dialog.CloseTrigger asChild>
-                <CloseButton size="sm" />
-              </Dialog.CloseTrigger>
-            </Dialog.Content>
-          </Dialog.Positioner>
-        </Portal>
-      </Dialog.Root>
+                  <Box>
+                    <Text fontSize="13px" fontWeight="700" letterSpacing="0.04em" color="#0E7A45">
+                      STATUS
+                    </Text>
+                    <Text mt={1} fontSize="20px" fontWeight="700" color="var(--heading)">
+                      {item.status?.nama || "Belum ada status"}
+                    </Text>
+                  </Box>
+                  <Baris label="NOMOR PERMOHONAN">{item.noPermohonan}</Baris>
+                  <Baris label="NAMA">{item.nama}</Baris>
+                  <Baris label="NIK">{item.nik}</Baris>
+                  <Baris label="ASAL">{item.asal}</Baris>
+                  <Baris label="ALAMAT">{item.alamat}</Baris>
+                  <Baris label="EMAIL">{item.email}</Baris>
+                  <Baris label="WHATSAPP">{item.nomorWA ? `+62 ${item.nomorWA}` : ""}</Baris>
+                  <Baris label="ALASAN">{item.alasan}</Baris>
+                  <Baris label="RINCIAN">{item.rincian}</Baris>
+                  {item.keberatans?.[0]?.alasan ? (
+                    <Baris label="ALASAN KEBERATAN">{item.keberatans[0].alasan}</Baris>
+                  ) : null}
+                </Box>
+              ))}
+            </Box>
+          ) : null}
+        </Container>
+      </Box>
     </Layout>
   );
 }

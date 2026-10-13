@@ -16,6 +16,7 @@ import { chakra } from "@chakra-ui/react";
 import Logo from "../assets/logo.png";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import { ColorModeButton } from "./ui/color-mode";
 
 import icon1 from "../assets/dinkesicon1.png";
 import icon2 from "../assets/dinkesicon2.png";
@@ -741,11 +742,13 @@ function Navbar() {
           top={dropdownTop + "px"}
           width="100vw"
           minH="180px"
+          maxH="calc(100vh - 80px)"
+          overflowY="auto"
           boxShadow="lg"
           bgColor={"#14A75B"}
           zIndex={99}
-          px={{ base: 6, md: 24 }}
-          py={8}
+          px={{ base: 4, xl: 8, "2xl": 16 }}
+          py={6}
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -758,7 +761,9 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1400px"
+            w="100%"
+            maxW="1400px"
+            flexWrap="wrap"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -907,11 +912,13 @@ function Navbar() {
           top={dropdownTop + "px"}
           width="100vw"
           minH="180px"
+          maxH="calc(100vh - 80px)"
+          overflowY="auto"
           boxShadow="lg"
           bgColor={"#14A75B"}
           zIndex={99}
-          px={{ base: 6, md: 24 }}
-          py={8}
+          px={{ base: 4, xl: 8, "2xl": 16 }}
+          py={6}
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -924,7 +931,9 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1400px"
+            w="100%"
+            maxW="1400px"
+            flexWrap="wrap"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1154,11 +1163,13 @@ function Navbar() {
           top={dropdownTop + "px"}
           width="100vw"
           minH="180px"
+          maxH="calc(100vh - 80px)"
+          overflowY="auto"
           boxShadow="lg"
           bgColor={"#14A75B"}
           zIndex={99}
-          px={{ base: 6, md: 24 }}
-          py={8}
+          px={{ base: 4, xl: 8, "2xl": 16 }}
+          py={6}
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -1171,7 +1182,9 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1400px"
+            w="100%"
+            maxW="1400px"
+            flexWrap="wrap"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1359,11 +1372,13 @@ function Navbar() {
           top={dropdownTop + "px"}
           width="100vw"
           minH="180px"
+          maxH="calc(100vh - 80px)"
+          overflowY="auto"
           boxShadow="lg"
           bgColor={"#14A75B"}
           zIndex={99}
-          px={{ base: 6, md: 24 }}
-          py={8}
+          px={{ base: 4, xl: 8, "2xl": 16 }}
+          py={6}
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -1376,7 +1391,9 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1400px"
+            w="100%"
+            maxW="1400px"
+            flexWrap="wrap"
             gap={{ base: 6, md: 5 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1395,7 +1412,7 @@ function Navbar() {
             <SimpleGrid columns={[2, null, 3]} gap="20px">
               <Flex
                 as="a"
-                href="https://pena.dinkes.paserkab.go.id/login"
+                href="https://pena-dinkes.paserkab.go.id/login"
                 target="_blank"
                 rel="noopener noreferrer"
                 gap={"10px"}
@@ -1429,7 +1446,7 @@ function Navbar() {
               </Flex>
               <Flex
                 as="a"
-                href="https://kenaikan-pangkat.dinkes.paserkab.go.id"
+                href="https://sites.google.com/view/portal-kepegawaian"
                 target="_blank"
                 rel="noopener noreferrer"
                 gap={"10px"}
@@ -1578,11 +1595,13 @@ function Navbar() {
           top={dropdownTop + "px"}
           width="100vw"
           minH="180px"
+          maxH="calc(100vh - 80px)"
+          overflowY="auto"
           boxShadow="lg"
           bgColor={"#14A75B"}
           zIndex={99}
-          px={{ base: 6, md: 24 }}
-          py={8}
+          px={{ base: 4, xl: 8, "2xl": 16 }}
+          py={6}
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -1594,7 +1613,9 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1400px"
+            w="100%"
+            maxW="1400px"
+            flexWrap="wrap"
             gap={{ base: 6, md: 24 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1681,11 +1702,13 @@ function Navbar() {
           top={dropdownTop + "px"}
           width="100vw"
           minH="180px"
+          maxH="calc(100vh - 80px)"
+          overflowY="auto"
           boxShadow="lg"
           bgColor={"#14A75B"}
           zIndex={99}
-          px={{ base: 6, md: 24 }}
-          py={8}
+          px={{ base: 4, xl: 8, "2xl": 16 }}
+          py={6}
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -1697,7 +1720,9 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1400px"
+            w="100%"
+            maxW="1400px"
+            flexWrap="wrap"
             gap={{ base: 6, md: 24 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1719,11 +1744,13 @@ function Navbar() {
           top={dropdownTop + "px"}
           width="100vw"
           minH="180px"
+          maxH="calc(100vh - 80px)"
+          overflowY="auto"
           boxShadow="lg"
           bgColor={"#14A75B"}
           zIndex={99}
-          px={{ base: 6, md: 24 }}
-          py={8}
+          px={{ base: 4, xl: 8, "2xl": 16 }}
+          py={6}
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -1735,7 +1762,9 @@ function Navbar() {
         >
           {closeButton}
           <Flex
-            width="1400px"
+            w="100%"
+            maxW="1400px"
+            flexWrap="wrap"
             gap={{ base: 6, md: 24 }}
             direction={{ base: "column", md: "row" }}
           >
@@ -1839,43 +1868,67 @@ function Navbar() {
       <Flex
         maxW="1400px"
         mx="auto"
+        w="100%"
         align="center"
         justify="space-between"
-        py={"20px"}
+        gap={3}
+        py={{ xl: "14px", "2xl": "20px" }}
+        px={{ xl: 4, "2xl": 6 }}
       >
-        <Flex gap={3} alignItems="center">
-          <Image height="40px" src={Logo} alt="Logo" />
+        <Flex gap={3} alignItems="center" flexShrink={0}>
+          <Image height={{ xl: "36px", "2xl": "40px" }} src={Logo} alt="Logo" />
           <Box>
-            <Text color={"white"} fontSize={"16px"} fontWeight={700}>
+            <Text
+              color={"white"}
+              fontSize={{ xl: "15px", "2xl": "16px" }}
+              fontWeight={700}
+              lineHeight="1.2"
+              whiteSpace="nowrap"
+            >
               Dinas Kesehatan
             </Text>
-            <Text color={"white"} mt={0} fontSize={"14px"}>
+            <Text
+              color={"white"}
+              mt={0}
+              fontSize={{ xl: "13px", "2xl": "14px" }}
+              lineHeight="1.2"
+              whiteSpace="nowrap"
+            >
               Kabupaten Paser
             </Text>
           </Box>
         </Flex>
-        <Flex as="ul" gap={8} listStyleType="none" align="center" m={0} p={0}>
+        <Flex
+          as="ul"
+          gap={{ xl: 1, "2xl": 4 }}
+          listStyleType="none"
+          align="center"
+          m={0}
+          p={0}
+          minW={0}
+        >
           {menus.map((menu) => (
             <Box as="li" key={menu.key} position="relative" mt={"10px"}>
               {menu.dropdown ? (
                 <Button
                   variant="ghost"
                   fontWeight="medium"
-                  fontSize="xl"
+                  fontSize={{ xl: "sm", "2xl": "md" }}
                   color="white"
                   bg="transparent"
                   _hover={{ bg: "whiteAlpha.300", color: "white" }}
                   onClick={() =>
                     setOpenDropdown(openDropdown === menu.key ? null : menu.key)
                   }
-                  px={2}
+                  px={{ xl: 1.5, "2xl": 2 }}
                   position="relative"
-                  height="48px"
+                  height="44px"
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
                   justifyContent="center"
                   boxSizing="border-box"
+                  whiteSpace="nowrap"
                 >
                   <Flex as="span" zIndex={2}>
                     {menu.label} <BiChevronDown />
@@ -1911,18 +1964,19 @@ function Navbar() {
                   to={menu.url}
                   variant="ghost"
                   fontWeight="medium"
-                  fontSize="xl"
+                  fontSize={{ xl: "sm", "2xl": "md" }}
                   color="white"
                   bg="transparent"
                   _hover={{ bg: "whiteAlpha.300", color: "white" }}
-                  px={2}
+                  px={{ xl: 1.5, "2xl": 2 }}
                   position="relative"
-                  height="48px"
+                  height="44px"
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
                   justifyContent="center"
                   boxSizing="border-box"
+                  whiteSpace="nowrap"
                 >
                   <Box as="span" zIndex={2}>
                     {menu.label}
@@ -1939,9 +1993,30 @@ function Navbar() {
             </Box>
           ))}
 
-          {/* Tombol Logout */}
-          {isAuthenticated && (
-            <Box as="li" ml="auto">
+          <Flex as="li" ml="auto" align="center" gap={2} flexShrink={0}>
+            <ColorModeButton
+              variant="outline"
+              color="white"
+              borderColor="white"
+              bg="transparent"
+              _hover={{ bg: "whiteAlpha.200" }}
+              size="sm"
+              h="32px"
+              minW="32px"
+            />
+            <Button
+              as={RouterLink}
+              to="/admin"
+              variant="outline"
+              color="white"
+              borderColor="white"
+              _hover={{ bg: "whiteAlpha.200" }}
+              size="sm"
+              fontSize="sm"
+            >
+              Admin
+            </Button>
+            {isAuthenticated ? (
               <Button
                 variant="outline"
                 color="white"
@@ -1953,8 +2028,8 @@ function Navbar() {
               >
                 Logout
               </Button>
-            </Box>
-          )}
+            ) : null}
+          </Flex>
         </Flex>
       </Flex>
       {/* Render dropdown di luar Flex agar full-width, dengan transisi Fade+Slide */}

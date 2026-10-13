@@ -1,13 +1,23 @@
 import React, { useContext } from "react";
-import { Box, Flex, Text, Button, HStack, Icon } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  RiLogoutBoxLine,
-  RiHomeLine,
-  RiUserLine,
-  RiSettingsLine,
-} from "react-icons/ri";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ColorModeButton } from "../ui/color-mode";
+
+const navItems = [
+  { name: "Beranda", path: "/" },
+  { name: "Dashboard", path: "/admin" },
+  { name: "Informasi", path: "/admin/daftar-informasi", match: ["/admin/daftar-informasi", "/admin/tambah-dokumen", "/admin/edit-dokumen"] },
+  { name: "Berita", path: "/admin/daftar-berita", match: ["/admin/daftar-berita", "/admin/tambah-berita", "/admin/edit-berita"] },
+  { name: "Permohonan", path: "/admin/daftar-permohonan", match: ["/admin/daftar-permohonan", "/admin/permohonan"] },
+  { name: "Galeri", path: "/admin/galeri", match: ["/admin/galeri"] },
+  { name: "Jumbotron", path: "/admin/jumbotron", match: ["/admin/jumbotron"] },
+];
+
+function isCurrent(pathname, item) {
+  if (item.match) return item.match.some((path) => pathname.startsWith(path));
+  return pathname === item.path;
+}
 
 const NavbarAdmin = () => {
   const { logout, user } = useContext(AuthContext);
@@ -19,82 +29,81 @@ const NavbarAdmin = () => {
     navigate("/login");
   };
 
-  const navItems = [
-    { name: "Home", path: "/", icon: RiHomeLine },
-    { name: "Dashboard", path: "/admin", icon: RiHomeLine },
-    { name: "Informasi", path: "/admin/daftar-informasi", icon: RiUserLine },
-    { name: "Berita", path: "/admin/daftar-berita", icon: RiSettingsLine },
-    {
-      name: "Permohonan",
-      path: "/admin/daftar-permohonan",
-      icon: RiSettingsLine,
-    },
-  ];
-
   return (
     <Box
+      as="nav"
       position="fixed"
       top={0}
       left={0}
       right={0}
       zIndex={1000}
-      borderBottom="1px"
+      bg="#14A75B"
+      color="white"
       boxShadow="sm"
-      bgColor={"#14A75B"}
-      color={"white"}
     >
       <Flex
-        maxW="1200px"
+        maxW="1100px"
         mx="auto"
-        px={6}
-        py={4}
+        px={{ base: 3, md: 6 }}
+        py={3}
         align="center"
-        justify="space-between"
+        gap={3}
       >
-        {/* Logo/Brand */}
-        <Flex align="center">
-          <Text fontSize="xl" fontWeight="bold">
-            Admin Panel
-          </Text>
-        </Flex>
-
-        {/* Navigation Items */}
-        <HStack spacing={8}>
+        <Text fontWeight="700" flexShrink={0}>
+          Admin
+        </Text>
+        <Flex
+          as="ul"
+          listStyleType="none"
+          m={0}
+          p={0}
+          gap={1}
+          flex="1"
+          minW={0}
+          overflowX="auto"
+        >
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const active = isCurrent(location.pathname, item);
             return (
-              <Button
-                color={"white"}
-                key={item.name}
-                variant="ghost"
-                size="sm"
-                leftIcon={<Icon as={item.icon} />}
-                _hover={{}}
-                onClick={() => navigate(item.path)}
-                fontWeight={isActive ? "semibold" : "normal"}
-              >
-                {item.name}
-              </Button>
+              <Box as="li" key={item.path} flexShrink={0}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  color="white"
+                  bg={active ? "whiteAlpha.300" : "transparent"}
+                  fontWeight={active ? "700" : "500"}
+                  _hover={{ bg: "whiteAlpha.300" }}
+                  onClick={() => navigate(item.path)}
+                >
+                  {item.name}
+                </Button>
+              </Box>
             );
           })}
-        </HStack>
-
-        {/* User Info & Logout */}
-        <HStack spacing={4}>
-          <Text fontSize="sm">{user?.name || "Admin"}</Text>
-          <Button
-            color={"white"}
+        </Flex>
+        <Flex align="center" gap={2} flexShrink={0}>
+          <ColorModeButton
+            variant="outline"
+            color="white"
+            borderColor="white"
+            bg="transparent"
+            _hover={{ bg: "whiteAlpha.200" }}
             size="sm"
-            variant="ghost"
-            leftIcon={<Icon as={RiLogoutBoxLine} />}
-            _hover={{
-              color: "red.500",
-            }}
+          />
+          <Text fontSize="sm" display={{ base: "none", md: "block" }} maxW="140px" lineClamp={1}>
+            {user?.name || "Admin"}
+          </Text>
+          <Button
+            size="sm"
+            variant="outline"
+            color="white"
+            borderColor="white"
+            _hover={{ bg: "whiteAlpha.200" }}
             onClick={handleLogout}
           >
-            Logout
+            Keluar
           </Button>
-        </HStack>
+        </Flex>
       </Flex>
     </Box>
   );

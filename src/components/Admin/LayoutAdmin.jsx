@@ -5,9 +5,9 @@ import Footer from "../Footer";
 
 function LayoutAdmin({ children }) {
   return (
-    <Box>
+    <Box bg="var(--page-bg)" color="var(--text)" minH="100vh">
       <NavbarAdmin />
-      <Box pt={"30px"} minH={"75vh"}>
+      <Box pt="76px" minH="75vh">
         {children}
       </Box>
       <Footer />

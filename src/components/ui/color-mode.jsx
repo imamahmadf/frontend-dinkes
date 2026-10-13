@@ -8,7 +8,14 @@ import { LuMoon, LuSun } from 'react-icons/lu'
 
 export function ColorModeProvider(props) {
   return (
-    <ThemeProvider attribute='class' disableTransitionOnChange {...props} />
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      storageKey="dinkes-theme"
+      disableTransitionOnChange
+      {...props}
+    />
   )
 }
 
@@ -37,13 +44,13 @@ export function ColorModeIcon() {
 
 export const ColorModeButton = React.forwardRef(
   function ColorModeButton(props, ref) {
-    const { toggleColorMode } = useColorMode()
+    const { colorMode, toggleColorMode } = useColorMode()
     return (
       <ClientOnly fallback={<Skeleton boxSize='8' />}>
         <IconButton
           onClick={toggleColorMode}
           variant='ghost'
-          aria-label='Toggle color mode'
+          aria-label={colorMode === 'dark' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
           size='sm'
           ref={ref}
           {...props}

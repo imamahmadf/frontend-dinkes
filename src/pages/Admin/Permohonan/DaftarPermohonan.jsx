@@ -1,158 +1,122 @@
-import {
-  Box,
-  Image,
-  Text,
-  Center,
-  Container,
-  Heading,
-  Table,
-  Button,
-} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Box, Button, Flex, Table, Text } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import LayoutAdmin from "../../../components/Admin/LayoutAdmin";
-import React, { useRef, useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
-
-import "../../../styles/pagination.css";
-
-import { motion } from "framer-motion";
 import axios from "axios";
+import LayoutAdmin from "../../../components/Admin/LayoutAdmin";
+import AdminPage, { AdminPager } from "../../../components/Admin/AdminPage";
 
 function DaftarPermohonan() {
-  const [dataPermohonan, setDataPermohonan] = useState(null);
+  const [dataPermohonan, setDataPermohonan] = useState([]);
   const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(50);
   const [pages, setPages] = useState(0);
   const [rows, setRows] = useState(0);
-
-  const changePage = ({ selected }) => {
-    setPage(selected);
-  };
-  async function fetchdataPermohonan() {
-    await axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_BASE_URL
-        }/permohonan/get?page=${page}&limit=${limit}`
-      )
-      .then((res) => {
-        setDataPermohonan(res.data.result);
-        console.log(res.data.result);
-        setPage(res.data.page);
-        setPages(res.data.totalPage);
-        setRows(res.data.totalRows);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+  const [status, setStatus] = useState("loading");
+  const limit = 10;
 
   useEffect(() => {
-    fetchdataPermohonan();
+    let ignore = false;
+
+    async function load() {
+      setStatus("loading");
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/permohonan/get?page=${page}&limit=${limit}`
+        );
+        if (ignore) return;
+        setDataPermohonan(res.data.result || []);
+        setPages(res.data.totalPage || 0);
+        setRows(res.data.totalRows || 0);
+        setStatus("ready");
+      } catch (error) {
+        if (ignore) return;
+        console.error(error);
+        setStatus("error");
+      }
+    }
+
+    load();
+    return () => {
+      ignore = true;
+    };
   }, [page]);
 
   return (
     <LayoutAdmin>
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+      <AdminPage
+        title="Permohonan"
+        description="Daftar permohonan informasi yang masuk."
       >
-        <Box w="100vw" position="relative">
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
-            <Container
-              py={"120px"}
-              bgColor={"white"}
-              maxWidth={"1820px"}
-              color={"#524E4E"}
-              px={"80px"}
-            >
-              <Heading mb={"30px"} fontSize={"35px"}>
-                Daftar Permohonan
-              </Heading>
-              <Table.Root stickyHeader fontSize={"20px"}>
+        {status === "loading" ? <Text color="var(--muted)">Memuat data...</Text> : null}
+        {status === "error" ? (
+          <Text color="var(--muted)">Data belum bisa dimuat. Periksa koneksi, lalu muat ulang halaman.</Text>
+        ) : null}
+        {status === "ready" && dataPermohonan.length === 0 ? (
+          <Text color="var(--muted)">Belum ada permohonan.</Text>
+        ) : null}
+
+        {status === "ready" && dataPermohonan.length > 0 ? (
+          <>
+            <Text fontSize="14px" color="var(--muted)" mb={4}>
+              {rows} permohonan
+            </Text>
+            <Box display={{ base: "none", lg: "block" }} overflowX="auto">
+              <Table.Root size="sm">
                 <Table.Header>
-                  <Table.Row bgColor={"#14A75B"} py={"50px"}>
-                    <Table.ColumnHeader color={"white"}>No.</Table.ColumnHeader>
-                    <Table.ColumnHeader color={"white"}>
-                      Nama
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader color={"white"}>
-                      Asal
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader color={"white"}>
-                      NO WA
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader color={"white"} textAlign="end">
-                      Email
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader color={"white"} textAlign="end">
-                      No. Permohonan
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader color={"white"} textAlign="end">
-                      Status
-                    </Table.ColumnHeader>
-                    <Table.ColumnHeader textAlign="end" color={"white"}>
-                      Aksi
-                    </Table.ColumnHeader>
+                  <Table.Row bg="#14A75B">
+                    <Table.ColumnHeader color="white" w="52px">No</Table.ColumnHeader>
+                    <Table.ColumnHeader color="white">Nama</Table.ColumnHeader>
+                    <Table.ColumnHeader color="white">Asal</Table.ColumnHeader>
+                    <Table.ColumnHeader color="white">WhatsApp</Table.ColumnHeader>
+                    <Table.ColumnHeader color="white">Email</Table.ColumnHeader>
+                    <Table.ColumnHeader color="white">Nomor</Table.ColumnHeader>
+                    <Table.ColumnHeader color="white">Status</Table.ColumnHeader>
+                    <Table.ColumnHeader color="white" textAlign="end">Aksi</Table.ColumnHeader>
                   </Table.Row>
                 </Table.Header>
-
                 <Table.Body>
-                  {dataPermohonan?.map((item, index) => (
-                    <Table.Row key={item.id}>
-                      <Table.Cell>{index + 1}</Table.Cell>
-                      <Table.Cell>{item?.nama}</Table.Cell>
-                      <Table.Cell>{item?.asal}</Table.Cell>
-                      <Table.Cell>+62 {item?.nomorWA}</Table.Cell>
-                      <Table.Cell textAlign="end">{item?.email}</Table.Cell>
+                  {dataPermohonan.map((item, index) => (
+                    <Table.Row key={item.id || index}>
+                      <Table.Cell>{page * limit + index + 1}</Table.Cell>
+                      <Table.Cell fontWeight="600">{item.nama || "-"}</Table.Cell>
+                      <Table.Cell>{item.asal || "-"}</Table.Cell>
+                      <Table.Cell>{item.nomorWA ? `+62 ${item.nomorWA}` : "-"}</Table.Cell>
+                      <Table.Cell>{item.email || "-"}</Table.Cell>
+                      <Table.Cell>{item.noPermohonan || "-"}</Table.Cell>
+                      <Table.Cell>{item.status?.nama || "-"}</Table.Cell>
                       <Table.Cell textAlign="end">
-                        {item?.noPermohonan}
-                      </Table.Cell>
-                      <Table.Cell textAlign="end">
-                        {item?.status.nama}
-                      </Table.Cell>
-                      <Table.Cell textAlign="end">
-                        <Button onClick={() => handlePreview(item?.dokumen)}>
-                          Lihat
+                        <Button as={RouterLink} to={`/admin/permohonan/${item.id}`} size="sm" variant="outline">
+                          Detail
                         </Button>
                       </Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>
               </Table.Root>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
+            </Box>
 
-                  boxSizing: "border-box",
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <ReactPaginate
-                  previousLabel={"+"}
-                  nextLabel={"-"}
-                  pageCount={pages}
-                  onPageChange={changePage}
-                  activeClassName={"item active "}
-                  breakClassName={"item break-me "}
-                  breakLabel={"..."}
-                  containerClassName={"pagination"}
-                  disabledClassName={"disabled-page"}
-                  marginPagesDisplayed={1}
-                  nextClassName={"item next "}
-                  pageClassName={"item pagination-page "}
-                  pageRangeDisplayed={2}
-                  previousClassName={"item previous"}
-                />
-              </div>
-            </Container>
-          </Box>
-        </Box>
-      </motion.div>
+            <Flex display={{ base: "flex", lg: "none" }} direction="column" gap={3}>
+              {dataPermohonan.map((item, index) => (
+                <Box key={item.id || index} borderWidth="1px" borderColor="var(--line)" borderRadius="12px" p={4}>
+                  <Text fontSize="12px" color="var(--muted)">
+                    {page * limit + index + 1}. {item.noPermohonan || "Tanpa nomor"}
+                  </Text>
+                  <Text mt={1} fontWeight="700">{item.nama || "-"}</Text>
+                  <Text mt={1} fontSize="14px">{item.asal || "-"}</Text>
+                  <Text mt={1} fontSize="14px" color="var(--muted)">
+                    {item.email || "-"} · {item.nomorWA ? `+62 ${item.nomorWA}` : "-"}
+                  </Text>
+                  <Text mt={2} fontWeight="600">{item.status?.nama || "-"}</Text>
+                  <Button as={RouterLink} to={`/admin/permohonan/${item.id}`} size="sm" variant="outline" mt={3}>
+                    Detail
+                  </Button>
+                </Box>
+              ))}
+            </Flex>
+
+            <AdminPager page={page} pages={pages} onChange={setPage} />
+          </>
+        ) : null}
+      </AdminPage>
     </LayoutAdmin>
   );
 }

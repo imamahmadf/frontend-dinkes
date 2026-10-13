@@ -1,41 +1,86 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
-  Text,
-  Center,
-  Container,
-  Heading,
   Button,
-  VStack,
-  HStack,
-  Flex,
-  Input,
-  Textarea,
-  Dialog,
-  Portal,
   CloseButton,
+  Container,
+  Dialog,
+  Flex,
+  Heading,
+  Input,
   Link,
-  Spacer,
+  Portal,
+  SimpleGrid,
+  Text,
+  Textarea,
+  VStack,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { BsYoutube } from "react-icons/bs";
-import { BsTiktok } from "react-icons/bs";
-import Layout from "../components/Layout";
-import { motion } from "framer-motion";
 import axios from "axios";
-import { BsWhatsapp } from "react-icons/bs";
-import { Link as RouterLink } from "react-router-dom";
-import { BsInstagram } from "react-icons/bs";
+import { BsFacebook, BsInstagram, BsTiktok, BsWhatsapp, BsYoutube } from "react-icons/bs";
+import Layout from "../components/Layout";
 
-import { BsFacebook } from "react-icons/bs";
-// Schema validasi
 const validationSchema = Yup.object({
   nama: Yup.string().required("Nama wajib diisi"),
   email: Yup.string().email("Email tidak valid").required("Email wajib diisi"),
   subjek: Yup.string().required("Subjek wajib diisi"),
   pesan: Yup.string().required("Pesan wajib diisi"),
 });
+
+const sosial = [
+  {
+    nama: "WhatsApp",
+    nilai: "0853-8638-4948",
+    href: "https://wa.me/6281234567890",
+    warna: "#25D366",
+    icon: BsWhatsapp,
+  },
+  {
+    nama: "Instagram",
+    nilai: "dinkespaserkab",
+    href: "https://www.instagram.com/dinkespaserkab",
+    warna: "#E1306C",
+    icon: BsInstagram,
+  },
+  {
+    nama: "Facebook",
+    nilai: "Dinkes Paser",
+    href: "https://www.facebook.com/baini.rahman.37",
+    warna: "#1877F3",
+    icon: BsFacebook,
+  },
+  {
+    nama: "TikTok",
+    nilai: "dinkes_paser",
+    href: "https://www.tiktok.com/@dinkes_paser?",
+    warna: "#111111",
+    icon: BsTiktok,
+  },
+  {
+    nama: "YouTube",
+    nilai: "Dinkes Paser",
+    href: "https://www.youtube.com/@dinkespaser12",
+    warna: "#E11D48",
+    icon: BsYoutube,
+  },
+];
+
+function Field({ label, error, children }) {
+  return (
+    <Box>
+      <Text fontSize="14px" fontWeight="600" mb={2}>
+        {label}
+      </Text>
+      {children}
+      {error ? (
+        <Text mt={1} fontSize="13px" color="red.500">
+          {error}
+        </Text>
+      ) : null}
+    </Box>
+  );
+}
 
 function Kontak() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,33 +89,20 @@ function Kontak() {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const { nama, email, subjek, pesan } = values;
-    console.log("Form values:", values); // Debug log
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_API_BASE_URL
-        }/permohonan/post/laporan`,
-        {
-          nama,
-          email,
-          subjek,
-          pesan,
-        }
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/permohonan/post/laporan`,
+        { nama, email, subjek, pesan }
       );
-
-      // Pastikan modalMessage adalah string
-      console.log("Response data:", response.data); // Debug log
       const resultMessage =
         typeof response.data?.result === "string"
-          ? response.data?.result
+          ? response.data.result
           : "Pesan berhasil dikirim";
       setModalMessage(resultMessage);
       setIsOpen(true);
-      console.log(response.data);
       resetForm();
     } catch (error) {
-      console.log("Error:", error); // Debug log
       const msg =
         error.response?.data?.message ||
         "Gagal mengirim permohonan. Silakan coba lagi.";
@@ -84,350 +116,204 @@ function Kontak() {
 
   return (
     <Layout>
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <Box w="100vw" position="relative">
-          <Box bgColor={"#14A75B"} height={"350px"}></Box>
-          <Box
-            position="absolute"
-            left="50%"
-            transform="translateX(-50%)"
-            top="calc(25vh - 30px)"
-            bg="white"
-            color="black"
-            px={8}
-            py={4}
-            zIndex={10}
-            minHeight={"100px"}
-            minWidth={"1500px"}
-            bgColor={"gray"}
-          >
-            <Center height={"100px"}>
-              <Box width={"100%"}>
-                <Text
-                  fontSize={"40px"}
-                  fontWeight={1000}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  HUBUNGI KAMI
-                </Text>
-              </Box>
-            </Center>
-          </Box>
-
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
-            <Container
-              py={"120px"}
-              bgColor={"white"}
-              maxWidth={"1820px"}
-              color={"#524E4E"}
-              px={"80px"}
-            >
-              <Flex gap={5}>
-                <Flex width={"50%"} pe={"20px"} flexDirection={"column"}>
-                  <Heading mb={"30px"} fontWeight={900} fontSize={"35px"}>
-                    Informasi Kontak
-                  </Heading>
-                  <Text fontSize={"20px"} mb={"20px"} color="gray.600">
-                    Silakan hubungi kami melalui form di sebelah kanan atau
-                    melalui informasi kontak berikut:
-                  </Text>
-                  <Flex fontSize={"20px"} spacing={4} gap={4} align="stretch">
-                    <Box w={"60%"}>
-                      <Text fontWeight={700} mb={2}>
-                        Alamat:
-                      </Text>
-                      <Text>
-                        Komplek Perkantoran Jl. Kusuma Bangsa KM. 05 Gedung A.
-                        Lt.2 Kav. 1, Kecamatan Tanah Grogot, Kabupaten
-                        Paser,Provinsi Kalimantan Timur 76251
-                      </Text>
-                      <Text mt={"20px"} fontWeight={700} mb={2}>
-                        Email:
-                      </Text>
-                      <Text>dinkes@paser.go.id</Text>
-                    </Box>{" "}
-                    <Box w={"40%"}>
-                      <Text fontWeight={700} mb={2}>
-                        Jam Oprasional:
-                      </Text>
-                      <Text>Senin - Kamis, 08.00 - 16.00 WITA</Text>
-                      <Text>Jumat, 08.00 - 11.30 WITA</Text>
-                    </Box>
-                  </Flex>{" "}
-                  <Spacer />
-                  <Box
-                    mt={"30px"}
-                    left={{ base: "10px", md: "20px", lg: "30px" }}
-                    zIndex={20}
-                    display={{ base: "flex", md: "flex" }}
-                    flexDirection="column"
-                    gap={{ base: 2, md: 3, lg: 4 }}
-                  >
-                    {/* WhatsApp */}
-                    <Flex>
-                      <Link href="https://wa.me/6281234567890" isExternal>
-                        <Box
-                          bg="#25D366"
-                          color={"white"}
-                          borderRadius="full"
-                          boxShadow="md"
-                          p={{ base: 2, md: 2.5, lg: 3 }}
-                          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
-                          _hover={{ bg: "#1DA851" }}
-                          transition="0.2s"
-                        >
-                          <BsWhatsapp />
-                        </Box>
-                        <Text>0853-8638-4948</Text>
-                      </Link>
-                    </Flex>
-                    {/* Instagram */}
-                    <Flex>
-                      <Link
-                        href="https://www.instagram.com/dinkespaserkab"
-                        isExternal
-                      >
-                        <Box
-                          bg="#E1306C"
-                          color={"white"}
-                          borderRadius="full"
-                          boxShadow="md"
-                          p={{ base: 2, md: 2.5, lg: 3 }}
-                          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
-                          _hover={{ bg: "#C13584" }}
-                          transition="0.2s"
-                        >
-                          <BsInstagram />
-                        </Box>{" "}
-                        <Text>dinkespaserkab</Text>
-                      </Link>
-                    </Flex>
-                    {/* Facebook */}
-                    <Flex>
-                      <Link
-                        href="https://www.facebook.com/baini.rahman.37"
-                        isExternal
-                      >
-                        <Box
-                          bg="#1877F3"
-                          color={"white"}
-                          borderRadius="full"
-                          boxShadow="md"
-                          p={{ base: 2, md: 2.5, lg: 3 }}
-                          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
-                          _hover={{ bg: "#145DB2" }}
-                          transition="0.2s"
-                        >
-                          <BsFacebook />
-                        </Box>
-                        <Text>Dinkes Paser</Text>
-                      </Link>
-                    </Flex>
-                    <Flex>
-                      <Link
-                        href="https://www.tiktok.com/@dinkes_paser?"
-                        isExternal
-                      >
-                        <Box
-                          bg="black"
-                          color={"white"}
-                          borderRadius="full"
-                          boxShadow="md"
-                          p={{ base: 2, md: 2.5, lg: 3 }}
-                          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
-                          _hover={{ bg: "black" }}
-                          transition="0.2s"
-                        >
-                          <BsTiktok />
-                        </Box>{" "}
-                        <Text>dinkes_paser </Text>
-                      </Link>
-                    </Flex>
-                    <Flex>
-                      <Link
-                        href="https://www.youtube.com/@dinkespaser12"
-                        isExternal
-                      >
-                        <Box
-                          bg="red"
-                          color={"white"}
-                          borderRadius="full"
-                          boxShadow="md"
-                          p={{ base: 2, md: 2.5, lg: 3 }}
-                          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
-                          _hover={{ bg: "red" }}
-                          transition="0.2s"
-                        >
-                          <BsYoutube />
-                        </Box>{" "}
-                        <Text>Dinkes Paser </Text>
-                      </Link>
-                    </Flex>
-                  </Box>
-                </Flex>
-                <Box width={"50%"}>
-                  <Heading mb={"30px"} fontWeight={900} fontSize={"35px"}>
-                    Kirim Pesan
-                  </Heading>
-                  <Text fontSize={"20px"} mb={"20px"}>
-                    Sampaikan pertanyaan, saran, kritik maupun aduan terkait
-                    layanan informasi publik di Lingkungan Pemerintah Kabupaten
-                    Paser.
-                  </Text>
-                  <Formik
-                    initialValues={{
-                      nama: "",
-                      email: "",
-                      subjek: "",
-                      pesan: "",
-                    }}
-                    validationSchema={validationSchema}
-                    onSubmit={handleSubmit}
-                  >
-                    {({
-                      errors,
-                      touched,
-                      setFieldValue,
-                      values,
-                      handleChange,
-                      handleBlur,
-                    }) => (
-                      <Form>
-                        <VStack spacing={6} align="stretch">
-                          <Box>
-                            <Text fontSize="16px" fontWeight="600" mb={2}>
-                              Nama
-                            </Text>
-                            <Input
-                              name="nama"
-                              value={values.nama}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              borderColor={
-                                errors.nama && touched.nama
-                                  ? "red.500"
-                                  : "gray.300"
-                              }
-                            />
-                            {errors.nama && touched.nama && (
-                              <Text color="red.500">{errors.nama}</Text>
-                            )}
-                          </Box>
-                          <Box>
-                            <Text fontSize="16px" fontWeight="600" mb={2}>
-                              E-Mail
-                            </Text>
-                            <Input
-                              name="email"
-                              value={values.email}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              borderColor={
-                                errors.email && touched.email
-                                  ? "red.500"
-                                  : "gray.300"
-                              }
-                            />
-                            {errors.email && touched.email && (
-                              <Text color="red.500">{errors.email}</Text>
-                            )}
-                          </Box>{" "}
-                          <Box>
-                            <Text fontSize="16px" fontWeight="600" mb={2}>
-                              Subjek
-                            </Text>
-                            <Input
-                              name="subjek"
-                              value={values.subjek}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              borderColor={
-                                errors.subjek && touched.subjek
-                                  ? "red.500"
-                                  : "gray.300"
-                              }
-                            />
-                            {errors.subjek && touched.subjek && (
-                              <Text color="red.500">{errors.subjek}</Text>
-                            )}
-                          </Box>
-                          <Box>
-                            <Text fontSize="16px" fontWeight="600" mb={2}>
-                              Pesan
-                            </Text>
-                            <Textarea
-                              minHeight={"200px"}
-                              name="pesan"
-                              rows={3}
-                              value={values.pesan}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              borderColor={
-                                errors.pesan && touched.pesan
-                                  ? "red.500"
-                                  : "gray.300"
-                              }
-                            />
-                            {errors.pesan && touched.pesan && (
-                              <Text color="red.500">{errors.pesan}</Text>
-                            )}
-                          </Box>
-                          <Flex justify="center" mt={8}>
-                            <Button
-                              type="submit"
-                              colorScheme="green"
-                              size="lg"
-                              w={"100%"}
-                              px={12}
-                              py={6}
-                              fontSize="18px"
-                              isLoading={isSubmitting}
-                              loadingText="Mengirim..."
-                            >
-                              Kirim
-                            </Button>
-                          </Flex>
-                        </VStack>
-                      </Form>
-                    )}
-                  </Formik>
-                </Box>
-              </Flex>
-            </Container>
-          </Box>
+      <Box bg="var(--page-bg)" minH="70vh" color="var(--text)" overflowX="hidden">
+        <Box bg="#14A75B" color="white" pt={{ base: "88px", md: "104px" }} pb={{ base: 6, md: 8 }}>
+          <Container maxW="1100px" px={{ base: 4, md: 6 }}>
+            <Text fontSize="13px" fontWeight="700" letterSpacing="0.08em" textTransform="uppercase" color="whiteAlpha.800">
+              Dinas Kesehatan Kabupaten Paser
+            </Text>
+            <Heading as="h1" mt={2} fontSize={{ base: "28px", md: "36px" }} lineHeight="1.2">
+              Hubungi Kami
+            </Heading>
+            <Text mt={3} maxW="640px" fontSize={{ base: "15px", md: "17px" }} color="whiteAlpha.900">
+              Sampaikan pertanyaan, saran, kritik, maupun aduan terkait layanan informasi publik.
+            </Text>
+          </Container>
         </Box>
-      </motion.div>
 
-      {/* ✅ Dialog untuk menampilkan hasil */}
-      <Dialog.Root
-        open={isOpen}
-        onOpenChange={(details) => setIsOpen(details.open)}
-      >
+        <Container maxW="1100px" px={{ base: 4, md: 6 }} py={{ base: 5, md: 8 }}>
+          <SimpleGrid columns={{ base: 1, lg: 2 }} gap={4} alignItems="start">
+            <Box
+              bg="var(--card)"
+              borderWidth="1px"
+              borderColor="var(--line)"
+              borderRadius="16px"
+              p={{ base: 4, md: 6 }}
+            >
+              <Heading as="h2" fontSize={{ base: "20px", md: "24px" }} color="var(--heading)">
+                Informasi Kontak
+              </Heading>
+              <Text mt={2} color="var(--muted)" fontSize="15px" lineHeight="1.6">
+                Silakan hubungi kami melalui formulir atau informasi kontak berikut.
+              </Text>
+
+              <Box mt={5} display="flex" flexDirection="column" gap={4}>
+                <Box>
+                  <Text fontSize="13px" fontWeight="700" letterSpacing="0.04em" color="#0E7A45">
+                    ALAMAT
+                  </Text>
+                  <Text mt={1} lineHeight="1.6">
+                    Komplek Perkantoran Jl. Kusuma Bangsa KM. 05 Gedung A. Lt.2 Kav. 1, Kecamatan Tanah Grogot, Kabupaten Paser, Provinsi Kalimantan Timur 76251
+                  </Text>
+                </Box>
+                <Box>
+                  <Text fontSize="13px" fontWeight="700" letterSpacing="0.04em" color="#0E7A45">
+                    EMAIL
+                  </Text>
+                  <Link href="mailto:dinkes@paser.go.id" color="var(--text)" fontWeight="600">
+                    dinkes@paser.go.id
+                  </Link>
+                </Box>
+                <Box>
+                  <Text fontSize="13px" fontWeight="700" letterSpacing="0.04em" color="#0E7A45">
+                    JAM OPERASIONAL
+                  </Text>
+                  <Text mt={1}>Senin - Kamis, 08.00 - 16.00 WITA</Text>
+                  <Text>Jumat, 08.00 - 11.30 WITA</Text>
+                </Box>
+              </Box>
+
+              <Box mt={6} display="flex" flexDirection="column" gap={3}>
+                {sosial.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.nama}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      display="flex"
+                      alignItems="center"
+                      gap={3}
+                      color="var(--text)"
+                      _hover={{ color: "#0E7A45" }}
+                    >
+                      <Flex
+                        align="center"
+                        justify="center"
+                        w="40px"
+                        h="40px"
+                        borderRadius="full"
+                        bg={item.warna}
+                        color="white"
+                        flexShrink={0}
+                      >
+                        <Icon />
+                      </Flex>
+                      <Box>
+                        <Text fontSize="13px" color="var(--muted)">{item.nama}</Text>
+                        <Text fontWeight="600">{item.nilai}</Text>
+                      </Box>
+                    </Link>
+                  );
+                })}
+              </Box>
+            </Box>
+
+            <Box
+              bg="var(--card)"
+              borderWidth="1px"
+              borderColor="var(--line)"
+              borderRadius="16px"
+              p={{ base: 4, md: 6 }}
+            >
+              <Heading as="h2" fontSize={{ base: "20px", md: "24px" }} color="var(--heading)">
+                Kirim Pesan
+              </Heading>
+              <Text mt={2} mb={5} color="var(--muted)" fontSize="15px" lineHeight="1.6">
+                Sampaikan pertanyaan, saran, kritik maupun aduan terkait layanan informasi publik di Lingkungan Pemerintah Kabupaten Paser.
+              </Text>
+
+              <Formik
+                initialValues={{ nama: "", email: "", subjek: "", pesan: "" }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ errors, touched, values, handleChange, handleBlur }) => (
+                  <Form>
+                    <VStack gap={4} align="stretch">
+                      <Field label="Nama" error={touched.nama && errors.nama}>
+                        <Input
+                          name="nama"
+                          aria-label="Nama"
+                          value={values.nama}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          bg="var(--surface)"
+                          color="var(--text)"
+                          borderColor={touched.nama && errors.nama ? "red.500" : "var(--line)"}
+                        />
+                      </Field>
+                      <Field label="E-Mail" error={touched.email && errors.email}>
+                        <Input
+                          name="email"
+                          type="email"
+                          aria-label="E-Mail"
+                          value={values.email}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          bg="var(--surface)"
+                          color="var(--text)"
+                          borderColor={touched.email && errors.email ? "red.500" : "var(--line)"}
+                        />
+                      </Field>
+                      <Field label="Subjek" error={touched.subjek && errors.subjek}>
+                        <Input
+                          name="subjek"
+                          aria-label="Subjek"
+                          value={values.subjek}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          bg="var(--surface)"
+                          color="var(--text)"
+                          borderColor={touched.subjek && errors.subjek ? "red.500" : "var(--line)"}
+                        />
+                      </Field>
+                      <Field label="Pesan" error={touched.pesan && errors.pesan}>
+                        <Textarea
+                          name="pesan"
+                          aria-label="Pesan"
+                          rows={6}
+                          value={values.pesan}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          bg="var(--surface)"
+                          color="var(--text)"
+                          borderColor={touched.pesan && errors.pesan ? "red.500" : "var(--line)"}
+                        />
+                      </Field>
+                      <Button
+                        type="submit"
+                        bg="#14A75B"
+                        color="white"
+                        _hover={{ bg: "#0E7A45" }}
+                        loading={isSubmitting}
+                        loadingText="Mengirim..."
+                      >
+                        Kirim
+                      </Button>
+                    </VStack>
+                  </Form>
+                )}
+              </Formik>
+            </Box>
+          </SimpleGrid>
+        </Container>
+      </Box>
+
+      <Dialog.Root open={isOpen} onOpenChange={(details) => setIsOpen(details.open)}>
         <Portal>
           <Dialog.Backdrop />
           <Dialog.Positioner>
-            <Dialog.Content>
+            <Dialog.Content bg="var(--card)" color="var(--text)" mx={4}>
               <Dialog.Header>
                 <Dialog.Title>Informasi</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>
-                <Text fontWeight={800} mt={"15px"} fontSize={"25px"}>
-                  {typeof modalMessage === "string"
-                    ? modalMessage
-                    : "Pesan berhasil dikirim"}
-                </Text>
+                <Text>{typeof modalMessage === "string" ? modalMessage : "Pesan berhasil dikirim"}</Text>
               </Dialog.Body>
               <Dialog.Footer>
-                <Button
-                  colorScheme="green"
-                  mr={3}
-                  onClick={() => setIsOpen(false)}
-                >
+                <Button bg="#14A75B" color="white" _hover={{ bg: "#0E7A45" }} onClick={() => setIsOpen(false)}>
                   Tutup
                 </Button>
               </Dialog.Footer>

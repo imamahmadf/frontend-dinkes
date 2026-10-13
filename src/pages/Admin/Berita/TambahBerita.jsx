@@ -16,11 +16,25 @@ import * as Yup from "yup";
 import "react-quill/dist/quill.snow.css";
 import api from "../../../utils/api";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 import LayoutAdmin from "../../../components/Admin/LayoutAdmin";
+import AdminPage from "../../../components/Admin/AdminPage";
+
+const kosong = {
+  judul: "",
+  konten: "",
+  gambar: null,
+  bidang: "",
+  tema: "",
+};
 
 const TambahBerita = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);
   const quillRef = useRef();
+  const [awal, setAwal] = useState(kosong);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [bidangList, setBidangList] = useState([]);
@@ -35,7 +49,7 @@ const TambahBerita = () => {
       .required("Konten berita wajib diisi")
       .min(50, "Konten berita minimal 50 karakter"),
     gambar: Yup.mixed()
-      .required("Gambar berita wajib diupload")
+      .test("wajib", "Gambar berita wajib diupload", (value) => isEdit || Boolean(value))
       .test("fileSize", "Ukuran file terlalu besar (maksimal 5MB)", (value) => {
         if (!value) return true;
         return value.size <= 5 * 1024 * 1024; // 5MB
@@ -71,25 +85,32 @@ const TambahBerita = () => {
     const formData = new FormData();
     formData.append("judul", values.judul);
     formData.append("konten", contentHTML);
-    formData.append("gambar", values.gambar);
+    if (values.gambar) formData.append("gambar", values.gambar);
     formData.append("bidang", values.bidang);
     formData.append("tema", values.tema);
 
-    await axios
-      .post(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/berita/post`,
-        formData
-      )
+    const url = isEdit
+      ? `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/berita/update/${id}`
+      : `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/berita/post`;
+
+    await axios({
+      method: isEdit ? "put" : "post",
+      url,
+      data: formData,
+    })
       .then((res) => {
         setSubmitting(false);
         resetForm();
         setSelectedImage(null);
         setImagePreview(null);
-
         console.log(res.data);
+        alert(isEdit ? "Berita berhasil diperbarui." : "Berita berhasil disimpan.");
+        navigate("/admin/daftar-berita");
       })
       .catch((err) => {
         console.error(err);
+        setSubmitting(false);
+        alert("Berita gagal disimpan.");
       });
   };
 
@@ -117,22 +138,36 @@ const TambahBerita = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (!id) return;
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/berita/get/id/${id}`)
+      .then((res) => {
+        const item = res.data.result;
+        if (!item) return;
+        setAwal({
+          judul: item.judul || "",
+          konten: item.isi || "",
+          gambar: null,
+          bidang: String(item.bidangId || item.bidang?.id || ""),
+          tema: String(item.temaBeritaId || item.temaBerita?.id || ""),
+        });
+        if (item.foto) {
+          setImagePreview(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}${item.foto}`);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [id]);
   return (
     <LayoutAdmin>
-      <Box py={"80px"}>
-        <Container maxW="1200px">
-          <Heading fontSize="30px" fontWeight={700} mb={6} textAlign="center">
-            Tambah Berita
-          </Heading>
-
+      <AdminPage
+        title={isEdit ? "Edit berita" : "Tambah berita"}
+        description={isEdit ? "Perbarui isi berita. Gambar hanya diunggah jika ingin diganti." : "Tulis berita, pilih bidang dan tema, lalu simpan."}
+      >
           <Formik
-            initialValues={{
-              judul: "",
-              konten: "",
-              gambar: null,
-              bidang: "", // baru
-              tema: "", // baru
-            }}
+            initialValues={awal}
+            enableReinitialize
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -169,7 +204,7 @@ const TambahBerita = () => {
                   {/* Upload Gambar */}
                   <Box>
                     <Text mb={2} fontWeight="medium">
-                      Gambar Berita *
+                      {isEdit ? "Ganti gambar" : "Gambar Berita *"}
                     </Text>
                     <input
                       type="file"
@@ -195,7 +230,7 @@ const TambahBerita = () => {
                     {/* Image Preview */}
                     {imagePreview && (
                       <Box mt={4}>
-                        <Text fontSize="sm" mb={2} color="gray.600">
+                        <Text fontSize="sm" mb={2} color="var(--muted)">
                           Preview Gambar:
                         </Text>
                         <Image
@@ -284,20 +319,20 @@ const TambahBerita = () => {
                   {/* Submit Button */}
                   <Button
                     type="submit"
-                    colorScheme="blue"
                     size="lg"
-                    isLoading={isSubmitting}
-                    loadingText="Menyimpan..."
+                    bg="#14A75B"
+                    color="white"
+                    _hover={{ bg: "#0E7A45" }}
+                    loading={isSubmitting}
                     w="full"
                   >
-                    Simpan Berita
+                    Simpan berita
                   </Button>
                 </VStack>
               </Form>
             )}
           </Formik>
-        </Container>
-      </Box>
+      </AdminPage>
     </LayoutAdmin>
   );
 };

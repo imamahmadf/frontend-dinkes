@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Center, VStack, Button, Field, Input, Text } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext"; // ⬅️ path harus sesuai
+import { ColorModeButton, LightMode } from "../components/ui/color-mode";
 import axios from "axios";
 
 const Login = () => {
@@ -71,8 +72,19 @@ const Login = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <Center bgColor={"#14A75B"} height={"100vh"}>
-      <Center bgColor={"white"} boxShadow="md" borderRadius={"8px"} p={"100px"}>
+    <Center bgColor={"#14A75B"} height={"100vh"} position="relative">
+      <ColorModeButton
+        position="absolute"
+        top={4}
+        right={4}
+        variant="outline"
+        color="white"
+        borderColor="white"
+        bg="transparent"
+        _hover={{ bg: "whiteAlpha.200" }}
+      />
+      <LightMode>
+      <Center bgColor={"white"} color="#1c2420" boxShadow="md" borderRadius={"8px"} p={"100px"}>
         <form onSubmit={handleSubmit}>
           <VStack spacing={6} w={"600px"}>
             <Text fontSize="2xl" fontWeight="bold" mb={4}>
@@ -115,6 +127,7 @@ const Login = () => {
           </VStack>
         </form>
       </Center>
+      </LightMode>
     </Center>
   );
 };

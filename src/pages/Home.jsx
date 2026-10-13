@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
+  CloseButton,
   Container,
+  Dialog,
   Image,
   Flex,
+  Portal,
   SimpleGrid,
-  Center,
   Text,
   Button,
   HStack,
   VStack,
   Link,
-  Avatar,
-  Spacer,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { BsYoutube } from "react-icons/bs";
 import { BsTiktok } from "react-icons/bs";
 import Layout from "../components/Layout";
@@ -42,12 +42,18 @@ import Banner3 from "../assets/banner3.png";
 import Banner4 from "../assets/banner4.png";
 import Banner5 from "../assets/banner5.png";
 import Banner6 from "../assets/banner6.png";
-import api from "../utils/api";
 import { BsInstagram } from "react-icons/bs";
-import LaporPelayanan from "../components/LaporPelayanan";
 import { BsFacebook } from "react-icons/bs";
 import Kadis from "../assets/kadis.jpg";
 import axios from "axios";
+
+function formatTanggal(value) {
+  if (!value) return "";
+  const [tahun, bulan, hari] = String(value).slice(0, 10).split("-");
+  const date = new Date(Number(tahun), Number(bulan) - 1, Number(hari));
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+}
 
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
@@ -78,8 +84,10 @@ function Home() {
   const [databerita, setDataBerita] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const [fotoList, setFotoList] = useState([]);
+  const [infoList, setInfoList] = useState([]);
+  const [dipilih, setDipilih] = useState(null);
+  const [slideJumbotron, setSlideJumbotron] = useState(images);
   async function fetchBerita() {
     try {
       setLoading(true);
@@ -101,6 +109,48 @@ function Home() {
   useEffect(() => {
     fetchBerita();
   }, []);
+
+  useEffect(() => {
+    let ignore = false;
+    const base = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
+    async function loadGaleri() {
+      try {
+        const [foto, info] = await Promise.all([
+          axios.get(`${base}/galeri/get/foto?page=0&limit=10`),
+          axios.get(`${base}/galeri/get/infografis?page=0&limit=3`),
+        ]);
+        if (ignore) return;
+        setFotoList(foto.data.result || []);
+        setInfoList(info.data.result || []);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadGaleri();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+    const base = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
+    axios
+      .get(`${base}/jumbotron/get`)
+      .then((res) => {
+        if (ignore) return;
+        const daftar = (res.data.result || []).filter((item) => item.foto).map((item) => `${base}${item.foto}`);
+        if (daftar.length) setSlideJumbotron(daftar);
+      })
+      .catch((err) => console.error(err));
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -121,7 +171,7 @@ function Home() {
 
   return (
     <Layout>
-      <Box bgColor="white">
+      <Box bgColor="var(--page-bg)" overflowX="hidden">
         <Box w="100vw" h="100vh" overflow="hidden" position="relative">
           <Box
             position="absolute"
@@ -235,20 +285,23 @@ function Home() {
                   mb={6}
                 >
                   <MotionText
-                    fontSize={{ base: "2xl", md: "4xl", lg: "40px" }}
+                    as="h1"
+                    fontSize={{ base: "3xl", md: "5xl", lg: "52px" }}
                     fontWeight="bold"
-                    mb={0}
+                    lineHeight="1.15"
+                    mb={1}
                     initial={{ opacity: 0, y: 10 }}
                     animate={
                       isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
                     }
                     transition={{ delay: 0.7, duration: 0.6 }}
                   >
-                    Pusat Layanan dan Informasi
+                    Dinkes Paser
                   </MotionText>
                   <MotionText
-                    fontSize={{ base: "2xl", md: "4xl", lg: "40px" }}
-                    fontWeight="bold"
+                    as="p"
+                    fontSize={{ base: "lg", md: "2xl", lg: "28px" }}
+                    fontWeight="semibold"
                     mb={2}
                     initial={{ opacity: 0, y: 10 }}
                     animate={
@@ -256,7 +309,20 @@ function Home() {
                     }
                     transition={{ delay: 1, duration: 0.6 }}
                   >
-                    Kesehatan di Kabupaten Paser
+                    Dinas Kesehatan Kabupaten Paser
+                  </MotionText>
+                  <MotionText
+                    as="p"
+                    fontSize={{ base: "sm", lg: "16px" }}
+                    mb={2}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={
+                      isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
+                    }
+                    transition={{ delay: 1.1, duration: 0.6 }}
+                  >
+                    Website resmi pusat layanan dan informasi kesehatan di
+                    Kabupaten Paser
                   </MotionText>
                   <MotionText
                     fontSize={{ base: "sm", lg: "14px" }}
@@ -361,34 +427,68 @@ function Home() {
           </Box>
 
           <Swiper
+            key={slideJumbotron.join("|")}
             modules={[Autoplay, Pagination, Navigation, EffectFade]}
             effect="fade"
             fadeEffect={{ crossFade: true }}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
-            loop={true}
+            loop={slideJumbotron.length > 1}
             style={{ height: "100%", width: "100%" }}
           >
-            {images.map((img, i) => (
-              <SwiperSlide key={i}>
+            {slideJumbotron.map((img, i) => (
+              <SwiperSlide key={`${img}-${i}`}>
                 <Image
                   src={img}
                   objectFit="cover"
                   w="100%"
                   h="100vh"
-                  alt={`slide-${i}`}
+                  alt="Dinas Kesehatan Kabupaten Paser"
                 />
               </SwiperSlide>
             ))}
           </Swiper>
         </Box>
-        <Container
-          mt={0}
-          pt={"30px"}
-          maxW="container.lg"
-          position="relative"
-          bgColor={"white"}
-        >
-          <Box>
+        <style>{`
+          .banner-beranda .swiper-button-prev,
+          .banner-beranda .swiper-button-next {
+            width: 36px;
+            height: 36px;
+            margin-top: 0;
+            transform: translateY(-50%);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.92);
+            color: #0E7A45;
+          }
+          .banner-beranda .swiper-button-prev::after,
+          .banner-beranda .swiper-button-next::after {
+            font-size: 14px;
+            font-weight: 700;
+          }
+          .banner-beranda .swiper-button-prev { left: 12px; }
+          .banner-beranda .swiper-button-next { right: 12px; }
+          .custom-swiper-pagination .swiper-pagination-bullet-active,
+          .foto-pagination .swiper-pagination-bullet-active { background: #14A75B; }
+          .foto-beranda .swiper-button-prev,
+          .foto-beranda .swiper-button-next {
+            width: 36px;
+            height: 36px;
+            margin-top: 0;
+            transform: translateY(-50%);
+            border-radius: 999px;
+            background: #ffffff;
+            color: #0E7A45;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+          }
+          .foto-beranda .swiper-button-prev::after,
+          .foto-beranda .swiper-button-next::after {
+            font-size: 14px;
+            font-weight: 700;
+          }
+          .foto-beranda .swiper-button-prev { left: 8px; }
+          .foto-beranda .swiper-button-next { right: 8px; }
+        `}</style>
+        <Container maxW="1100px" px={{ base: 4, md: 6 }} pt={{ base: 6, md: 8 }}>
+          <Box className="banner-beranda" position="relative" bg="var(--card)" borderWidth="1px" borderColor="var(--line)" borderRadius="16px" overflow="hidden">
             <Swiper
               modules={[Autoplay, Pagination, Navigation, EffectFade]}
               effect="fade"
@@ -403,232 +503,299 @@ function Home() {
                 nextEl: ".banner-next",
                 prevEl: ".banner-prev",
               }}
-              style={{
-                width: "100%",
-                height: "250px",
-
-                overflow: "hidden",
-              }}
+              style={{ width: "100%", height: "100%" }}
             >
               {BannerSwiper.map((img, i) => (
                 <SwiperSlide key={i}>
                   <Image
                     src={img}
-                    objectFit="cover"
+                    objectFit="contain"
                     w="100%"
-                    h="250px"
-                    alt={`banner-${i}`}
+                    h={{ base: "180px", md: "280px" }}
+                    bg="var(--surface)"
+                    alt="Banner informasi Dinas Kesehatan Kabupaten Paser"
                   />
                 </SwiperSlide>
               ))}
             </Swiper>
-            {/* Tombol custom */}
-            <button
-              className="swiper-button-prev banner-prev"
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "10px",
-                zIndex: 20,
-              }}
-            ></button>
-            <button
-              className="swiper-button-next banner-next"
-              style={{
-                position: "absolute",
-                top: "50%",
-                right: "10px",
-                zIndex: 20,
-              }}
-            ></button>
-            {/* Custom pagination di bawah banner */}
-            <div
-              className="custom-swiper-pagination"
-              style={{ marginTop: "16px", textAlign: "center" }}
-            ></div>
+            <button className="swiper-button-prev banner-prev" type="button" aria-label="Banner sebelumnya" />
+            <button className="swiper-button-next banner-next" type="button" aria-label="Banner berikutnya" />
           </Box>
+          <Box className="custom-swiper-pagination" mt={3} textAlign="center" />
         </Container>
-        ;
-        <Container
-          mt={"30px"}
-          p={{ base: "20px", md: "30px" }}
-          maxW="container.lg"
-          bgColor="gray.100"
-        >
-          <Center height={{ base: "80px", md: "100px" }} color={"#524E4E"}>
-            <Box width="100%" mb={{ base: "20px", md: "30px" }}>
-              {" "}
-              <MotionText
-                fontSize={{ base: "28px", md: "40px" }}
-                fontWeight={1000}
+
+        <Container maxW="1100px" px={{ base: 4, md: 6 }} py={{ base: 8, md: 12 }}>
+          <Text as="h2" textAlign="center" fontSize={{ base: "26px", md: "34px" }} fontWeight="700" color="var(--heading)">
+            PIMPINAN DAERAH
+          </Text>
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap={4} mt={6}>
+            {leaders.map((leader) => (
+              <Box
+                key={leader.name}
+                bg="var(--card)"
+                borderWidth="1px"
+                borderColor="var(--line)"
+                borderRadius="16px"
+                p={4}
                 textAlign="center"
-                mb={0}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                animate={
-                  isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
-                }
-                transition={{ delay: 0.7, duration: 0.6 }}
               >
-                PIMPINAN DAERAH
-              </MotionText>
-            </Box>
-          </Center>
-          <SimpleGrid color={"#524E4E"} columns={[1, null, 3]} gap={4}>
-            {leaders.map((leader, index) => (
-              <MotionBox
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                animate={
-                  isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
-                }
-                transition={{ delay: 0.5, duration: 1 }}
-              >
-                <Flex
-                  gap={5}
-                  direction={{ base: "column", md: "row" }}
-                  align={{ base: "center", md: "flex-start" }}
-                  textAlign={{ base: "center", md: "left" }}
-                >
-                  <Image
-                    src={leader.img}
-                    width={{ base: "200px", md: "180px" }}
-                    h={{ base: "250px", md: "220px" }}
-                    objectFit="cover"
-                  />
-                  <Box>
-                    <Text
-                      fontSize={{ base: "18px", md: "20px" }}
-                      fontWeight={400}
-                    >
-                      {leader.title}
-                    </Text>
-                    <Text
-                      fontSize={{ base: "18px", md: "20px" }}
-                      fontWeight={700}
-                      color="black"
-                    >
-                      {leader.name}
-                    </Text>
-                  </Box>
-                </Flex>
-              </MotionBox>
+                <Image
+                  src={leader.img}
+                  alt={`${leader.title}, ${leader.name}`}
+                  w="180px"
+                  h="220px"
+                  mx="auto"
+                  objectFit="cover"
+                  objectPosition="top"
+                  borderRadius="12px"
+                />
+                <Text mt={4} fontSize="13px" fontWeight="700" letterSpacing="0.04em" color="#0E7A45">
+                  {leader.title}
+                </Text>
+                <Text mt={1} fontSize={{ base: "16px", md: "18px" }} fontWeight="700" color="var(--heading)">
+                  {leader.name}
+                </Text>
+              </Box>
             ))}
           </SimpleGrid>
         </Container>
-        <Container my={"60px"}>
-          <Flex>
-            {loading && (
-              <Text textAlign="center" color="gray.500" fontSize="lg" py={8}>
-                Memuat data berita...
-              </Text>
-            )}
-            {error && (
-              <Text textAlign="center" color="red.500" fontSize="lg" py={8}>
-                {error}
-              </Text>
-            )}
-            {!loading && !error && databerita && databerita.length > 0 && (
-              <Box mt={"60px"}>
-                <Box color={"#524E4E"} width="100%" mb={"30px"}>
-                  <MotionText
-                    fontSize={{ base: "28px", md: "40px" }}
-                    fontWeight={1000}
-                    textAlign="center"
-                    mb={0}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    animate={
-                      isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
-                    }
-                    transition={{ delay: 0.7, duration: 0.6 }}
-                  >
-                    BERITA TERKINI
-                  </MotionText>
-                </Box>
 
-                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-                  {databerita.map((berita, index) => (
-                    <BeritaCard key={berita.id} berita={berita} index={index} />
-                  ))}
-                </SimpleGrid>
-              </Box>
-            )}
-            {!loading && !error && (!databerita || databerita.length === 0) && (
-              <Text textAlign="center" color="gray.500" fontSize="lg" py={8}>
-                Tidak ada berita tersedia saat ini
+        <Container maxW="1100px" px={{ base: 4, md: 6 }} pb={{ base: 8, md: 12 }}>
+          {loading ? (
+            <Text textAlign="center" color="var(--muted)" py={8}>
+              Memuat data berita...
+            </Text>
+          ) : null}
+          {error ? (
+            <Text textAlign="center" color="red.500" py={8}>
+              {error}
+            </Text>
+          ) : null}
+          {!loading && !error && databerita && databerita.length > 0 ? (
+            <Box>
+              <Text as="h2" textAlign="center" fontSize={{ base: "26px", md: "34px" }} fontWeight="700" color="var(--heading)" mb={6}>
+                BERITA TERKINI
               </Text>
-            )}
-          </Flex>
-
-          <Button
-            as={RouterLink}
-            to="/daftar-berita-dinkes"
-            my={"30px"}
-            w={"100%"}
-          >
-            Semua Berita
-          </Button>
-        </Container>
-        <Container>
-          <Flex
-            gap={{ base: "20px", md: "30px", lg: "50px" }}
-            direction={{ base: "column", lg: "row" }}
-            align={{ base: "center", lg: "flex-start" }}
-          >
-            <Box display={{ base: "none", lg: "flex" }}>
-              <iframe
-                width="960"
-                height="515"
-                src="https://www.youtube.com/embed/abBU-dOeTaQ?si=oYWKVdOEq_13S-_I"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
+              <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={4}>
+                {databerita.map((berita, index) => (
+                  <BeritaCard key={berita.id} berita={berita} index={index} />
+                ))}
+              </SimpleGrid>
             </Box>
-            <Flex
-              flexDirection={"column"}
-              w={{ base: "100%", lg: "30%" }}
-              align={{ base: "center", lg: "flex-start" }}
-              textAlign={{ base: "center", lg: "left" }}
+          ) : null}
+          {!loading && !error && (!databerita || databerita.length === 0) ? (
+            <Text textAlign="center" color="var(--muted)" py={8}>
+              Tidak ada berita tersedia saat ini
+            </Text>
+          ) : null}
+          <Flex justify="center" mt={6}>
+            <Button as={RouterLink} to="/daftar-berita-dinkes" bg="#14A75B" color="white" _hover={{ bg: "#0E7A45" }}>
+              Semua Berita
+            </Button>
+          </Flex>
+        </Container>
+
+        <Container maxW="1100px" px={{ base: 4, md: 6 }} pb={{ base: 8, md: 12 }}>
+          <Flex justify="space-between" align="center" gap={3} mb={6}>
+            <Text as="h2" fontSize={{ base: "26px", md: "34px" }} fontWeight="700" color="var(--heading)">
+              INFOGRAFIS TERBARU
+            </Text>
+            <Button as={RouterLink} to="/galeri/info-grafis" variant="outline" borderColor="#14A75B" color="#0E7A45" flexShrink={0}>
+              Semua
+            </Button>
+          </Flex>
+          {infoList.length === 0 ? (
+            <Text color="var(--muted)">Belum ada infografis.</Text>
+          ) : (
+            <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
+              {infoList.map((item) => (
+                <Box
+                  key={item.id}
+                  as="button"
+                  type="button"
+                  textAlign="left"
+                  bg="var(--card)"
+                  color="var(--text)"
+                  borderWidth="1px"
+                  borderColor="var(--line)"
+                  borderRadius="16px"
+                  overflow="hidden"
+                  cursor="pointer"
+                  _hover={{ borderColor: "#14A75B" }}
+                  onClick={() => setDipilih(item)}
+                >
+                  <Image
+                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}${item.foto}`}
+                    alt={item.deskripsi || "Infografis"}
+                    w="100%"
+                    h="220px"
+                    objectFit="cover"
+                  />
+                  <Box p={4}>
+                    <Text fontWeight="600" lineClamp={2}>{item.deskripsi}</Text>
+                    <Text mt={2} fontSize="14px" color="var(--muted)">
+                      {[item.bidang?.nama, formatTanggal(item.tanggal)].filter(Boolean).join(" · ")}
+                    </Text>
+                  </Box>
+                </Box>
+              ))}
+            </SimpleGrid>
+          )}
+        </Container>
+
+        <Container maxW="1100px" px={{ base: 4, md: 6 }} pb={{ base: 8, md: 12 }}>
+          <Flex justify="space-between" align="center" gap={3} mb={6}>
+            <Text as="h2" fontSize={{ base: "26px", md: "34px" }} fontWeight="700" color="var(--heading)">
+              FOTO TERBARU
+            </Text>
+            <Button as={RouterLink} to="/galeri/foto" variant="outline" borderColor="#14A75B" color="#0E7A45" flexShrink={0}>
+              Semua
+            </Button>
+          </Flex>
+          {fotoList.length === 0 ? (
+            <Text color="var(--muted)">Belum ada foto.</Text>
+          ) : (
+            <Box className="foto-beranda" position="relative">
+              <Swiper
+                modules={[Autoplay, Pagination, Navigation]}
+                autoplay={{ delay: 2800, disableOnInteraction: false, pauseOnMouseEnter: true }}
+                loop={fotoList.length > 3}
+                spaceBetween={16}
+                slidesPerView={1}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  992: { slidesPerView: 3 },
+                }}
+                pagination={{ clickable: true, el: ".foto-pagination" }}
+                navigation={{ nextEl: ".foto-next", prevEl: ".foto-prev" }}
+              >
+                {fotoList.map((item) => (
+                  <SwiperSlide key={item.id}>
+                    <Box
+                      as="button"
+                      type="button"
+                      w="100%"
+                      textAlign="left"
+                      bg="var(--card)"
+                      color="var(--text)"
+                      borderWidth="1px"
+                      borderColor="var(--line)"
+                      borderRadius="16px"
+                      overflow="hidden"
+                      cursor="pointer"
+                      onClick={() => setDipilih(item)}
+                    >
+                      <Image
+                        src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}${item.foto}`}
+                        alt={item.deskripsi || "Foto kegiatan"}
+                        w="100%"
+                        h="220px"
+                        objectFit="cover"
+                      />
+                      <Box p={4}>
+                        <Text fontWeight="600" lineClamp={2}>{item.deskripsi}</Text>
+                        <Text mt={2} fontSize="14px" color="var(--muted)">
+                          {[item.bidang?.nama, formatTanggal(item.tanggal)].filter(Boolean).join(" · ")}
+                        </Text>
+                      </Box>
+                    </Box>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <button className="swiper-button-prev foto-prev" type="button" aria-label="Foto sebelumnya" />
+              <button className="swiper-button-next foto-next" type="button" aria-label="Foto berikutnya" />
+              <Box className="foto-pagination" mt={3} textAlign="center" />
+            </Box>
+          )}
+        </Container>
+
+        <Container maxW="1100px" px={{ base: 4, md: 6 }} pb={{ base: 8, md: 12 }}>
+          <Flex direction={{ base: "column", lg: "row" }} gap={{ base: 5, lg: 6 }} align="stretch">
+            <Box flex="1" minW={0} borderRadius="16px" overflow="hidden" bg="black" position="relative" h={{ base: "220px", md: "420px" }}>
+              <iframe
+                src="https://www.youtube.com/embed/abBU-dOeTaQ?si=oYWKVdOEq_13S-_I"
+                title="Video Dinas Kesehatan Kabupaten Paser"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </Box>
+            <Box
+              w={{ base: "100%", lg: "300px" }}
+              flexShrink={0}
+              bg="var(--card)"
+              borderWidth="1px"
+              borderColor="var(--line)"
+              borderRadius="16px"
+              p={4}
+              textAlign="center"
             >
-              <Avatar.Root
-                borderRadius={0}
-                shape="square"
-                minW={{ base: "250px", md: "300px", lg: "400px" }}
-                h={{ base: "300px", md: "350px", lg: "450px" }}
-              >
-                <Avatar.Fallback name="Kepala Dinas" />{" "}
-                <Avatar.Image src={Kadis} />
-              </Avatar.Root>
-              <Spacer />
-              <Text
-                fontSize={{ base: "18px", md: "22px", lg: "25px" }}
-                fontWeight={100}
-              >
+              <Image
+                src={Kadis}
+                alt="Amri Yulihardi, Kepala Dinas Kesehatan Kabupaten Paser"
+                w="100%"
+                h={{ base: "280px", lg: "340px" }}
+                objectFit="cover"
+                objectPosition="top"
+                borderRadius="12px"
+              />
+              <Text mt={4} fontSize="13px" fontWeight="700" letterSpacing="0.04em" color="#0E7A45">
                 KEPALA DINAS
               </Text>
-              <Text
-                fontSize={{ base: "20px", md: "25px", lg: "30px" }}
-                fontWeight={600}
-              >
+              <Text mt={1} fontSize={{ base: "20px", md: "22px" }} fontWeight="700" color="var(--heading)">
                 Amri Yulihardi, S.STP., M.Si.
               </Text>
-            </Flex>
+            </Box>
           </Flex>
         </Container>
-        <Box bgColor="gray.100" color={"#524E4E"} mt={"60px"} p={"30px"}>
-          <Box width="100%" mb={"60px"}>
-            <Text fontSize="40px" fontWeight={1000} textAlign="center">
+
+        <Box bg="var(--surface)" color="var(--text)" py={{ base: 8, md: 12 }}>
+          <Container maxW="1100px" px={{ base: 4, md: 6 }}>
+            <Text as="h2" textAlign="center" fontSize={{ base: "26px", md: "34px" }} fontWeight="700" color="var(--heading)" mb={6}>
               PERSEBARAN PUSKESMAS
             </Text>
-          </Box>
-          <Peta />
+            <Box bg="var(--card)" borderWidth="1px" borderColor="var(--line)" borderRadius="16px" overflow="hidden">
+              <Peta />
+            </Box>
+          </Container>
         </Box>
       </Box>
+
+      <Dialog.Root open={Boolean(dipilih)} onOpenChange={(details) => { if (!details.open) setDipilih(null); }}>
+        <Portal>
+          <Dialog.Backdrop />
+          <Dialog.Positioner>
+            <Dialog.Content maxW="960px" bg="var(--card)" color="var(--text)" mx={4}>
+              <Dialog.Header>
+                <Dialog.Title>{dipilih?.tipe === "infografis" ? "Infografis" : "Foto"}</Dialog.Title>
+              </Dialog.Header>
+              <Dialog.Body>
+                {dipilih?.foto ? (
+                  <Image
+                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}${dipilih.foto}`}
+                    alt={dipilih.deskripsi || "Galeri"}
+                    w="100%"
+                    maxH="70vh"
+                    objectFit="contain"
+                    bg="var(--surface)"
+                    borderRadius="12px"
+                  />
+                ) : null}
+                {dipilih?.deskripsi ? (
+                  <Text mt={4} fontWeight="600">{dipilih.deskripsi}</Text>
+                ) : null}
+                <Text mt={1} fontSize="14px" color="var(--muted)">
+                  {[dipilih?.bidang?.nama, formatTanggal(dipilih?.tanggal)].filter(Boolean).join(" · ")}
+                </Text>
+              </Dialog.Body>
+              <Dialog.CloseTrigger asChild>
+                <CloseButton size="sm" />
+              </Dialog.CloseTrigger>
+            </Dialog.Content>
+          </Dialog.Positioner>
+        </Portal>
+      </Dialog.Root>
     </Layout>
   );
 }

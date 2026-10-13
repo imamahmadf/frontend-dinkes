@@ -34,10 +34,16 @@ import HomeAdmin from "./pages/Admin/HomeAdmin";
 import DaftarInformasi from "./pages/Admin/Informasi/DaftarInformasi";
 import DaftarBerita from "./pages/Admin/Berita/Daftarberita";
 import DaftarPermohonan from "./pages/Admin/Permohonan/DaftarPermohonan";
+import DetailPermohonan from "./pages/Admin/Permohonan/DetailPermohonan";
 import Keberatan from "./pages/Pelayanan/Keberatan";
 import DaftarBeritaDinkes from "./pages/DaftarberitaDinkes";
 import Detailberita from "./pages/DetailBerita";
 import KepalaDinas from "./pages/DinasKesehatan/KepalaDinas";
+import GaleriPublik from "./pages/Galeri/GaleriPublik";
+import DaftarGaleri from "./pages/Admin/Galeri/DaftarGaleri";
+import FormGaleri from "./pages/Admin/Galeri/FormGaleri";
+import DaftarJumbotron from "./pages/Admin/Jumbotron/DaftarJumbotron";
+import FormJumbotron from "./pages/Admin/Jumbotron/FormJumbotron";
 import Kontak from "./pages/Kontak";
 import AlasanPenolakan from "./pages/SOP/AlasanPenolakan";
 import Maklumat from "./pages/ProfilPPID/Maklumat";
@@ -48,6 +54,7 @@ import Pengaduan from "./pages/Pengaduan";
 import Dikecualikan from "./pages/PPID/Dikecualikan";
 import AlurPelaporan from "./pages/AlurPelaporan";
 import SengketaInformasi from "./pages/SOP/SengketaInformasi";
+import Seo from "./components/Seo";
 function App() {
   const { logout, setToken, setUser, setRole, isAuthenticated } =
     useContext(AuthContext);
@@ -130,6 +137,7 @@ function App() {
   }, [isAuthenticated]); // Hanya re-run jika isAuthenticated berubah
   return (
     <BrowserRouter>
+      <Seo />
       <Routes>
         {/* Public Routes - Tidak memerlukan login */}
         <Route path="/" element={<Home />} />
@@ -176,6 +184,26 @@ function App() {
           element={<DaftarBeritaDinkes />}
         />{" "}
         <Route path="/kepala-dinas" element={<KepalaDinas />} />
+        <Route
+          path="/galeri/foto"
+          element={
+            <GaleriPublik
+              tipe="foto"
+              title="Foto"
+              description="Dokumentasi kegiatan Dinas Kesehatan Kabupaten Paser."
+            />
+          }
+        />
+        <Route
+          path="/galeri/info-grafis"
+          element={
+            <GaleriPublik
+              tipe="infografis"
+              title="Infografis"
+              description="Infografis kesehatan dari Dinas Kesehatan Kabupaten Paser."
+            />
+          }
+        />
         {/* Super Admin Routes - Hanya untuk Super Admin */}
         <Route
           path="/admin/superx"
@@ -194,7 +222,23 @@ function App() {
           }
         />
         <Route
+          path="/admin/edit-berita/:id"
+          element={
+            <AdminRoute>
+              <TambahBerita />
+            </AdminRoute>
+          }
+        />
+        <Route
           path="/admin/tambah-dokumen"
+          element={
+            <AdminRoute>
+              <TambahDokumen />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/edit-dokumen/:id"
           element={
             <AdminRoute>
               <TambahDokumen />
@@ -230,6 +274,62 @@ function App() {
           element={
             <AdminRoute>
               <DaftarPermohonan />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/permohonan/:id"
+          element={
+            <AdminRoute>
+              <DetailPermohonan />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/galeri"
+          element={
+            <AdminRoute>
+              <DaftarGaleri />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/galeri/tambah/:tipe"
+          element={
+            <AdminRoute>
+              <FormGaleri />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/galeri/edit/:id"
+          element={
+            <AdminRoute>
+              <FormGaleri />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/jumbotron"
+          element={
+            <AdminRoute>
+              <DaftarJumbotron />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/jumbotron/tambah"
+          element={
+            <AdminRoute>
+              <FormJumbotron />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/jumbotron/edit/:id"
+          element={
+            <AdminRoute>
+              <FormJumbotron />
             </AdminRoute>
           }
         />

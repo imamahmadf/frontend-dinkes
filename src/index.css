@@ -1,1 +1,29 @@
+:root {
+  color-scheme: light;
+  --page-bg: #f7f8f7;
+  --surface: #eef2ef;
+  --card: #ffffff;
+  --text: #3d4440;
+  --heading: #1c2420;
+  --muted: #5c675f;
+  --line: #e2e8e4;
+}
 
+html.dark {
+  color-scheme: dark;
+  --page-bg: #101614;
+  --surface: #171e1b;
+  --card: #1e2723;
+  --text: #d7e2db;
+  --heading: #f3f7f4;
+  --muted: #b7c4bc;
+  --line: #314039;
+}
+
+html,
+body,
+#root {
+  background: var(--page-bg);
+  color: var(--text);
+  min-height: 100%;
+}

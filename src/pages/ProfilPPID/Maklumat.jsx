@@ -1,179 +1,33 @@
-import React from "react";
-import {
-  Box,
-  Image,
-  Text,
-  Center,
-  Container,
-  Heading,
-  List,
-} from "@chakra-ui/react";
-import { For, SimpleGrid, Tabs } from "@chakra-ui/react";
-import Layout from "../../components/Layout";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/effect-fade"; // penting!
-import Dinkes3 from "../../assets/dinkes3.png";
-import Dinkes4 from "../../assets/dinkes4.png";
-import Dinkes1 from "../../assets/dinkes1.png";
-import Dinkes2 from "../../assets/dinkes2.png";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
-import { motion } from "framer-motion";
-import KiriGambar from "../../assets/kiri.png";
-import KananGambar from "../../assets/kanan.png";
-const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
+import { List, Text } from "@chakra-ui/react";
+import PpidLayout from "../../components/ppid/PpidLayout";
+
+const janji = [
+  "Memberikan pelayanan informasi yang cepat dan tepat waktu.",
+  "Memudahkan masyarakat memperoleh informasi publik dengan cara yang sederhana.",
+  "Menyediakan informasi yang akurat, benar, dan tidak menyesatkan.",
+  "Menyediakan daftar informasi yang wajib diumumkan.",
+  "Menjamin penggunaan informasi dan fasilitas pelayanan sesuai ketentuan.",
+  "Menyiapkan ruang dan fasilitas yang nyaman.",
+  "Menanggapi permintaan informasi dan keberatan dengan cepat, baik secara langsung maupun melalui media.",
+  "Menyiapkan petugas informasi yang siap melayani.",
+  "Melakukan pengawasan internal dan evaluasi kinerja pelaksana.",
+];
 
 function Maklumat() {
   return (
-    <Layout>
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <Box w="100vw" position="relative">
-          {/* Swiper */}
-          <Box>
-            <Swiper
-              modules={[Autoplay, Pagination, Navigation, EffectFade]}
-              effect="fade"
-              fadeEffect={{ crossFade: true }}
-              autoplay={{ delay: 4000, disableOnInteraction: false }}
-              loop={true}
-              pagination={{ clickable: true }}
-              navigation
-              style={{ width: "100%" }} // Hapus height di sini
-            >
-              {images.map((img, i) => (
-                <SwiperSlide key={i}>
-                  <Image
-                    src={img}
-                    objectFit="contain" // atau "unset" jika ingin benar-benar asli
-                    w="100%"
-                    h="auto"
-                    maxH="80vh" // opsional, agar tidak terlalu tinggi di layar besar
-                    alt={`slide-${i}`}
-                    display="block"
-                    mx="auto"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </Box>
-          {/* Box merah, absolute di bawah swiper */}
-          <Box
-            position="absolute"
-            left="50%"
-            transform="translateX(-50%)"
-            top="calc(40vh - 30px)"
-            bg="white"
-            color="black"
-            px={8}
-            py={4}
-            zIndex={10}
-            minHeight={"100px"}
-            minWidth={"1500px"}
-            bgColor={"#14A75B"}
-            style={{
-              backgroundImage: `url(${KiriGambar}), url(${KananGambar})`,
-              backgroundPosition: "16px center, calc(100% - 16px) center",
-              backgroundRepeat: "no-repeat, no-repeat",
-              backgroundSize: "auto 100px, auto 100px",
-            }}
-          >
-            <Center height={"100px"}>
-              <Box width={"100%"}>
-                <Box>
-                  <Center flexDirection="column">
-                    <Text
-                      fontSize={"40px"}
-                      fontWeight={1000}
-                      color={"white"}
-                      textAlign={"center"}
-                    >
-                      MAKLUMAT PELAYANAN
-                    </Text>
-                    <Box
-                      height={"5px"}
-                      width="fit-content"
-                      bg={"yellow"}
-                      alignSelf="center"
-                      mt={"4px"}
-                      px={"32px"}
-                    ></Box>
-                  </Center>
-                </Box>
-                <Text
-                  fontSize={"30px"}
-                  fontWeight={100}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  Maklumat Pelayanan Informasi Publik
-                </Text>
-              </Box>
-            </Center>
-          </Box>
-          {/* Box biru, langsung di bawah swiper */}
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
-            <Container
-              pt={"80px"}
-              bgColor={"white"}
-              maxWidth={"1820px"}
-              color={"#524E4E"}
-              pb={"50px"}
-            >
-              <Text fontWeight={600} fontSize={"30px"}>
-                Maklumat Peayanan Informasi Publik
-              </Text>{" "}
-              <Box ms={"35px"} mb={"35px"}>
-                <List.Root as="ol" fontSize={"25px"}>
-                  <List.Item>
-                    Memberikan Pelayanan Informasi yang cepat dan tepat waktu;
-                  </List.Item>
-                  <List.Item>
-                    Memberikan kemudahan dalam mendapatkan informasi publik
-                    bidang komunikasi dan informatika yang diperlukan dengan
-                    murah dan sederhana;
-                  </List.Item>
-                  <List.Item>
-                    Menyediakan dan memberikan informasi publik yang akurat,
-                    benar dan tidak menyesatkan;
-                  </List.Item>{" "}
-                  <List.Item>
-                    Menyediakan daftar informasi publik untuk informasi yang
-                    wajib disediakan dan diumumkan;
-                  </List.Item>
-                  <List.Item>
-                    Menjamin penggunaan seluruh informasi publik dan fasilitas
-                    pelayanan sesuai dengan ketentuan dan tata tertib yang
-                    berlaku;
-                  </List.Item>{" "}
-                  <List.Item>
-                    Menyiapkan ruang dan fasilitas nyaman dan tertata baik;
-                  </List.Item>
-                  <List.Item>
-                    Merespon dengan cepat permintaan informasi dan keberatan
-                    atas informasi publik yang disampaikan baik langsung maupun
-                    media;
-                  </List.Item>
-                  <List.Item>
-                    Menyiapkan petugas informasi yang berdedikasi dan siap
-                    melayani;
-                  </List.Item>
-                  <List.Item>
-                    Melakukan pengawasan internal dan evaluasi kinerja
-                    pelaksana.
-                  </List.Item>
-                </List.Root>
-              </Box>
-            </Container>
-          </Box>
-        </Box>
-      </motion.div>
-    </Layout>
+    <PpidLayout
+      title="Maklumat Pelayanan"
+      description="Janji layanan informasi publik Dinas Kesehatan Kabupaten Paser."
+    >
+      <Text fontWeight="700" mb={4}>
+        Kami berjanji untuk:
+      </Text>
+      <List.Root as="ol" gap={3} ps={5} fontSize="16px" lineHeight="1.6">
+        {janji.map((item) => (
+          <List.Item key={item}>{item}</List.Item>
+        ))}
+      </List.Root>
+    </PpidLayout>
   );
 }
 

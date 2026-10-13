@@ -1,308 +1,160 @@
-import React from "react";
-import {
-  Box,
-  Image,
-  Text,
-  Center,
-  Container,
-  Heading,
-  VStack,
-  HStack,
-  Badge,
-} from "@chakra-ui/react";
-import { For, SimpleGrid, Tabs } from "@chakra-ui/react";
+import { Box, Container, Heading, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import Layout from "../../components/Layout";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/effect-fade"; // penting!
-import Dinkes3 from "../../assets/dinkes3.png";
-import Dinkes4 from "../../assets/dinkes4.png";
-import Dinkes1 from "../../assets/dinkes1.png";
-import Dinkes2 from "../../assets/dinkes2.png";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
-import { motion } from "framer-motion";
-import KiriGambar from "../../assets/kiri.png";
-import KananGambar from "../../assets/kanan.png";
 import Kadis from "../../assets/kadis.jpg";
-const images = [Dinkes3, Dinkes4, Dinkes1, Dinkes2];
+
+const identitas = [
+  { label: "NIP", value: "198407262002121001" },
+  { label: "Pangkat/Golongan", value: "Pembina Utama Muda / IV C" },
+  { label: "Alamat", value: "Tanah Grogot, Kabupaten Paser, Kalimantan Timur" },
+  { label: "Agama", value: "Islam" },
+  { label: "Jenis kelamin", value: "Laki-laki" },
+];
+
+const jabatan = [
+  "Kepala Dinas Kesehatan (19 Juni 2024 – sekarang)",
+  "Kepala Bagian Sumber Daya Alam Sekretariat Daerah (02 Februari 2023 – 18 Juni 2024)",
+  "Sekretaris Dinas Komunikasi Informatika Statistik dan Persandian (05 April 2022 – 01 Februari 2023)",
+  "Camat Muara Samu (08 Agustus 2018 – 04 April 2022)",
+  "Sekretaris Camat Batu Engau (30 Desember 2016 – 07 Agustus 2018)",
+  "Sekretaris Badan Lingkungan Hidup Kab. Paser (20 Agustus 2014 – 29 Desember 2016)",
+  "Sekretaris Camat Kuaro (02 April 2012 – 20 Agustus 2014)",
+];
+
+const diklat = [
+  "Pelatihan Kepemimpinan Nasional Tingkat II (PKN TK II) (2024)",
+  "Diklatpim TK III (2012)",
+  "Diklatpim TK IV (2006)",
+  "Workshop Penguatan Manajemen Kinerja Sistem Akuntabilitas Kinerja Instansi Pemerintah (SAKIP) (2024)",
+  "Pelatihan Pengelolaan Manajemen Risiko Perangkat Daerah (2023)",
+];
+
+function Bagian({ judul, children }) {
+  return (
+    <Box
+      mt={4}
+      bg="var(--card)"
+      borderWidth="1px"
+      borderColor="var(--line)"
+      borderRadius="16px"
+      p={{ base: 4, md: 6 }}
+    >
+      <Heading as="h2" fontSize={{ base: "18px", md: "20px" }} color="var(--heading)">
+        {judul}
+      </Heading>
+      <Box mt={4}>{children}</Box>
+    </Box>
+  );
+}
+
+function Daftar({ items }) {
+  return (
+    <Box display="flex" flexDirection="column" gap={3}>
+      {items.map((item, index) => (
+        <Box key={item} display="flex" gap={3} alignItems="flex-start">
+          <Text
+            flexShrink={0}
+            w="28px"
+            h="28px"
+            borderRadius="full"
+            bg="var(--surface)"
+            color="#0E7A45"
+            fontSize="13px"
+            fontWeight="700"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {index + 1}
+          </Text>
+          <Text pt="3px" fontSize="15px" lineHeight="1.6">
+            {item}
+          </Text>
+        </Box>
+      ))}
+    </Box>
+  );
+}
 
 function KepalaDinas() {
   return (
     <Layout>
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <Box w="100vw" position="relative">
-          <Box bgColor={"#14A75B"} height={"350px"}></Box>
-          <Box
-            position="absolute"
-            left="50%"
-            transform="translateX(-50%)"
-            top="calc(25vh - 30px)"
-            bg="white"
-            color="black"
-            px={8}
-            py={4}
-            zIndex={10}
-            minHeight={"100px"}
-            minWidth={"1500px"}
-            bgColor={"gray"}
-          >
-            <Center height={"100px"}>
-              <Box width={"100%"}>
-                <Text
-                  fontSize={"40px"}
-                  fontWeight={1000}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  KEPALA DINAS KESEHATAN
-                </Text>
-                <Text
-                  fontSize={"30px"}
-                  fontWeight={100}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  KABUPATEN PASER
-                </Text>
-              </Box>
-            </Center>
-          </Box>
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
-            <Container
-              pt={"80px"}
-              bgColor={"white"}
-              maxWidth={"1820px"}
-              color={"#524E4E"}
-              px={"80px"}
-              pb={"80px"}
-            >
-              <Center flexDirection={"column"}>
-                <Heading
-                  mb={"40px"}
-                  fontSize={"35px"}
-                  textAlign="center"
-                  color={"#14A75B"}
-                >
-                  Profil Kepala Dinas Kesehatan
-                </Heading>
-
-                {/* Foto dan Informasi Utama */}
-                <Box
-                  display="flex"
-                  gap="40px"
-                  mb="40px"
-                  alignItems="flex-start"
-                >
-                  <Box flex="0 0 300px">
-                    <Image
-                      src={Kadis}
-                      alt="Kepala Dinas Kesehatan"
-                      borderRadius="lg"
-                      boxShadow="lg"
-                      width="100%"
-                      height="400px"
-                      objectFit="cover"
-                    />
-                  </Box>
-
-                  <Box flex="1">
-                    <VStack spacing="20px" align="stretch">
-                      <Box>
-                        <Heading size="lg" color="#14A75B" mb="15px">
-                          Amri Yulihardi, S.STP., M.Si.
-                        </Heading>
-                        <Badge colorScheme="green" fontSize="14px" mb="10px">
-                          Kepala Dinas Kesehatan
-                        </Badge>
-                      </Box>
-
-                      <Box>
-                        <Text fontSize="16px" fontWeight="bold" mb="10px">
-                          Informasi Pribadi:
-                        </Text>
-                        <VStack spacing="8px" align="stretch">
-                          <HStack justify="space-between">
-                            <Text fontWeight="semibold" width="150px">
-                              NIP:
-                            </Text>
-                            <Text>198407262002121001</Text>
-                          </HStack>
-                          <HStack justify="space-between">
-                            <Text fontWeight="semibold" width="150px">
-                              Pangkat/Golongan:
-                            </Text>
-                            <Text>Pembina Utama Muda / IV C</Text>
-                          </HStack>
-                          <HStack justify="space-between">
-                            <Text fontWeight="semibold" width="150px">
-                              Alamat:
-                            </Text>
-                            <Text>
-                              Tanah Grogot Kabupaten Paser Kalimantan Timur
-                            </Text>
-                          </HStack>
-                          <HStack justify="space-between">
-                            <Text fontWeight="semibold" width="150px">
-                              Agama:
-                            </Text>
-                            <Text>Islam</Text>
-                          </HStack>
-                          <HStack justify="space-between">
-                            <Text fontWeight="semibold" width="150px">
-                              Jenis Kelamin:
-                            </Text>
-                            <Text>Laki-laki</Text>
-                          </HStack>
-                        </VStack>
-                      </Box>
-                    </VStack>
-                  </Box>
-                </Box>
-
-                {/* <Divider my="30px" /> */}
-
-                {/* Pendidikan */}
-                <Box width="100%" mb="30px">
-                  <Heading size="md" color="#14A75B" mb="15px">
-                    Pendidikan
-                  </Heading>
-                  <Box bg="gray.50" p="20px" borderRadius="md">
-                    <Text fontSize="16px">
-                      <strong>S-2 Administrasi Pemerintahan Daerah</strong>
-                    </Text>
-                  </Box>
-                </Box>
-
-                {/* Riwayat Jabatan */}
-                <Box width="100%" mb="30px">
-                  <Heading size="md" color="#14A75B" mb="15px">
-                    Riwayat Jabatan
-                  </Heading>
-                  <Box bg="gray.50" p="20px" borderRadius="md">
-                    <VStack spacing="12px" align="stretch">
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          1.
-                        </Text>
-                        <Text>Kepala Dinas Kesehatan (19 Juni 2024 - )</Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          2.
-                        </Text>
-                        <Text>
-                          Kepala Bagian Sumber Daya Alam Sekretariat Daerah (02
-                          Februari 2023 – 18 Juni 2024)
-                        </Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          3.
-                        </Text>
-                        <Text>
-                          Sekretaris Dinas Komunikasi Informatika Statistik dan
-                          Persandian (05 April 2022- 01 Februari 2023)
-                        </Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          4.
-                        </Text>
-                        <Text>
-                          Camat Muara Samu (08 Agustus 2018- 04 April 2022)
-                        </Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          5.
-                        </Text>
-                        <Text>
-                          Sekretaris Camat Batu Engau (30 Desember 2016-07
-                          Agustus 2018)
-                        </Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          6.
-                        </Text>
-                        <Text>
-                          Sekretaris Badan Lingkungan Hidup Kab. Paser (20
-                          Agustus 2014-29 Desember 2016)
-                        </Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          7.
-                        </Text>
-                        <Text>
-                          Sekretaris Camat Kuaro (02 April 2012-20 Agustus 2014)
-                        </Text>
-                      </HStack>
-                    </VStack>
-                  </Box>
-                </Box>
-
-                {/* Riwayat Diklat */}
-                <Box width="100%">
-                  <Heading size="md" color="#14A75B" mb="15px">
-                    Riwayat Diklat Teknis dan Kepemimpinan
-                  </Heading>
-                  <Box bg="gray.50" p="20px" borderRadius="md">
-                    <VStack spacing="12px" align="stretch">
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          1.
-                        </Text>
-                        <Text>
-                          PELATIHAN KEPEMIMPINAN NASIONAL TINGKAT II (PKN TK II)
-                          (2024)
-                        </Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          2.
-                        </Text>
-                        <Text>DIKLATPIM TK III (2012)</Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          3.
-                        </Text>
-                        <Text>DIKLATPIM TK IV (2006)</Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          4.
-                        </Text>
-                        <Text>
-                          Workshop Penguatan Manajemen Kinerja Sistem
-                          Akuntabilitas Kinerja Instansi Pemerintah (SAKIP)
-                          (2024)
-                        </Text>
-                      </HStack>
-                      <HStack>
-                        <Text fontWeight="bold" width="30px">
-                          5.
-                        </Text>
-                        <Text>
-                          Pelatihan Pengelolaan Manajemen Risiko Perangkat
-                          Daerah (2023)
-                        </Text>
-                      </HStack>
-                    </VStack>
-                  </Box>
-                </Box>
-              </Center>
-            </Container>
-          </Box>
+      <Box bg="var(--page-bg)" minH="70vh" color="var(--text)">
+        <Box bg="#14A75B" color="white" pt={{ base: "88px", md: "104px" }} pb={{ base: 6, md: 8 }}>
+          <Container maxW="960px" px={{ base: 4, md: 6 }}>
+            <Text fontSize="13px" fontWeight="700" letterSpacing="0.08em" textTransform="uppercase" color="whiteAlpha.800">
+              Dinas Kesehatan
+            </Text>
+            <Heading as="h1" mt={2} fontSize={{ base: "28px", md: "36px" }} lineHeight="1.2">
+              Kepala Dinas
+            </Heading>
+            <Text mt={3} fontSize={{ base: "15px", md: "17px" }} color="whiteAlpha.900">
+              Profil kepala Dinas Kesehatan Kabupaten Paser.
+            </Text>
+          </Container>
         </Box>
-      </motion.div>
+
+        <Container maxW="960px" px={{ base: 4, md: 6 }} py={{ base: 5, md: 8 }}>
+          <Box
+            bg="var(--card)"
+            borderWidth="1px"
+            borderColor="var(--line)"
+            borderRadius="16px"
+            overflow="hidden"
+          >
+            <Box
+              display="flex"
+              flexDirection={{ base: "column", md: "row" }}
+              gap={{ base: 5, md: 8 }}
+              p={{ base: 4, md: 6 }}
+            >
+              <Image
+                src={Kadis}
+                alt="Amri Yulihardi, Kepala Dinas Kesehatan Kabupaten Paser"
+                w={{ base: "100%", md: "280px" }}
+                h={{ base: "320px", md: "360px" }}
+                objectFit="cover"
+                objectPosition="top"
+                borderRadius="12px"
+                flexShrink={0}
+              />
+              <Box flex="1" minW={0}>
+                <Text fontSize="13px" fontWeight="700" letterSpacing="0.06em" textTransform="uppercase" color="#0E7A45">
+                  Kepala Dinas Kesehatan
+                </Text>
+                <Heading as="h2" mt={2} fontSize={{ base: "24px", md: "30px" }} lineHeight="1.25" color="var(--heading)">
+                  Amri Yulihardi, S.STP., M.Si.
+                </Heading>
+                <SimpleGrid columns={{ base: 1, sm: 2 }} gap={4} mt={6}>
+                  {identitas.map((item) => (
+                    <Box key={item.label}>
+                      <Text fontSize="13px" color="var(--muted)">
+                        {item.label}
+                      </Text>
+                      <Text mt={1} fontSize="15px" fontWeight="600" color="var(--heading)">
+                        {item.value}
+                      </Text>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+              </Box>
+            </Box>
+          </Box>
+
+          <Bagian judul="Pendidikan">
+            <Text fontSize="15px" lineHeight="1.6">
+              S-2 Administrasi Pemerintahan Daerah
+            </Text>
+          </Bagian>
+
+          <Bagian judul="Riwayat jabatan">
+            <Daftar items={jabatan} />
+          </Bagian>
+
+          <Bagian judul="Riwayat diklat teknis dan kepemimpinan">
+            <Daftar items={diklat} />
+          </Bagian>
+        </Container>
+      </Box>
     </Layout>
   );
 }

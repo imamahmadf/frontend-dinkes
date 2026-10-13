@@ -78,57 +78,27 @@ function Keberatan() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <Box w="100vw" position="relative">
-          <Box bgColor={"#14A75B"} height={"350px"}></Box>
-          <Box
-            position="absolute"
-            left="50%"
-            transform="translateX(-50%)"
-            top="calc(25vh - 30px)"
-            bg="white"
-            color="black"
-            px={8}
-            py={4}
-            zIndex={10}
-            minHeight={"100px"}
-            minWidth={"1500px"}
-            bgColor={"gray"}
-          >
-            <Center height={"100px"}>
-              <Box width={"100%"}>
-                <Text
-                  fontSize={"40px"}
-                  fontWeight={1000}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  PERMOHONAN INFORMASI ONLINE
-                </Text>
-                <Text
-                  fontSize={"30px"}
-                  fontWeight={100}
-                  color={"white"}
-                  textAlign={"center"}
-                >
-                  PENGAJUAN KEBERATAN ONLINE
-                </Text>
-              </Box>
-            </Center>
+        <Box bg="var(--page-bg)" minH="70vh">
+          <Box bg="#14A75B" color="white" pt={{ base: "88px", md: "104px" }} pb={{ base: 8, md: 10 }}>
+            <Container maxW="860px" px={{ base: 4, md: 6 }}>
+              <Text fontSize="13px" fontWeight="700" letterSpacing="0.08em" textTransform="uppercase" color="whiteAlpha.800">
+                Layanan PPID
+              </Text>
+              <Heading as="h1" mt={2} fontSize={{ base: "28px", md: "36px" }} color="white">
+                Pengajuan Keberatan
+              </Heading>
+              <Text mt={3} color="whiteAlpha.900">
+                Ajukan keberatan jika jawaban atas permohonan informasi belum sesuai.
+              </Text>
+            </Container>
           </Box>
-
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
-            <Container
-              py={"120px"}
-              bgColor={"white"}
-              maxWidth={"1820px"}
-              color={"#524E4E"}
-              px={"80px"}
-            >
-              <Heading mb={"30px"} fontSize={"35px"}>
+          <Container maxW="860px" px={{ base: 4, md: 6 }} py={{ base: 5, md: 8 }}>
+            <Box bg="var(--card)" borderRadius="16px" boxShadow="sm" p={{ base: 4, md: 8 }} color="var(--text)" borderWidth="1px" borderColor="var(--line)">
+              <Heading mb={4} fontSize={{ base: "22px", md: "26px" }}>
                 Form Pengajuan Keberatan
               </Heading>
 
-              <Text fontSize={"18px"} mb={"40px"} color="gray.600">
+              <Text fontSize={"18px"} mb={"40px"} color="var(--muted)">
                 Pengajuan permohonan Keberatan secara daring, cepat, dan sesuai
                 prosedur untuk mendukung keterbukaan informasi publik.
               </Text>
@@ -212,9 +182,9 @@ function Keberatan() {
                   </Form>
                 )}
               </Formik>
+            </Box>
             </Container>
           </Box>
-        </Box>
       </motion.div>
 
       {/* ✅ Dialog untuk menampilkan hasil */}

@@ -11,10 +11,25 @@ import {
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import LayoutAdmin from "../../../components/Admin/LayoutAdmin";
+import AdminPage from "../../../components/Admin/AdminPage";
 import api from "../../../utils/api";
 
+const kosong = {
+  judul: "",
+  ringkasan: "",
+  tahun: "",
+  file: null,
+  jenis: "",
+  bidang: "",
+};
+
 const TambahDokumen = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);
+  const [awal, setAwal] = useState(kosong);
   const [selectedFile, setSelectedFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [dataJenis, setDataJenis] = useState(null);
@@ -40,7 +55,7 @@ const TambahDokumen = () => {
         `Tahun maksimal ${new Date().getFullYear()}`
       ),
     file: Yup.mixed()
-      .required("File PDF wajib diupload")
+      .test("wajib", "File PDF wajib diupload", (value) => isEdit || Boolean(value))
       .test(
         "fileSize",
         "Ukuran file terlalu besar (maksimal 10MB)",
@@ -71,26 +86,28 @@ const TambahDokumen = () => {
     formData.append("judul", values.judul);
     formData.append("ringkasan", values.ringkasan);
     formData.append("tahun", values.tahun);
-    formData.append("file", values.file);
+    if (values.file) formData.append("file", values.file);
     formData.append("jenis", values.jenis);
     formData.append("bidang", values.bidang);
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/informasi/post`,
-        formData
-      );
+      const url = isEdit
+        ? `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/informasi/update/${id}`
+        : `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/informasi/post`;
+      const response = await axios({
+        method: isEdit ? "put" : "post",
+        url,
+        data: formData,
+      });
 
-      console.log("Dokumen berhasil diupload:", response.data);
+      console.log("Dokumen tersimpan:", response.data);
 
-      // Reset form setelah berhasil
       setSubmitting(false);
       resetForm();
       setSelectedFile(null);
       setFilePreview(null);
-
-      // Bisa ditambahkan notifikasi sukses di sini
-      alert("Dokumen berhasil diupload!");
+      alert(isEdit ? "Dokumen berhasil diperbarui." : "Dokumen berhasil diupload!");
+      navigate("/admin/daftar-informasi");
     } catch (error) {
       console.error("Error uploading dokumen:", error);
       setSubmitting(false);
@@ -125,22 +142,35 @@ const TambahDokumen = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (!id) return;
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/informasi/detail/${id}`)
+      .then((res) => {
+        const item = res.data.result;
+        if (!item) return;
+        setAwal({
+          judul: item.judul || "",
+          ringkasan: item.ringkasan || "",
+          tahun: item.tahun || "",
+          file: null,
+          jenis: String(item.jenisInformasiId || item.jenisInformasi?.id || ""),
+          bidang: String(item.bidangId || item.bidang?.id || ""),
+        });
+        setFilePreview(item.dokumen ? "Berkas saat ini tetap dipakai jika tidak diganti." : null);
+      })
+      .catch((err) => console.error(err));
+  }, [id]);
+
   return (
     <LayoutAdmin>
-      <Box py={"80px"}>
-        <Container maxW="1200px">
-          <Heading fontSize="30px" fontWeight={700} mb={6} textAlign="center">
-            Tambah Dokumen
-          </Heading>
-
+      <AdminPage
+        title={isEdit ? "Edit dokumen" : "Tambah dokumen"}
+        description={isEdit ? "Perbarui data. Berkas PDF hanya diunggah jika ingin diganti." : "Isi data berikut, lalu unggah berkas PDF."}
+      >
           <Formik
-            initialValues={{
-              judul: "",
-              ringkasan: "",
-              tahun: "",
-              file: null,
-              jenis: "", // baru
-            }}
+            initialValues={awal}
+            enableReinitialize
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -294,7 +324,7 @@ const TambahDokumen = () => {
                   {/* Upload File PDF */}
                   <Box>
                     <Text mb={2} fontWeight="medium">
-                      File PDF *
+                      {isEdit ? "Ganti file PDF" : "File PDF *"}
                     </Text>
                     <input
                       type="file"
@@ -319,8 +349,8 @@ const TambahDokumen = () => {
 
                     {/* File Preview */}
                     {filePreview && (
-                      <Box mt={4} p={3} bg="gray.50" borderRadius="md">
-                        <Text fontSize="sm" color="gray.600" mb={1}>
+                      <Box mt={4} p={3} bg="var(--surface)" borderRadius="md">
+                        <Text fontSize="sm" color="var(--muted)" mb={1}>
                           File yang dipilih:
                         </Text>
                         <Text fontSize="sm" fontWeight="medium">
@@ -333,20 +363,20 @@ const TambahDokumen = () => {
                   {/* Submit Button */}
                   <Button
                     type="submit"
-                    colorScheme="blue"
                     size="lg"
-                    isLoading={isSubmitting}
-                    loadingText="Mengupload..."
+                    bg="#14A75B"
+                    color="white"
+                    _hover={{ bg: "#0E7A45" }}
+                    loading={isSubmitting}
                     w="full"
                   >
-                    Upload Dokumen
+                    Unggah dokumen
                   </Button>
                 </VStack>
               </Form>
             )}
           </Formik>
-        </Container>
-      </Box>
+      </AdminPage>
     </LayoutAdmin>
   );
 };

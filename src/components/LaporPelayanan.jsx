@@ -114,18 +114,18 @@ function LaporPelayanan() {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Box position="relative">
-          <Box bgColor={"gray.100"} zIndex={1} py={"50px"}>
+          <Box bgColor="var(--surface)" zIndex={1} py={"50px"}>
             <Container
               py={"120px"}
-              bgColor={"white"}
+              bgColor="var(--card)"
               maxWidth={"1820px"}
-              color={"#524E4E"}
+              color="var(--text)"
             >
               <Heading mb={"30px"} fontSize={"35px"}>
                 Form Permohonan Informasi
               </Heading>
 
-              <Text fontSize={"18px"} mb={"40px"} color="gray.600">
+              <Text fontSize={"18px"} mb={"40px"} color="var(--muted)">
                 Pengajuan permohonan informasi secara daring, cepat, dan sesuai
                 prosedur untuk mendukung keterbukaan informasi publik.
               </Text>
@@ -212,7 +212,7 @@ function LaporPelayanan() {
                           }
                         />
                         {values.fotoKtp && (
-                          <Text fontSize="sm" color="gray.600">
+                          <Text fontSize="sm" color="var(--muted)">
                             {values.fotoKtp.name} (
                             {(values.fotoKtp.size / 1024).toFixed(1)} KB)
                           </Text>
